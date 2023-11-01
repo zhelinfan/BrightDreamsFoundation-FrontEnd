@@ -1,6 +1,23 @@
 <template>
     <div class="app-container">
+      <!--查询表单-->
+        <div class="search-div">
+            <el-form label-width="70px" size="small">
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item label="流水号">
+                            <el-input style="width: 100%" v-model="searchObj.donationId" placeholder="根据捐赠流水号搜索"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row style="display:flex">
+                    <el-button type="primary" icon="el-icon-search" size="mini" :loading="isLoading" @click="fetchData()">搜 索</el-button>
+                    <el-button icon="el-icon-refresh" size="mini" @click="resetData()">重 置</el-button>
+                </el-row>
+            </el-form>
+        </div>
         <el-table
+        v-loading="isLoading"
         :data="tableData"
         stripe
         style="width: 100%;margin-top: 10px;">
@@ -8,96 +25,70 @@
         <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
             <el-form-item label="捐赠物品">
-                <span>{{ props.row.name }}</span>
+                <span>{{ props.row.donationItem }}</span>
             </el-form-item>
             <el-form-item label="捐赠物品接受者 / 单位">
-                <span>{{ props.row.shop }}</span>
+                <span>{{ props.row.donateAccept }}</span>
             </el-form-item>
             <el-form-item label="捐赠物始发位置">
-                <span>{{ props.row.id }}</span>
+                <span>{{ props.row.sendLocation }}</span>
             </el-form-item>
             <el-form-item label="捐赠物当前位置">
-                <span>{{ props.row.shopId }}</span>
+                <span>{{ props.row.currentLocation }}</span>
             </el-form-item>
             <el-form-item label="捐赠物终到位置">
-                <span>{{ props.row.category }}</span>
+                <span>{{ props.row.acceptLocation }}</span>
             </el-form-item>
             <el-form-item label="预计到达日期">
-                <span>{{ props.row.address }}</span>
+                <span>{{ props.row.estArriveTime }}</span>
             </el-form-item>
-            <el-form-item label="捐赠物描述">
-                <span>{{ props.row.desc }}</span>
+            <el-form-item label="捐赠详细描述">
+                <span>{{ props.row.donateDescription }}</span>
             </el-form-item>
             </el-form>
         </template>
         </el-table-column>
         <el-table-column
         label="流水号"
-        prop="id">
+        prop="donationId">
         </el-table-column>
         <el-table-column
         label="捐赠人"
-        prop="name">
+        prop="donator">
         </el-table-column>
         <el-table-column
-        label="描述"
-        prop="desc">
+        label="简短描述">
+          <template slot-scope="scope">{{scope.row.donateDescription.substring(0,7).concat('...')}}</template>
         </el-table-column>
-      </el-table>
+        </el-table>
+        <el-pagination
+        :current-page="page"
+        :total="total"
+        :page-size="limit"
+        style="padding: 30px 0; text-align: center;"
+        layout="total, prev, pager, next, jumper"
+        @current-change="fetchData"/>
     </div>
 </template>
 
 <script>
-  import api from '@/api/admin/user'
+  import api from '@/api/donation/donation'
   export default {
     name: 'DonationList',
     // 定义数据模型
     data() {
         return {
             isLoading: true,
-            list: [], // 列表
             total: 0, // 总记录数
             page: 1, // 页码
             limit: 10, // 每页记录数
             searchObj: {}, // 查询条件
-            tableData: [{
-            id: '12987122',
-            name: '好滋好味鸡蛋仔',
-            category: '江浙小吃、小吃零食',
-            desc: '荷兰优质淡奶，奶香浓而不腻',
-            address: '上海市普陀区真北路',
-            shop: '王小虎夫妻店',
-            shopId: '10333'
-            }, {
-            id: '12987123',
-            name: '好滋好味鸡蛋仔',
-            category: '江浙小吃、小吃零食',
-            desc: '荷兰优质淡奶，奶香浓而不腻',
-            address: '上海市普陀区真北路',
-            shop: '王小虎夫妻店',
-            shopId: '10333'
-            }, {
-            id: '12987125',
-            name: '好滋好味鸡蛋仔',
-            category: '江浙小吃、小吃零食',
-            desc: '荷兰优质淡奶，奶香浓而不腻',
-            address: '上海市普陀区真北路',
-            shop: '王小虎夫妻店',
-            shopId: '10333'
-            }, {
-            id: '12987126',
-            name: '好滋好味鸡蛋仔',
-            category: '江浙小吃、小吃零食',
-            desc: '荷兰优质淡奶，奶香浓而不腻',
-            address: '上海市普陀区真北路',
-            shop: '王小虎夫妻店',
-            shopId: '10333'
-            }]
+            tableData: []
         }
     },
     // 页面渲染成功后获取数据
     created() {
-        // this.fetchData()
+        this.fetchData()
     },
     // 定义方法
     methods: {
@@ -105,14 +96,13 @@
             this.page = current
             // 调用api
             api.getPageList(this.page, this.limit, this.searchObj).then(response => {
-                this.list = response.data.records
+                this.tableData = response.data.records
                 this.total = response.data.total
                 this.isLoading = false
             })
         },
         // 重置表单
         resetData() {
-            console.log('重置查询表单')
             this.searchObj = {}
             this.fetchData()
         },

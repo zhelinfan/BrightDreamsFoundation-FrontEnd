@@ -42,7 +42,7 @@
       <el-table-column prop="createDate" label="创建时间" sortable/>
       <el-table-column label="操作" width="400" align="center">
         <template slot-scope="scope">
-          <el-button icon="el-icon-edit" size="mini" @click="showDonation()" title="查看捐赠流水" plain>查看捐赠流水</el-button>
+          <el-button icon="el-icon-edit" size="mini" @click="showDonation(scope.row.id)" title="查看捐赠流水" plain>查看捐赠流水</el-button>
           <el-button type="warning" icon="el-icon-edit" size="mini" @click="edit(scope.row.id)" title="修改" plain>修 改</el-button>
           <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeDataById(scope.row.id)" title="删除">删 除</el-button>
         </template>
@@ -71,13 +71,65 @@
       </span>
     </el-dialog>
     <el-dialog title="捐赠流水" :visible.sync="donationVisible" width="80%" >
-      
+      <el-table
+        v-loading="isLoading"
+        :data="donationList"
+        stripe
+        style="width: 100%;">
+        <el-table-column type="expand">
+        <template slot-scope="props">
+            <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="捐赠物品">
+                <span>{{ props.row.donationItem }}</span>
+            </el-form-item>
+            <el-form-item label="捐赠物品接受者 / 单位">
+                <span>{{ props.row.donateAccept }}</span>
+            </el-form-item>
+            <el-form-item label="捐赠物始发位置">
+                <span>{{ props.row.sendLocation }}</span>
+            </el-form-item>
+            <el-form-item label="捐赠物当前位置">
+                <span>{{ props.row.currentLocation }}</span>
+            </el-form-item>
+            <el-form-item label="捐赠物终到位置">
+                <span>{{ props.row.acceptLocation }}</span>
+            </el-form-item>
+            <el-form-item label="预计到达日期">
+                <span>{{ props.row.estArriveTime }}</span>
+            </el-form-item>
+            <el-form-item label="捐赠详细描述">
+                <span>{{ props.row.donateDescription }}</span>
+            </el-form-item>
+            </el-form>
+        </template>
+        </el-table-column>
+        <el-table-column
+        label="流水号"
+        prop="donationId">
+        </el-table-column>
+        <el-table-column
+        label="捐赠人"
+        prop="donator">
+        </el-table-column>
+        <el-table-column
+        label="简短描述">
+          <template slot-scope="scope">{{scope.row.donateDescription.substring(0,7).concat('...')}}</template>
+        </el-table-column>
+        </el-table>
+        <el-pagination
+        :current-page="donationPage"
+        :total="donationTotal"
+        :page-size="donationLimit"
+        style="padding: 30px 0; text-align: center;"
+        layout="total, prev, pager, next, jumper"
+        @current-change="showDonationPage"/>
     </el-dialog>
   </div>
   </template>
 
   <script>
   import api from '@/api/admin/user'
+  import donationApi from '@/api/donation/donation'
   export default {
     // 定义数据模型
     data() {
@@ -95,6 +147,12 @@
             user: {},
             saveBtnDisabled: false,
             donationVisible: false,
+            donationList: [],
+            donationTotal: 0,
+            donationPage: 1,
+            donationLimit: 5,
+            donationSearchObj: {},
+            userId: 0
         }
     },
     // 页面渲染成功后获取数据
@@ -199,8 +257,19 @@
               this.$message.success(response.message)
           })
         },
-        showDonation() {
+        showDonation(id) {
           this.donationVisible = true
+          this.userId = id
+          this.showDonationPage()
+        },
+        showDonationPage(current = 1) {
+          this.donationPage = current
+          this.donationSearchObj.donatorId = this.userId
+          donationApi.getPageList(this.donationPage, this.donationLimit, this.donationSearchObj).then(response => {
+            this.donationList = response.data.records
+            this.donationTotal = response.data.total
+            this.isLoading = false
+          })
         }
     }
   }
@@ -211,7 +280,7 @@
     font-size: 0;
   }
   .demo-table-expand label {
-    width: 90px;
+    width: 160px;
     color: #99a9bf;
   }
   .demo-table-expand .el-form-item {
