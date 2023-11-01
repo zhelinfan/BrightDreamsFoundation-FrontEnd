@@ -13,5 +13,5 @@ export default {
       method: 'get',
       params: searchObj
     })
-  },
+  }
 }
