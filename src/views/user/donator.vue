@@ -5,8 +5,8 @@
       <el-form label-width="70px" size="small">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="登录名">
-              <el-input style="width: 100%" v-model="searchObj.username" placeholder="根据用户登录名搜索"></el-input>
+            <el-form-item label="捐赠者名">
+              <el-input style="width: 100%" v-model="searchObj.username" placeholder="根据捐赠者姓名搜索"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -38,13 +38,12 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="username" label="用户登录名" />
-      <el-table-column prop="realName" label="用户真实名" />
-      <el-table-column prop="roleName" label="角色" />
-      <el-table-column prop="createDate" label="创建时间" width="160" sortable/>
-      <el-table-column label="操作" width="200" align="center">
+      <el-table-column prop="realName" label="捐赠者名" />
+      <el-table-column prop="createDate" label="创建时间" sortable/>
+      <el-table-column label="操作" width="400" align="center">
         <template slot-scope="scope">
-          <el-button type="warning" icon="el-icon-edit" size="mini" @click="edit(scope.row.id)" title="修改">修 改</el-button>
+          <el-button icon="el-icon-edit" size="mini" @click="showDonation()" title="查看捐赠流水" plain>查看捐赠流水</el-button>
+          <el-button type="warning" icon="el-icon-edit" size="mini" @click="edit(scope.row.id)" title="修改" plain>修 改</el-button>
           <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeDataById(scope.row.id)" title="删除">删 除</el-button>
         </template>
       </el-table-column>
@@ -59,14 +58,11 @@
         @current-change="fetchData"/>
     <el-dialog title="添加/修改" :visible.sync="dialogVisible" width="40%" >
       <el-form ref="dataForm" :model="user" label-width="150px" size="small" style="padding-right: 40px;">
-        <el-form-item label="用户名称">
+        <el-form-item label="捐赠者登录名">
           <el-input v-model="user.username"/>
         </el-form-item>
-        <el-form-item label="用户初始密码">
+        <el-form-item label="捐赠者初始密码">
           <el-input v-model="user.password"/>
-        </el-form-item>
-        <el-form-item label="角色编码">
-          <el-input v-model="user.role"/>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -74,13 +70,15 @@
         <el-button type="primary" icon="el-icon-check" @click="saveOrUpdate()" size="small">确 定</el-button>
       </span>
     </el-dialog>
+    <el-dialog title="捐赠流水" :visible.sync="donationVisible" width="80%" >
+      
+    </el-dialog>
   </div>
   </template>
 
   <script>
   import api from '@/api/admin/user'
   export default {
-    name: 'UserList',
     // 定义数据模型
     data() {
         return {
@@ -89,11 +87,14 @@
             total: 0, // 总记录数
             page: 1, // 页码
             limit: 10, // 每页记录数
-            searchObj: {}, // 查询条件
+            searchObj: {
+              role: 3
+            }, // 查询条件
             multipleSelection: [], // 批量删除选中的记录列表
             dialogVisible: false,
             user: {},
-            saveBtnDisabled: false
+            saveBtnDisabled: false,
+            donationVisible: false,
         }
     },
     // 页面渲染成功后获取数据
@@ -114,7 +115,9 @@
         // 重置表单
         resetData() {
             console.log('重置查询表单')
-            this.searchObj = {}
+            this.searchObj = {
+              role: 3
+            }
             this.fetchData()
         },
         removeDataById(id) {
@@ -140,9 +143,11 @@
             } else {
                 this.updateData()
             }
+            this.user = {}
         },
         // 新增
         saveData() {
+          this.user.role = 3
             api.save(this.user).then(response => {
                 this.$message.success(response.message || '操作成功')
                 this.dialogVisible = false
@@ -172,28 +177,46 @@
         },
         // 批量删除
         batchRemove() {
-        if (this.multipleSelection.length === 0) {
-            this.$message.warning('请选择要删除的记录！')
-            return
-        }
-        this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-        }).then(() => {
-            // 点击确定，远程调用ajax
-            // 遍历selection，将id取出放入id列表
-            var idList = []
-            this.multipleSelection.forEach(item => {
-            idList.push(item.id)
-            })
-            // 调用api
-            return api.batchRemove(idList)
-        }).then((response) => {
-            this.fetchData()
-            this.$message.success(response.message)
-        })
+          if (this.multipleSelection.length === 0) {
+              this.$message.warning('请选择要删除的记录！')
+              return
+          }
+          this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+          }).then(() => {
+              // 点击确定，远程调用ajax
+              // 遍历selection，将id取出放入id列表
+              var idList = []
+              this.multipleSelection.forEach(item => {
+              idList.push(item.id)
+              })
+              // 调用api
+              return api.batchRemove(idList)
+          }).then((response) => {
+              this.fetchData()
+              this.$message.success(response.message)
+          })
+        },
+        showDonation() {
+          this.donationVisible = true
         }
     }
   }
   </script>
+
+<style>
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+</style>

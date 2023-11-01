@@ -49,5 +49,26 @@ export default {
       method: `delete`,
       data: idList
     })
+  },
+  // isFromChild means the main person is child or not.
+  getBind(id, isBind, isFromChild) {
+    return request({
+      url: `${api_name}/getBind/${id}/${isBind}/${isFromChild}`,
+      method: 'get'
+    })
+  },
+  bind(id, idList, isChildBind) {
+    return request({
+      url: `${api_name}/bind/${id}/${isChildBind}`,
+      method: `post`,
+      data: idList
+    })
+  },
+  unbind(id, idList, isChildUnbind) {
+    return request({
+      url: `${api_name}/unbind/${id}/${isChildUnbind}`,
+      method: `delete`,
+      data: idList
+    })
   }
 }

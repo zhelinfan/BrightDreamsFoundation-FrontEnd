@@ -46,12 +46,12 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/welcome',
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
+      path: 'welcome',
+      name: 'Welcome',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '欢迎', icon: 'dashboard' }
     }]
   },
 
@@ -74,7 +74,7 @@ export const constantRoutes = [
       },
       {
         path: 'children',
-        // component: () => import('@/views/system/sysRole/list'),
+        component: () => import('@/views/user/child'),
         meta: {
           title: '儿童管理',
           icon: 'child'
@@ -82,7 +82,7 @@ export const constantRoutes = [
       },
       {
         path: 'volunteer',
-        // component: () => import('@/views/system/sysRole/list'),
+        component: () => import('@/views/user/volunteer'),
         meta: {
           title: '志愿者管理',
           icon: 'volunteer'
@@ -90,11 +90,24 @@ export const constantRoutes = [
       },
       {
         path: 'donator',
-        // component: () => import('@/views/system/sysRole/list'),
+        component: () => import('@/views/user/donator'),
         meta: {
           title: '捐赠者管理',
           icon: 'donator'
         }
+      }
+    ]
+  },
+
+  {
+    path: '/donation',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'donation',
+        component: () => import('@/views/donation/index'),
+        meta: { title: '捐赠流水', icon: 'form' }
       }
     ]
   },
