@@ -124,7 +124,7 @@
 </template>
 
 <script>
-import api from '@/api/register/index'
+import api from '@/api/register'
 export default {
   name: 'Register',
   data() {
