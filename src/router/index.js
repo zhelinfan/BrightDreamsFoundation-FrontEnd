@@ -36,6 +36,25 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
+  {
+    path: '/task',
+    component: Layout, // 使用Layout组件作为包裹
+    redirect: '/task/list', // 可能需要一个默认的子路由
+    meta: {
+      title: '任务管理',
+      icon: 'child'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/task/list.vue'),
+        meta: {
+          title: '任务列表',
+          icon: 'child'
+        }
+      }
+    ]
+  },
 
   {
     path: '/404',
