@@ -70,7 +70,7 @@ export const constantRoutes = [
       path: 'welcome',
       name: 'Welcome',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '欢迎', icon: 'dashboard' }
+      meta: { title: '欢迎', icon: 'welcome' }
     }]
   },
 
@@ -127,6 +127,32 @@ export const constantRoutes = [
         name: 'donation',
         component: () => import('@/views/donation/index'),
         meta: { title: '捐赠流水', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/mission',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'mission',
+        component: () => import('@/views/mission/index'),
+        meta: { title: '任务发布', icon: 'el-icon-s-order' }
+      }
+    ]
+  },
+
+  {
+    path: '/data',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'data',
+        component: () => import('@/views/data/index'),
+        meta: { title: '数据中控', icon: 'dashboard' }
       }
     ]
   },

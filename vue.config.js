@@ -44,7 +44,7 @@ module.exports = {
         pathRewrite: { // 重写路径: 去掉路径中开头的'/dev-api'
           '^/dev-api': ''
         }
-      }
+      },
     }
   },
   configureWebpack: {
