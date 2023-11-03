@@ -2,14 +2,17 @@
   <div class="register-container">
     <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register-form" auto-complete="on" label-position="left">
       <div class="image-container">
-        <el-image src="@/assets/register_images/children2.jpg" fit="fit" placeholder="加载失败" />
+        <img
+          style="width: 300px; height: 170px"
+          :fit= "fit"
+          :src="require('@/assets/register_images/children1.png')">
       </div>
       <div class="title-container">
         <h3 class="title">小同学，欢迎注册！!</h3>
       </div>
       <el-form-item ref="username" prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="el-icon-table-lamp" />
+          <i class="el-icon-user" />
         </span>
         <el-input
           :key="classType"
@@ -23,35 +26,41 @@
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="el-icon-table-lamp" />
+          <i class="el-icon-key"/>
         </span>
         <el-input
-          :key="classType"
+          :key="passwordType"
           ref="password"
           v-model="registerForm.password"
-          :type="classType"
+          :type="passwordType"
           placeholder="密码"
           name="password"
           tabindex="2"
         />
+        <span class="show-pwd" @click="showPwd">
+          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+        </span>
       </el-form-item>
       <el-form-item prop="password_confirm">
         <span class="svg-container">
-          <svg-icon icon-class="el-icon-table-lamp" />
+          <i class="el-icon-key"/>
         </span>
         <el-input
-          :key="classType"
+          :key="passwordType"
           ref="password_confirm"
           v-model="password_confirm"
-          :type="classType"
+          :type="passwordType"
           placeholder="确认密码"
           name="password_confirm"
           tabindex="3"
         />
+        <span class="show-pwd" @click="showPwd">
+          <svg-icon v-bind:icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+        </span>
       </el-form-item>
       <el-form-item prop="realName">
         <span class="svg-container">
-          <svg-icon icon-class="el-icon-table-lamp" />
+          <i class="el-icon-edit"/>
         </span>
         <el-input
           :key="classType"
@@ -65,7 +74,7 @@
       </el-form-item>
       <el-form-item prop="school">
         <span class="svg-container">
-          <svg-icon icon-class="el-icon-school" />
+          <i class="el-icon-school"/>
         </span>
         <el-select v-model="registerForm.school" placeholder="请选择你的学校哦">
           <el-option
@@ -79,7 +88,7 @@
 
       <el-form-item prop="class">
         <span class="svg-container">
-          <svg-icon icon-class="el-icon-table-lamp" />
+          <i class="el-icon-table-lamp"/>
         </span>
         <el-input
           :key="classType"
@@ -97,7 +106,7 @@
       </el-form-item>
       <el-form-item prop="age">
         <span class="svg-container">
-          <svg-icon icon-class="el-icon-table-lamp" />
+          <i class="el-icon-date"/>
         </span>
         <el-select v-model="registerForm.age" placeholder="请选择你的年龄哦">
           <el-option
@@ -204,10 +213,12 @@ export default {
         age: [{ required: true, trigger: 'blur', validator: validate }]
       },
       password_confirm: '',
+      passwordType: 'password',
       suggestionList: [],
       loading: false,
       classType: 'class',
-      redirect: undefined
+      redirect: undefined,
+      url: ''
     }
   },
   watch: {
@@ -219,6 +230,15 @@ export default {
     }
   },
   methods: {
+    trimRealName() {
+      this.registerForm.school = this.registerForm.school.trim()
+      this.registerForm.class = this.registerForm.class.trim()
+      this.registerForm.realName = this.registerForm.realName.trim()
+      this.registerForm.gender = this.registerForm.gender.trim()
+      this.registerForm.age = this.registerForm.age.trim()
+      this.registerForm.username = this.registerForm.username.trim()
+      this.registerForm.password = this.registerForm.password.trim()
+    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -232,13 +252,18 @@ export default {
     handleRegister() {
       this.$refs.registerForm.validate(valid => {
         if (valid) {
+          this.trimRealName()
           this.loading = true
           api.register(this.registerForm).then(response => {
             this.loading = false
             const code = response.code
             if (code === '404') {
+              this.loading = false
               // this.suggestionList = [{ value: '用户名重复啦，再改改吧' }]
               alert('用户名重复啦，再改改吧！')
+            }
+            if (code === 200) {
+              this.$router.push('/user/login')
             }
           })
         } else {
@@ -268,6 +293,12 @@ $cursor: #484848;
 
 /* reset element-ui css */
 .register-container {
+  //margin-top: 50px;
+  .image-container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
   .el-input {
     display: inline-block;
     height: 47px;
@@ -312,7 +343,7 @@ $cursor: #484848;
 
 <style lang="scss" scoped>
 $bg: #ffd8b0;
-$dark_gray: #000000;
+$dark_gray: #484848;
 $light_gray: #ffb859;
 
 .register-container {
@@ -376,6 +407,9 @@ $light_gray: #ffb859;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+  .icon{
+    color: chocolate;
   }
 }
 </style>
