@@ -36,7 +36,14 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
+  {
+    path: '/register',
+    component: () => import('@/views/register/index'),
+    meta: {
+      title: '儿童注册',
+      icon: 'el-icon-user'
+    }
+  },
   {
     path: '/404',
     component: () => import('@/views/404'),
@@ -51,7 +58,7 @@ export const constantRoutes = [
       path: 'welcome',
       name: 'Welcome',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '欢迎', icon: 'welcome' }
+      meta: { title: '欢迎', icon: 'dashboard' }
     }]
   },
 
