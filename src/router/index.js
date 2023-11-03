@@ -120,6 +120,19 @@ export const constantRoutes = [
   },
 
   {
+    path: '/mission',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'mission',
+        component: () => import('@/views/mission/index'),
+        meta: { title: '任务发布', icon: 'el-icon-s-order' }
+      }
+    ]
+  },
+
+  {
     path: '/data',
     component: Layout,
     children: [
