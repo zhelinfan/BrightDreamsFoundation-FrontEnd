@@ -19,9 +19,9 @@
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
             <el-form-item label="任务类型">
-              <span>{{ props.row.kind }}</span>
+              <span>{{ props.row.kindName }}</span>
             </el-form-item>
-            <el-form-item label="目标分数">
+            <el-form-item label="目标次数 / 时长">
               <span>{{ props.row.targetNum }}</span>
             </el-form-item>
             <el-form-item label="奖励">
@@ -34,7 +34,7 @@
               <span>{{ props.row.releaseDate }}</span>
             </el-form-item>
             <el-form-item label="状态">
-              <span>{{ props.row.released }}</span>
+              <span>{{ props.row.released ? '已发布' : '未发布' }}</span>
             </el-form-item>
             <el-form-item label="任务详细描述">
               <span>{{ props.row.description }}</span>
@@ -79,10 +79,19 @@
           <el-input v-model="mission.description" />
         </el-form-item>
         <el-form-item label="任务类型">
-          <el-input v-model="mission.kindName" />
+          <el-select v-model="mission.kind" placeholder="请选择">
+            <el-option
+              label="互动任务"
+              value="0">
+            </el-option>
+            <el-option
+              label="学习任务"
+              value="1">
+            </el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="目标分数">
-          <el-input v-model="mission.targetNum" />
+        <el-form-item label="目标次数 / 时长">
+          <el-input :disabled="mission.kind == 1" v-model="mission.targetNum" />
         </el-form-item>
         <el-form-item label="任务奖励">
           <el-input v-model="mission.reward" />
