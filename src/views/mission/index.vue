@@ -82,16 +82,16 @@
           <el-select v-model="mission.kind" placeholder="请选择">
             <el-option
               label="互动任务"
-              value="0">
-            </el-option>
+              value="0"
+            />
             <el-option
               label="学习任务"
-              value="1">
-            </el-option>
+              value="1"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="目标次数 / 时长">
-          <el-input :disabled="mission.kind == 1" v-model="mission.targetNum" />
+          <el-input v-model="mission.targetNum" :disabled="mission.kind == 1" />
         </el-form-item>
         <el-form-item label="任务奖励">
           <el-input v-model="mission.reward" />
