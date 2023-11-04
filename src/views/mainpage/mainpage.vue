@@ -3,9 +3,9 @@
     <ChildNavbar />
     <div class="image-container">
 <!--      <div class="image-front"></div>-->
-      <img :src="require('@/assets/main_images/main2.png')" class="image-transition" fit="cover">
+      <img :src="require('@/assets/main_images/main2.png')" class="image-transition">
       <transition-group name="fade" tag="p" class="letter">
-        <p v-for="(line, index) in textLines" :key="index" :class="{ 'last-line': index === 5 }">{{ line }}</p>
+        <p v-for="(line, index) in textLines" :key="index" :class="{ 'last-line': index === 7 }">{{ line }}</p>
       </transition-group>
       <transition name="button-fade">
         <el-button v-if="showImage" class="button-transition">开 始 学 习</el-button>
@@ -33,7 +33,9 @@ export default {
       '我们将陪伴你',
       '度过心灵的孤独时刻',
       '领略知识的美妙',
-      '感受学习的快乐！',
+      '感受学习的快乐',
+      '在交流中',
+      '享受生活的阳光灿烂',
       '        ——明光筑梦守护者'
     ]
     // 逐行显示文本
@@ -72,19 +74,15 @@ export default {
   left: 0; /* 图片位于左侧，可以根据需要调整位置 */
   z-index: -1; /* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 */
   max-width: 100%; /* 图片最大宽度为100% */
-  //max-height: 100%;
   height: auto;
-  //max-height: 100%;
-  //width: 1280px;
 }
 //button
 .button-transition {
   position: absolute;
-  left: 42%;
-  top:67%;
+  top: 75%;
+  left: 39%;
   width: 260px; /* 初始宽度 */
-  height: 60px; /* 初始高度 */
-  margin-top: 70px;
+  height: 58px; /* 初始高度 */
   filter: brightness(1); /* 初始亮度较低 */
   background-color: #69daef;
   border: 3px solid #4ea3b0;
@@ -120,15 +118,14 @@ export default {
 }
 .letter{
   position: absolute;
-  left: 10%;
-  top: 10%;
+  top: 30%;
+  left: 21%;
   width: 300px;
-  margin-top: 120px;
-  margin-left: 250px;
   text-align: left;
   font-family: fangsong;
+  font-size: large;
 }
 .last-line {
-  margin-left: 100px; /* 调整最后一行文本的左边距 */
+  margin-left: 80px; /* 调整最后一行文本的左边距 */
 }
 </style>

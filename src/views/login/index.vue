@@ -5,7 +5,8 @@
         <img
           fit="fill"
           :src="require('@/assets/register_images/children1.png')"
-          style="width: 250px; height: 140px">
+          style="width: 250px; height: 140px"
+        >
       </div>
       <div class="title-container">
         <h3 class="title">明光筑梦，伴你成长</h3>
@@ -28,7 +29,7 @@
 
       <el-form-item prop="password">
         <span class="svg-container">
-          <i class="el-icon-key"/>
+          <i class="el-icon-key" />
         </span>
         <el-input
           :key="passwordType"
@@ -47,7 +48,7 @@
       </el-form-item>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:20px;" @click="handleLogin">登录</el-button>
-      <el-button :loading="loading1" type="primary" style="width:100%;margin-bottom:20px;" id="register" @click="registerSwitch" >注册</el-button>
+      <el-button id="register" :loading="loading1" type="primary" style="width:100%;margin-bottom:20px;" @click="registerSwitch">注册</el-button>
     </el-form>
   </div>
 </template>
@@ -125,10 +126,18 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            console.log('welcome')
+          this.$store.dispatch('user/login', this.loginForm).then(response => {
+            // const code = response.code
+            // if (code === '200') {
             this.$router.push({ path: '/mainpage' })
             this.loading = false
+            // }
+            // if (code === '2') {
+            //   this.$router.push({ path: '/welcome' })
+            //   this.loading = false
+            // } else {
+            //   alert('用户不存在')
+            // }
           }).catch(() => {
             this.loading = false
           })
