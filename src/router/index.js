@@ -38,10 +38,20 @@ export const constantRoutes = [
   },
   {
     path: '/register',
-    component: () => import('@/views/register/index'),
+    component: () => import('@/views/register/index.vue'),
     meta: {
       title: '儿童注册',
-      icon: 'el-icon-user'
+      icon: 'el-icon-user',
+      hidden: true
+    }
+  },
+  {
+    path: '/mainpage',
+    component: () => import('@/views/mainpage/mainpage.vue'),
+    meta: {
+      title: '儿童主页面',
+      icon: 'el-icon-user',
+      hidden: true
     }
   },
   {
@@ -144,7 +154,6 @@ export const constantRoutes = [
       }
     ]
   },
-
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

@@ -3,9 +3,9 @@
     <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register-form" auto-complete="on" label-position="left">
       <div class="image-container">
         <img
-          style="width: 300px; height: 170px"
-          :fit= "fit"
-          :src="require('@/assets/register_images/children1.png')">
+          fit="fill"
+          :src="require('@/assets/register_images/children1.png')"
+          style="width: 300px; height: 170px"/>
       </div>
       <div class="title-container">
         <h3 class="title">小同学，欢迎注册！!</h3>
@@ -26,7 +26,7 @@
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
-          <i class="el-icon-key"/>
+          <i class="el-icon-key" />
         </span>
         <el-input
           :key="passwordType"
@@ -43,7 +43,7 @@
       </el-form-item>
       <el-form-item prop="password_confirm">
         <span class="svg-container">
-          <i class="el-icon-key"/>
+          <i class="el-icon-key" />
         </span>
         <el-input
           :key="passwordType"
@@ -263,7 +263,7 @@ export default {
               alert('用户名重复啦，再改改吧！')
             }
             if (code === 200) {
-              this.$router.push('/user/login')
+              this.$router.push('/login')
             }
           })
         } else {
@@ -314,7 +314,7 @@ $cursor: #484848;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
       height: 47px;
-      caret-color: $cursor;
+      caret-color: $light_gray;
 
       &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px $bg inset !important;
@@ -324,10 +324,14 @@ $cursor: #484848;
   }
 
   .el-form-item {
-    border: 2px solid rgba(170, 170, 170, 0.6);
-    background: rgb(255, 255, 255,0.4);
+    //border: 2px solid rgba(170, 170, 170, 0.6);
+    //background: rgb(255, 255, 255,0.4);
+    //border-radius: 5px;
+    //color: #2d2d2d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    color: #2d2d2d;
+    color: #454545;
   }
   #gender-item{
     background: transparent;
