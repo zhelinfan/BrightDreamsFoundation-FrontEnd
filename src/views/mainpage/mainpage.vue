@@ -3,7 +3,7 @@
     <ChildNavbar />
     <div class="image-container">
 <!--      <div class="image-front"></div>-->
-      <img :src="require('@/assets/main_images/main2.png')" class="image-transition">
+      <img :src="require('@/assets/main_images/main2.png')" class="image-transition" fit="cover">
       <transition-group name="fade" tag="p" class="letter">
         <p v-for="(line, index) in textLines" :key="index" :class="{ 'last-line': index === 5 }">{{ line }}</p>
       </transition-group>
@@ -72,11 +72,16 @@ export default {
   left: 0; /* 图片位于左侧，可以根据需要调整位置 */
   z-index: -1; /* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 */
   max-width: 100%; /* 图片最大宽度为100% */
-  max-height: 100%;
-  width: 1280px;
+  //max-height: 100%;
+  height: auto;
+  //max-height: 100%;
+  //width: 1280px;
 }
 //button
 .button-transition {
+  position: absolute;
+  left: 42%;
+  top:67%;
   width: 260px; /* 初始宽度 */
   height: 60px; /* 初始高度 */
   margin-top: 70px;
@@ -114,6 +119,9 @@ export default {
   opacity: 0;
 }
 .letter{
+  position: absolute;
+  left: 10%;
+  top: 10%;
   width: 300px;
   margin-top: 120px;
   margin-left: 250px;

@@ -55,6 +55,22 @@ export const constantRoutes = [
     }
   },
   {
+    path: '/submitHomework',
+    component: () => import('@/views/tasks/submitHomework'),
+    meta: {
+      title: '作业提交',
+      icon: 'el-icon-edit-outline'
+    }
+  },
+  {
+    path: '/checkSubmission',
+    component: () => import('@/views/tasks/checkSubmission.vue'),
+    meta: {
+      title: '查看作业提交状况',
+      icon: 'el-icon-document-checked'
+    }
+  },
+  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true

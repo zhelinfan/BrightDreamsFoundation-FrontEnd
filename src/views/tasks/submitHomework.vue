@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-
+    <ChildNavbar />
     <div class="header">
         <h2> 任务：默写《静夜思》<br></h2>
       <div class="sub-header">
@@ -40,31 +40,34 @@
 
 <script>
 
-import { zip } from "mockjs/src/mock/random/address";
-
+import { zip } from 'mockjs/src/mock/random/address'
+import ChildNavbar from '@/layout/components/childNavbar.vue'
 export default {
-  name: "SubmitHomework",
+  name: 'SubmitHomework',
+  components: {
+    ChildNavbar
+  },
   data() {
     return {
       fileList: [],
       uploadFileSizeLimit: 1000, // 文件大小限制为1000KB
       textarea: ''
-    };
+    }
   },
   methods: {
     zip,
     beforeUpload(file) {
-      const isLtSize = file.size / 1024 <= this.uploadFileSizeLimit;
+      const isLtSize = file.size / 1024 <= this.uploadFileSizeLimit
       if (!isLtSize) {
-        this.$message.error(`文件大小超过限制 (${this.uploadFileSizeLimit}KB)`);
+        this.$message.error(`文件大小超过限制 (${this.uploadFileSizeLimit}KB)`)
       }
-      return isLtSize;
+      return isLtSize
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      console.log(file, fileList)
     },
     handlePreview(file) {
-      console.log(file);
+      console.log(file)
     }
   }
 }
