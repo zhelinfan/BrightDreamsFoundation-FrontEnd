@@ -125,10 +125,18 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            console.log('welcome')
-            this.$router.push({ path: '/mainpage' })
-            this.loading = false
+          this.$store.dispatch('user/login', this.loginForm).then(response => {
+            const code = response.code
+            if (code === '200') {
+              this.$router.push({ path: '/mainpage' })
+              this.loading = false
+            }
+            if (code === '2') {
+              this.$router.push({ path: '/welcome' })
+              this.loading = false
+            } else {
+              alert('用户不存在')
+            }
           }).catch(() => {
             this.loading = false
           })
