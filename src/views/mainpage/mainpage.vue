@@ -65,12 +65,8 @@ export default {
 .content-container{
   text-align: center;
 }
-.sub-container{
-  //background: url("../src/assets/main_images/main.png");
-}
 //image
 .image-transition {
-  margin-top: 50px;
   position: absolute; /* 设置绝对定位 */
   bottom: 0; /* 图片位于底部 */
   left: 0; /* 图片位于左侧，可以根据需要调整位置 */
@@ -120,7 +116,7 @@ export default {
 .letter{
   width: 300px;
   margin-top: 120px;
-  margin-left: 220px;
+  margin-left: 250px;
   text-align: left;
   font-family: fangsong;
 }
