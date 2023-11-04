@@ -37,19 +37,21 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/submitHomework',
-    component: () => import('@/views/tasks/submitHomework'),
+    path: '/register',
+    component: () => import('@/views/register/index.vue'),
     meta: {
-      title: '作业提交',
-      icon: 'el-icon-edit-outline'
+      title: '儿童注册',
+      icon: 'el-icon-user',
+      hidden: true
     }
   },
   {
-    path: '/checkSubmission',
-    component: () => import('@/views/tasks/checkSubmission.vue'),
+    path: '/mainpage',
+    component: () => import('@/views/mainpage/mainpage.vue'),
     meta: {
-      title: '查看作业提交状况',
-      icon: 'el-icon-document-checked'
+      title: '儿童主页面',
+      icon: 'el-icon-user',
+      hidden: true
     }
   },
   {

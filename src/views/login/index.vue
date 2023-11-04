@@ -1,14 +1,19 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
+      <div class="image-container">
+        <img
+          fit="fill"
+          :src="require('@/assets/register_images/children1.png')"
+          style="width: 250px; height: 140px">
+      </div>
       <div class="title-container">
-        <h3 class="title">明光筑梦管理系统登录</h3>
+        <h3 class="title">明光筑梦，伴你成长</h3>
       </div>
 
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <i class="el-icon-user" />
         </span>
         <el-input
           ref="username"
@@ -23,7 +28,7 @@
 
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <i class="el-icon-key"/>
         </span>
         <el-input
           :key="passwordType"
@@ -41,15 +46,14 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:20px;" @click="handleLogin">登录</el-button>
+      <el-button :loading="loading1" type="primary" style="width:100%;margin-bottom:20px;" id="register" @click="registerSwitch" >注册</el-button>
     </el-form>
   </div>
 </template>
 
 <script>
 // import { validUsername } from '@/utils/validate'
-
 export default {
   name: 'Login',
   data() {
@@ -77,17 +81,18 @@ export default {
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
+      loading1: false,
       passwordType: 'password',
       redirect: undefined
     }
   },
   watch: {
-    $route: {
-      handler: function(route) {
-        this.redirect = route.query && route.query.redirect
-      },
-      immediate: true
-    }
+    // $route: {
+    //   // handler: function(route) {
+    //   //   this.redirect = route.query && route.query.redirect
+    //   // },
+    //   immediate: true
+    // }
   },
   methods: {
     showPwd() {
@@ -100,12 +105,29 @@ export default {
         this.$refs.password.focus()
       })
     },
+    registerSwitch() {
+      // this.loading1 = true
+      console.log(this.$router)
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading1 = true
+          this.$store.dispatch('user/login', this.loginForm).then(() => {
+            console.log('welcome')
+            this.$router.push({ path: '/register' })
+            this.loading1 = false
+          }).catch(() => {
+            this.loading1 = false
+          })
+        }
+      })
+    },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+            console.log('welcome')
+            this.$router.push({ path: '/mainpage' })
             this.loading = false
           }).catch(() => {
             this.loading = false
@@ -125,7 +147,7 @@ export default {
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg:#283443;
-$light_gray:#fff;
+$light_gray:chocolate;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -136,6 +158,13 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
+  .image-container{
+    display: flex;
+    justify-content: center;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    margin-top: -110px;
+  }
   .el-input {
     display: inline-block;
     height: 47px;
@@ -149,7 +178,7 @@ $cursor: #fff;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
       height: 47px;
-      caret-color: $cursor;
+      caret-color: $light_gray;
 
       &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px $bg inset !important;
@@ -157,34 +186,40 @@ $cursor: #fff;
       }
     }
   }
-
+  .el-button{
+    border: #3f3f40;
+    background: chocolate;
+  }
   .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(170, 170, 170, 0.6);
+    background: rgb(255, 255, 255,0.4);
     border-radius: 5px;
-    color: #454545;
+    color: #2d2d2d;
   }
 }
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
+$bg: #ffd8b0;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
 .login-container {
+
   min-height: 100%;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
 
   .login-form {
+    //border: 2px solid #000;
     position: relative;
     width: 520px;
     max-width: 100%;
     padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+    align-items: center;
   }
 
   .tips {
@@ -198,8 +233,7 @@ $light_gray:#eee;
       }
     }
   }
-
-  .svg-container {
+    .svg-container {
     padding: 6px 5px 6px 15px;
     color: $dark_gray;
     vertical-align: middle;
@@ -212,7 +246,7 @@ $light_gray:#eee;
 
     .title {
       font-size: 26px;
-      color: $light_gray;
+      color: #484848;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
@@ -227,6 +261,10 @@ $light_gray:#eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+  #register{
+    margin-top: 5px;
+    margin-left: -0.4px;
   }
 }
 </style>
