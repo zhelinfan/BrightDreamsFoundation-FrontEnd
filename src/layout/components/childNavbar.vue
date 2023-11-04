@@ -63,7 +63,7 @@ export default {
       console.log(key, keyPath)
     },
     taskSwitch() {
-      this.$router.push({ path: '/register' })
+      this.$router.push({ path: '/task' })
     },
     shopSwitch() {
     },

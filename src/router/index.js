@@ -55,6 +55,52 @@ export const constantRoutes = [
     }
   },
   {
+    path: '/task',
+    component: Layout, // 使用Layout组件作为包裹
+    redirect: '/task/list', // 可能需要一个默认的子路由
+    meta: {
+      title: '任务列表',
+      icon: 'child'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/task/list.vue'),
+        meta: {
+          title: '任务列表',
+          icon: 'child'
+        }
+      }
+    ]
+  },
+  // {
+  //   path: '/detail',
+  //   component: Layout, // 使用Layout组件作为包裹
+  //   redirect: 'task-detail', // 可能需要一个默认的子路由
+  //   meta: {
+  //     title: '任务详情',
+  //     icon: 'child'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'task-detail',
+  //       component: () => import('@/views/task/detail.vue'),
+  //       meta: {
+  //         title: '任务详情',
+  //         icon: 'child'
+  //       }
+  //     }
+  //   ]
+  // },
+  {
+    path: '/detail',
+    component: () => import('@/views/task/detail.vue'),
+    meta: {
+      title: '任务详情',
+      icon: 'child',
+    }
+  },
+  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
@@ -125,32 +171,6 @@ export const constantRoutes = [
         name: 'donation',
         component: () => import('@/views/donation/index'),
         meta: { title: '捐赠流水', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/mission',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'mission',
-        component: () => import('@/views/mission/index'),
-        meta: { title: '任务发布', icon: 'el-icon-s-order' }
-      }
-    ]
-  },
-
-  {
-    path: '/data',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'data',
-        component: () => import('@/views/data/index'),
-        meta: { title: '数据中控', icon: 'dashboard' }
       }
     ]
   },

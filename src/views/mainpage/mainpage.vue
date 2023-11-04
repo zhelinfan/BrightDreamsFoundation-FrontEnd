@@ -118,7 +118,7 @@ export default {
 }
 .letter{
   position: absolute;
-  top: 20%;
+  top: 30%;
   left: 21%;
   width: 300px;
   text-align: left;

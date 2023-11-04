@@ -17,7 +17,10 @@
                     </el-date-picker>
                   </el-form-item>
                   <el-form-item>
-                    <el-button type="primary" icon="el-icon-search" @click="onSubmit" size="small">查询</el-button>
+                    <el-button  type="primary" icon="el-icon-search" @click="onSubmit" size="small">查询</el-button>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button  type="primary" icon="el-icon-search" @click="taskDetail" size="small">查看任务详情</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -68,7 +71,7 @@
                   width="180"
                   header-align="center">
                 </el-table-column>
-                <el-table-column label="操作" width="200" header-align="center">
+                <el-table-column  @click="taskDetail" label="操作" width="200" header-align="center">
                   <template slot-scope="scope">
                     <el-button size="mini" type="primary" icon="el-icon-view"  @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
                   </template>
@@ -121,7 +124,7 @@ export default {
         .catch(error => {
           console.error('Error fetching missions:', error);
           this.isLoading = false;
-        });
+        })
     },
     onSubmit() {
       console.log('submit!', this.formInline)
@@ -148,6 +151,9 @@ export default {
     filterHandler(value, row, column) {
       const property = column['property']
       return row[property] === value
+    },
+    taskDetail() {
+      this.$router.push({ path: '/detail' })
     }
   }
 }
