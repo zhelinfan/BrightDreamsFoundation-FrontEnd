@@ -55,7 +55,7 @@
       />
       <el-table-column
         label="捐赠人"
-        prop="donatorName"
+        prop="donator"
       />
       <el-table-column
         label="简短描述"
