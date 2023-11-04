@@ -118,11 +118,12 @@ export default {
 }
 .letter{
   position: absolute;
-  top: 25%;
+  top: 20%;
   left: 21%;
   width: 300px;
   text-align: left;
   font-family: fangsong;
+  font-size: large;
 }
 .last-line {
   margin-left: 80px; /* 调整最后一行文本的左边距 */
