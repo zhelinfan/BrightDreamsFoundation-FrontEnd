@@ -39,5 +39,12 @@ export default {
       method: 'post',
       data: mission
     })
+  },
+  upload(file) {
+    return request({
+      url: `${api_name}/upload`,
+      method: 'post',
+      data: file
+    })
   }
 }

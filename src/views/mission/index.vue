@@ -31,13 +31,19 @@
               <span>{{ props.row.deadline }}</span>
             </el-form-item>
             <el-form-item label="开始日期">
-              <span>{{ props.row.releaseDate }}</span>
+              <span>{{ props.row.releaseDate === null ? '请先发布' : props.row.releaseDate }}</span>
             </el-form-item>
             <el-form-item label="状态">
               <span>{{ props.row.released ? '已发布' : '未发布' }}</span>
             </el-form-item>
-            <el-form-item label="任务详细描述">
+            <el-form-item label="任务详细描述" style="width: 100%;">
               <span>{{ props.row.description }}</span>
+            </el-form-item>
+            <el-form-item label="任务上传文件" style="width: 100%;">
+              <el-image
+                :src="props.row.pictureURL"
+                style="width: 200px; height: 200px;"
+              />
             </el-form-item>
           </el-form>
         </template>
@@ -81,17 +87,25 @@
         <el-form-item label="任务类型">
           <el-select v-model="mission.kind" placeholder="请选择">
             <el-option
-              label="互动任务"
+              label="上传文件任务"
               value="0"
             />
             <el-option
-              label="学习任务"
+              label="上传视频任务"
               value="1"
+            />
+            <el-option
+              label="聊天任务"
+              value="2"
+            />
+            <el-option
+              label="视频通话任务"
+              value="3"
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="目标次数 / 时长">
-          <el-input v-model="mission.targetNum" :disabled="mission.kind == 1" />
+        <el-form-item v-if="mission.kind == 2 || mission.kind == 3" label="目标次数 / 时长">
+          <el-input v-model="mission.targetNum" />
         </el-form-item>
         <el-form-item label="任务奖励">
           <el-input v-model="mission.reward" />
@@ -104,6 +118,22 @@
             type="date"
             placeholder="选择日期"
           />
+        </el-form-item>
+        <el-form-item label="上传任务描述文件">
+          <el-upload
+            class="upload-demo"
+            drag
+            action="http://localhost:8080/mission/upload"
+            multiple
+            :http-request="upload"
+            accept=".jpg,.png,.mp4"
+            :before-upload="beforeFileUpload"
+            :on-error="removeErrorUploadFile"
+          >
+            <i class="el-icon-upload" />
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png/mp4文件，且不超过20MB</div>
+          </el-upload>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -212,6 +242,24 @@ export default {
         this.fetchData(this.page)
         this.mission = {}
       })
+    },
+    upload(param) {
+      const formData = new FormData()
+      formData.append('file', param.file)
+      api.upload(formData).then(response => {
+        this.mission.pictureURL = response.data
+      })
+    },
+    beforeFileUpload(file) {
+      const isLt20M = file.size / 1024 / 1024 < 20
+      if (!isLt20M) {
+        this.$message.error('上传文件大小不能超过 20MB!')
+      }
+      return isLt20M
+    },
+    removeErrorUploadFile(file, fileList) {
+      console.log(file)
+      console.log(fileList)
     }
   }
 }
