@@ -30,9 +30,12 @@
         type="textarea"
         :rows="6"
         placeholder="描述"
-        v-model="textarea">
+        v-model="textarea"
+        class="el-input">
       </el-input>
-      <el-button round style="float: right;">提交</el-button>
+      <div class="btn-container">
+        <el-button round class="el-button">提交</el-button>
+      </div>
     </div>
 
   </div>
@@ -75,21 +78,28 @@ export default {
 </script>
 
 <style scoped>
+.container{
+  background-color: #efefef;
+  width: 100%;
+  height: 100%;
+}
 
 .header {
   /*border: 2px solid #000000;*/
-  background-color: #ffffff;
+  background-color: #efefef;
   color: #333;
   text-align: center;
   line-height: 40px;
-  width: 600px;
+  width: 800px;
   margin-left: 650px;
 }
 .sub-header{
-  border: 2px dashed #c2ebfd;
+  border: 2px dashed chocolate;
   border-radius: 30px;
   padding: 10px;
-  background-color: #e1f3fc;
+  background-color: #d1f3ff;
+  color: #2c2a2a;
+  box-shadow: 1px 1px 20px 1px #9d9d9d;
 }
 .sub-header p {
   margin: 1px 0; /* 调整上下边距为 5px，左右边距保持默认值 */
@@ -101,21 +111,31 @@ export default {
   justify-content: center;
   align-items: center;
   width: 900px;
+  height: 50%;
   position: relative;
   margin-left: 500px;
 }
 
-.el-input{
-  border: 2px solid #000000;
-  width: 60%;
-  margin-top: 20px;
-}
+/*.upload-demo {*/
+/*  box-shadow: 2px 2px 5px 5px #5a5e66;*/
+/*}*/
 .describe{
   font-size: 16px;
 }
+.el-input{
+  border: 1px solid #eeeeee;
+  border-radius: 5px;
+  width: 60%;
+  margin-top: 20px;
+}
+
 .el-button{
-  background-color: #7dd8ff;
-  color: #f5f6fb;
-  margin-top: 20px; /* 增加上方外边距 */
+  background-color: #fdd672;
+  color: #d36e25;
+  border: 1px solid #d36e25;
+  position: absolute;
+  bottom: 0;
+  right: 20%;
+  margin-top: 20px;
 }
 </style>
