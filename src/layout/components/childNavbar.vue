@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import ChildNavbar from '@/layout/components/childNavbar.vue'
 export default {
   name: 'ChildNavbar',
   data() {

@@ -56,8 +56,7 @@ export const constantRoutes = [
   },
   {
     path: '/task',
-    component: Layout, // 使用Layout组件作为包裹
-    redirect: '/task/list', // 可能需要一个默认的子路由
+    component: () => import('@/views//task/list'), // 使用Layout组件作为包裹
     meta: {
       title: '任务列表',
       icon: 'child'
@@ -97,7 +96,7 @@ export const constantRoutes = [
     component: () => import('@/views/task/detail.vue'),
     meta: {
       title: '任务详情',
-      icon: 'child',
+      icon: 'child'
     }
   },
   {
