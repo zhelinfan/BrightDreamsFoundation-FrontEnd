@@ -15,7 +15,7 @@
                     <div class="desc-title">任务描述</div>
                     <div class="desc-content">
                       <div class="content">限时2分钟默写诗歌，上传默写照片</div>
-                      <div class="figure"><img src="https://img1.baidu.com/it/u=4191626225,4294896077&fm=253&fmt=auto&app=138&f=JPEG?w=667&h=500" alt="静夜思"></div>
+                      <div class="figure" ><img :src="require('@/assets/task/libai.jpg')" alt="静夜思" id="taskImage"></div>
                     </div>
                   </div><!--desc-item-->
                   <div class="desc-item">
@@ -101,25 +101,33 @@ export default {
 </script>
 
 <style scoped>
-.main{
+.container{
+  position: absolute;
   width: 100%;
-  height: calc(100% - 50px);
-  padding: 12px;
+  height: 100%;
+}
+.main{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #efefef;
+  display: flex;
 }
 .work-main{
   position: absolute;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  height: 90%;
+  height: 100%;
   width: 95%;
   overflow: hidden;
 }
 .m-left {
   position: absolute;
-  left: 7%;
-  height: 100%;
-  width: 45%;
+  top: 5%;
+  left: 12%;
+  height: 90%;
+  width: 40%;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -132,8 +140,9 @@ export default {
 }
 .m-right {
   position: absolute;
-  right: 4%;
-  height: 100%;
+  top: 5%;
+  right: 6%;
+  height: 90%;
   width: 40%;
   display: flex;
   justify-content: flex-start;
@@ -186,7 +195,7 @@ export default {
 }
 .wk-body{
   padding: 0 20px;
-  height: calc(100% - 60px);
+  height: calc(100% - 40px);
   overflow-y: auto;
 }
 /* 设置滚动条样式 */
@@ -211,7 +220,7 @@ export default {
   display: block;
   border-radius: 4px;
   border-left:4px solid #d36e25;
-  font-size:20px;
+  font-size:15px;
   font-weight:550;
 }
 .desc-content{
@@ -219,7 +228,7 @@ export default {
   padding: 0 14px;
   line-height: 22px;
   color: #605e5c;
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 500;
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -231,17 +240,23 @@ export default {
   white-space: pre-wrap;
   line-height: 22px;
   color: #2c2a2a;
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 500;
-}
-
-.img-container img {
-  width: 100%; /* 设置图片宽度为容器宽度的百分比 */
-  height: auto; /* 让高度自适应，保持图片比例 */
 }
 
 #taskState {
   padding-left: 10px;
+}
+.wk-body .desc-content .figure {
+  display: flex;
+  align-items: flex-start;
+}
+#taskImage {
+  transform: scale(0.7);
+  position: relative;
+  margin-left: -17%;
+  margin-top: -10%;
+  margin-bottom: -10%;
 }
 .image-transition {
   position: absolute; /* 设置绝对定位 */

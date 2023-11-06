@@ -1,43 +1,90 @@
 <template>
-  <div class="container">
+  <div class="container" >
     <ChildNavbar />
-    <div class="header">
-        <h2> 任务：默写《静夜思》<br></h2>
-      <div class="sub-header">
-        <p> <b>任务基本描述：</b>默写《静夜思》整首，上传默写照片，限时2分钟</p>
-        <p> <b>奖励积分：</b>5</p>
-        <p> <b>截止时间：</b>2023年11月4日</p>
+    <div class="main">
+      <div style="height: 100%;">
+        <div class="work-main">
+          <div class="m-left">
+            <div class="work-warp">
+              <div class="wk-cover">
+                <div class="wk-head">
+                  <span>任务名称：默写《静夜思》</span>
+                </div><!--wk-head-->
+                <div class="wk-body">
+                  <div class="desc-item">
+                    <div class="desc-title">任务描述</div>
+                    <div class="desc-content">
+                      <div class="content">限时2分钟默写诗歌，上传默写照片</div>
+                      <div class="figure" ><img :src="require('@/assets/task/libai.jpg')" alt="静夜思" id="taskImage"></div>
+                    </div>
+                  </div><!--desc-item-->
+                  <div class="desc-item">
+                    <div class="desc-title">任务类型</div>
+                    <div class="desc-content">
+                      <div class="content">必做任务</div>
+                    </div>
+                  </div><!--desc-item-->
+                  <div class="desc-item">
+                    <div class="desc-title">奖励积分</div>
+                    <div class="desc-content">
+                      <div class="content">5</div>
+                    </div>
+                  </div><!--desc-item-->
+                  <div class="desc-item">
+                    <div class="desc-title">截止时间</div>
+                    <div class="desc-content">
+                      <div class="content">2023年11月4日23:59</div>
+                    </div>
+                  </div><!--desc-item-->
+                </div><!--wk-body-->
+              </div><!--wk-cover-->
+            </div><!--work-wrap-->
+          </div><!--left-->
+          <div class="m-right">
+            <div class="work-warp">
+              <div class="wk-cover">
+                <div class="wk-head"><span>任务提交</span></div>
+                <div class="wk-body">
+                  <div class="desc-item">
+                    <el-upload
+                      class="upload-demo"
+                      id="upload"
+                      style="padding-bottom: 20px;"
+                      drag
+                      action="https://jsonplaceholder.typicode.com/posts/"
+                      :on-preview="handlePreview"
+                      :on-remove="handleRemove"
+                      :file-list="fileList"
+                      :before-upload="beforeUpload"
+                      limit="1"
+                      accept=".zip">
+                      <i class="el-icon-upload"></i>
+                      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                      <div class="el-upload__tip" slot="tip">只能上传一个zip文件，文件大小不得超过1000KB</div>
+                    </el-upload>
+                  </div>
+                  <div class="desc-item">
+                      <el-input
+                        type="textarea"
+                        id="description"
+                        :rows="6"
+                        placeholder="描述"
+                        v-model="textarea"
+                        class="el-input">
+                      </el-input>
+                  </div>
+                  <div class="desc-item">
+                    <div class="btn-container">
+                      <el-button round class="el-button" id="submit">提交</el-button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!--right-->
+        </div><!--work-main-->
       </div>
-    </div>
-
-    <div class="main" style="text-align: center;">
-      <el-upload
-        class="upload-demo"
-        style="padding-bottom: 20px;"
-        drag
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :file-list="fileList"
-        :before-upload="beforeUpload"
-        limit="1"
-        accept=".zip">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip" slot="tip">只能上传一个zip文件，文件大小不得超过1000KB</div>
-      </el-upload>
-      <el-input
-        type="textarea"
-        :rows="6"
-        placeholder="描述"
-        v-model="textarea"
-        class="el-input">
-      </el-input>
-      <div class="btn-container">
-        <el-button round class="el-button">提交</el-button>
-      </div>
-    </div>
-
+    </div><!--main-->
   </div>
 </template>
 
@@ -78,64 +125,193 @@ export default {
 </script>
 
 <style scoped>
+
 .container{
-  background-color: #efefef;
+  position: absolute;
   width: 100%;
   height: 100%;
 }
-
-.header {
-  /*border: 2px solid #000000;*/
-  background-color: #efefef;
-  color: #333;
-  text-align: center;
-  line-height: 40px;
-  width: 800px;
-  margin-left: 650px;
-}
-.sub-header{
-  border: 2px dashed chocolate;
-  border-radius: 30px;
-  padding: 10px;
-  background-color: #d1f3ff;
-  color: #2c2a2a;
-  box-shadow: 1px 1px 20px 1px #9d9d9d;
-}
-.sub-header p {
-  margin: 1px 0; /* 调整上下边距为 5px，左右边距保持默认值 */
-}
-
 .main{
-  /*border: 2px solid #000000;*/
-  margin-top: 20px;
-  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #efefef;
+  display: flex;
+}
+.work-main{
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
+  width: 95%;
+  overflow: hidden;
+}
+.m-left {
+  position: absolute;
+  top: 5%;
+  left: 12%;
+  height: 90%;
+  width: 40%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  border: 1px solid #ffffff; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
+  border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
+}
+.m-left:hover {
+  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3); /* 当鼠标悬浮时，增加阴影的偏移、模糊度和颜色的透明度 */
+}
+.m-right {
+  position: absolute;
+  top: 5%;
+  right: 6%;
+  height: 90%;
+  width: 40%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  border: 1px solid #ffffff; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
+  border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
+}
+.m-right:hover {
+  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3); /* 当鼠标悬浮时，增加阴影的偏移、模糊度和颜色的透明度 */
+}
+.dc-info{
+  display: flex;
   align-items: center;
-  width: 900px;
-  height: 50%;
-  position: relative;
-  margin-left: 500px;
+  justify-content: flex-start;
+  padding-bottom: 10px;
+}
+.work-warp{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: #ffffff;
+  /*background-color: transparent;*/
+  border: 1px solid #ffffff; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
+  border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
+}
+.wk-cover{
+  /*border: 2px solid #000;*/
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+  border: 1px solid #ffffff; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
+  border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
 }
 
-/*.upload-demo {*/
-/*  box-shadow: 2px 2px 5px 5px #5a5e66;*/
-/*}*/
-.describe{
-  font-size: 16px;
+.wk-head{
+  height: 45px;
+  padding: 40px 20px 30px 20px;
+  display: flex;
+  align-items: center;
+}
+.wk-head span{
+  color: #000000;
+  font-weight: 550;
+  font-size: 22px;
+}
+.wk-body{
+  padding: 0 20px;
+  height: calc(100% - 45px);
+  overflow-y: auto;
+}
+/* 设置滚动条样式 */
+.wk-body::-webkit-scrollbar {
+  width: 6px; /* 设置滚动条宽度 */
+}
+
+.wk-body::-webkit-scrollbar-track {
+  background-color: #f5f5f5; /* 设置滚动条轨道背景色 */
+}
+
+.wk-body::-webkit-scrollbar-thumb {
+  background-color: #b7b7b7; /* 设置滚动条滑块颜色 */
+  border-radius: 3px; /* 设置滚动条滑块的圆角 */
+}
+
+.wk-body::-webkit-scrollbar-thumb:hover {
+  background-color: #706f6f; /* 设置滚动条滑块悬停时的颜色 */
+}
+.desc-title {
+  padding: 0 10px;
+  display: block;
+  border-radius: 4px;
+  border-left:4px solid #d36e25;
+  font-size:15px;
+  font-weight:550;
+}
+.desc-content{
+  margin-top: 10px;
+  padding: 0 14px;
+  line-height: 22px;
+  color: #605e5c;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin-bottom: 10px;
+}
+
+.content{
+  word-break: break-all;
+  white-space: pre-wrap;
+  line-height: 22px;
+  color: #2c2a2a;
+  font-size: 13px;
+  font-weight: 500;
 }
 .el-input{
   border: 1px solid #eeeeee;
   border-radius: 5px;
-  width: 60%;
+  width: 85%;
+  margin-left: 7%;
   margin-top: 20px;
 }
 
 .el-button{
-  background-color: #fdd672;
-  color: #d36e25;
-  border: 1px solid #d36e25;
-  position: absolute;
-  bottom: 0;
-  right: 20%;
-  margin-top: 20px;
+  background-color: #d1f3ff;
+  color: #2c2a2a;
+  border: 1px solid #85cff8;
+  position: relative;
+  margin-left: 77%;
+  margin-top: 3%;
+}
+.wk-body .desc-content .figure {
+  display: flex;
+  align-items: flex-start;
+}
+#taskImage {
+  transform: scale(0.7);
+  position: relative;
+  margin-left: -17%;
+  margin-top: -10%;
+  margin-bottom: -10%;
+}
+#upload {
+  position: relative;
+  margin-left: 15%;
+  margin-top: 5%;
+}
+#description {
+  position: relative;
+  margin-left: 30%;
+}
+
+.image-transition {
+  position: absolute; /* 设置绝对定位 */
+  bottom: 0; /* 图片位于底部 */
+  left: 0; /* 图片位于左侧，可以根据需要调整位置 */
+  z-index: -1; /* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 */
+  max-width: 100%; /* 图片最大宽度为100% */
+  /*height: 100%;*/
+  object-fit: contain;
 }
 </style>
