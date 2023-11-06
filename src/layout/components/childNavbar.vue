@@ -17,14 +17,18 @@
         fit= 'fill'
         :src="require('@/assets/childnav_images/title.png')">
     </el-menu-item>
-    <el-menu-item index="1" class="el-menu-item" id="el-menu-item-1" @click="taskSwitch">任务广场</el-menu-item>
+    <el-submenu index="1" id="el-menu-item-1" >
+      <template slot="title">任务广场</template>
+      <el-menu-item index="1" @click="taskSwitch">未完成任务</el-menu-item>
+      <el-menu-item index="1" @click="taskSwitch">已完成任务</el-menu-item>
+    </el-submenu>
     <el-menu-item index="2" class="el-menu-item" id="el-menu-item-2" @click="shopSwitch">积分商城</el-menu-item>
     <el-menu-item index="3" class="el-menu-item" id="el-menu-item-3" @click="chatSwitch">聊天互动</el-menu-item>
 
     <el-dropdown class="avatar-container" index="5" trigger="click">
       <div class="avatar-wrapper">
         <el-avatar :src="require('@/assets/childnav_images/child.png')" :size="41"></el-avatar>
-        <div class="username">小明同学</div>
+        <div class="username-pic">小明同学</div>
       </div>
       <el-dropdown-menu slot="dropdown" class="user-dropdown">
         <router-link to="">
@@ -50,7 +54,6 @@
 </template>
 
 <script>
-import ChildNavbar from '@/layout/components/childNavbar.vue'
 export default {
   name: 'ChildNavbar',
   data() {
@@ -71,6 +74,7 @@ export default {
     chatSwitch() {
     },
     personalCenter() {
+      this.$router.push({ path: '/personal' })
     },
     historyScore() {
     },
@@ -105,10 +109,10 @@ export default {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   margin-top: 20px;
 }
-.username{
+.username-pic{
   color: #575757;
   font-weight: bold;
-  margin-left: 120px;
+  margin-left: 65px;
   margin-top: -30px;
 
 }
