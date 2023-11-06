@@ -3,86 +3,92 @@
     <el-container>
       <ChildNavbar />
       <el-header style="height: 0px;"></el-header>
-          <el-main>
-            <div class="header">
-                <!-- 这里是查询和查看任务详情按钮 -->
-                <div class="white-box">
-                  <div class="center-content"> <!-- 添加一个包装层 -->
-                    <!-- 这里是查询和查看任务详情按钮 -->
-                    <div class="form">
-                      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                        <el-form-item label="">
-                          <el-input v-model="formInline.name" size="small" placeholder="" class="custom-input-style"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                          <el-button class="custom-button-color" type="warning" icon="el-icon-search" @click="onSubmit" size="small">查询</el-button>
-                          </el-form-item>
-                        <el-form-item>
-                          <el-button class="custom-button-color" type="warning" icon="el-icon-search" @click="taskDetail" size="small">查看任务详情</el-button>
-                        </el-form-item>
-                      </el-form>
-                    </div>
-                  </div>
-                </div>
+      <el-main>
+        <div class="header">
+          <!-- 这里是查询和查看任务详情按钮 -->
+          <div class="white-box">
+            <div class="center-content"> <!-- 添加一个包装层 -->
+              <!-- 这里是查询和查看任务详情按钮 -->
+              <div class="form">
                 <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                  <!-- ... 其他表单元素 ... -->
+                  <el-form-item label="">
+                    <el-input v-model="formInline.name" size="small" placeholder="" class="custom-input-style"></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" @click="onSubmit" size="small">查询</el-button>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" @click="taskDetail" size="small">查看任务详情</el-button>
+                  </el-form-item>
                 </el-form>
               </div>
-            <div class="content">
-              <el-table :data="tableData" style="width: 100%; max-width: 1200px;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle">
-                <el-table-column
-                  type="selection"
-                  width="55"
-                  header-align="center">
-                </el-table-column>
-                <el-table-column
-                  prop="name"
-                  label="任务名称"
-                  width="200"
-                  header-align="center"
-                  :cell-style="nameCellStyle">
-                </el-table-column>
-                <el-table-column
-                  prop="startTime"
-                  label="发布时间"
-                  sortable
-                  width="200"
-                  header-align="center"
-                >
-                </el-table-column>
-                  <el-table-column
-                  prop="stopTime"
-                  label="截止时间"
-                  sortable
-                  width="200"
-                  header-align="center"
-                >
-                </el-table-column>
-                <el-table-column
-                  prop="type"
-                  label="任务类型"
-                  width="180"
-                  header-align="center"
-                  column-key="type"
-                  :filters="[{text: '学习', value: '学习'}, {text: '互动', value: '互动'}]"
-                  :filter-method="filterHandler"
-                >
-                </el-table-column>
-                <el-table-column
-                  prop="award"
-                  label="奖励积分"
-                  width="180"
-                  header-align="center">
-                </el-table-column>
-                <el-table-column  @click="taskDetail" label="操作" width="200" header-align="center">
-                  <template slot-scope="scope">
-                    <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view"  @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
-                  </template>
-                </el-table-column>
-              </el-table>
             </div>
-          </el-main>
-        </el-container>
+          </div>
+          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+            <!-- ... 其他表单元素 ... -->
+          </el-form>
+        </div>
+        <div class="content">
+          <el-table :data="tableData" style="width: 100%; max-width: 1200px;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle">
+            <el-table-column
+              type="selection"
+              width="55"
+              header-align="center">
+            </el-table-column>
+            <el-table-column
+              prop="name"
+              label="任务名称"
+              width="200"
+              header-align="center"
+              :cell-style="nameCellStyle">
+            </el-table-column>
+            <el-table-column
+              prop="startTime"
+              label="发布时间"
+              sortable
+              width="200"
+              header-align="center"
+            >
+            </el-table-column>
+            <el-table-column
+              prop="stopTime"
+              label="截止时间"
+              sortable
+              width="200"
+              header-align="center"
+            >
+            </el-table-column>
+            <el-table-column
+              prop="type"
+              label="任务类型"
+              width="180"
+              header-align="center"
+              column-key="type"
+              :filters="[{text: '学习', value: '学习'}, {text: '互动', value: '互动'}]"
+              :filter-method="filterHandler"
+            >
+            </el-table-column>
+            <el-table-column
+              prop="award"
+              label="奖励积分"
+              width="180"
+              header-align="center">
+            </el-table-column>
+            <el-table-column
+              prop="status"
+              label="状态"
+              width="180"
+              header-align="center">
+            </el-table-column>
+            <el-table-column  @click="taskDetail" label="操作" width="200" header-align="center">
+              <template slot-scope="scope">
+                <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view"  @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-main>
+    </el-container>
     <img :src="require('@/assets/mission_images/1.png')" class="image-transition">
   </div>
 </template>
@@ -103,56 +109,64 @@ export default {
           startTime: '2023-11-01 08:00',
           stopTime: '2023-11-07 18:00',
           type: '学习',
-          award: 50
+          award: 50,
+          status: '已完成'
         },
         {
           name: '市场调研',
           startTime: '2023-11-02 09:00',
           stopTime: '2023-11-08 19:00',
           type: '互动',
-          award: 60
+          award: 60,
+          status: '审核中'
         },
         {
           name: '数据分析',
           startTime: '2023-11-01 08:00',
           stopTime: '2023-11-07 18:00',
           type: '学习',
-          award: 50
+          award: 50,
+          status: '待审核'
         },
         {
           name: '市场调研',
           startTime: '2023-11-02 09:00',
           stopTime: '2023-11-08 19:00',
           type: '互动',
-          award: 60
+          award: 60,
+          status: '已完成'
         },
         {
           name: '数据分析',
           startTime: '2023-11-01 08:00',
           stopTime: '2023-11-07 18:00',
           type: '学习',
-          award: 50
+          award: 50,
+          status: '审核中'
         },
         {
           name: '市场调研',
           startTime: '2023-11-02 09:00',
           stopTime: '2023-11-08 19:00',
           type: '互动',
-          award: 60
+          award: 60,
+          status: '待审核'
         },
         {
           name: '数据分析',
           startTime: '2023-11-01 08:00',
           stopTime: '2023-11-07 18:00',
           type: '学习',
-          award: 50
+          award: 50,
+          status: '已完成'
         },
         {
           name: '市场调研',
           startTime: '2023-11-02 09:00',
           stopTime: '2023-11-08 19:00',
           type: '互动',
-          award: 60
+          award: 60,
+          status: '已完成'
         }
       ],
       formInline: {
@@ -296,10 +310,9 @@ export default {
   bottom: 0; /* 图片位于底部 */
   left: 0; /* 图片位于左侧，可以根据需要调整位置 */
   z-index: -1; /* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 */
-  width: 100%; /* 图片最大宽度为100% */
-  height: 100%;
+  max-width: 100%; /* 图片最大宽度为100% */
+  height: auto;
 }
-
 .custom-input-style .el-input__inner {
   border: 1px solid #dcdfe6; /* 细边框，淡灰色 */
   border-radius: 4px; /* 轻微的圆角 */
