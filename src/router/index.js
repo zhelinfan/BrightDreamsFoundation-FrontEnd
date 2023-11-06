@@ -90,6 +90,22 @@ export const constantRoutes = [
       hidden: true
     }
   },
+  {
+    path: '/submitHomework',
+    component: () => import('@/views/tasks/submitHomework'),
+    meta: {
+      title: '作业提交',
+      icon: 'el-icon-edit-outline'
+    }
+  },
+  {
+    path: '/checkSubmission',
+    component: () => import('@/views/tasks/checkSubmission.vue'),
+    meta: {
+      title: '查看作业提交状况',
+      icon: 'el-icon-document-checked'
+    }
+  },
   // {
   //   path: '/detail',
   //   component: Layout, // 使用Layout组件作为包裹
