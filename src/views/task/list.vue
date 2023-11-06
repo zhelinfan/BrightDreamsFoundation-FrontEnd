@@ -85,7 +85,6 @@
             </div>
           </el-main>
         </el-container>
-    <el-footer></el-footer>
     <img :src="require('@/assets/mission_images/1.png')" class="image-transition">
   </div>
 </template>
@@ -300,6 +299,7 @@ export default {
   z-index: -1; /* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 */
   width: 100%; /* 图片最大宽度为100% */
   height: 100%;
+  object-fit: fill;
 }
 .custom-input-style .el-input__inner {
   border: 1px solid #dcdfe6; /* 细边框，淡灰色 */
