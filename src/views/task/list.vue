@@ -92,104 +92,36 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          name: '数据分析',
-          startTime: '2023-11-01 08:00',
-          stopTime: '2023-11-07 18:00',
-          type: '学习',
-          award: 50
-        },
-        {
-          name: '市场调研',
-          startTime: '2023-11-02 09:00',
-          stopTime: '2023-11-08 19:00',
-          type: '互动',
-          award: 60
-        },
-        {
-          name: '数据分析',
-          startTime: '2023-11-01 08:00',
-          stopTime: '2023-11-07 18:00',
-          type: '学习',
-          award: 50
-        },
-        {
-          name: '市场调研',
-          startTime: '2023-11-02 09:00',
-          stopTime: '2023-11-08 19:00',
-          type: '互动',
-          award: 60
-        },
-        {
-          name: '数据分析',
-          startTime: '2023-11-01 08:00',
-          stopTime: '2023-11-07 18:00',
-          type: '学习',
-          award: 50
-        },
-        {
-          name: '市场调研',
-          startTime: '2023-11-02 09:00',
-          stopTime: '2023-11-08 19:00',
-          type: '互动',
-          award: 60
-        },
-        {
-          name: '数据分析',
-          startTime: '2023-11-01 08:00',
-          stopTime: '2023-11-07 18:00',
-          type: '学习',
-          award: 50
-        },
-        {
-          name: '市场调研',
-          startTime: '2023-11-02 09:00',
-          stopTime: '2023-11-08 19:00',
-          type: '互动',
-          award: 60
-        }
-      ],
       formInline: {
         name: '',
         date: null
       },
-      isLoading: true,
-      total: 0, // 总记录数
-      page: 1, // 页码
-      limit: 10, // 每页记录数
-      searchObj: {}, // 查询条件
-      // tableData: [],
-      multipleSelection: [],
-      mission: {},
-      dialogVisible: false
+      id: {},
+      // isLoading: true,
+      // total: 0, // 总记录数
+      // page: 1, // 页码
+      // limit: 10, // 每页记录数
+      // searchObj: {}, // 查询条件
+      tableData: []
+      // multipleSelection: [],
+      // dialogVisible: false
     }
   },
   created() {
     this.fetchData()
   },
   methods: {
-    nameCellStyle({ row, column, rowIndex, columnIndex }) {
-      // 如果是任务名称列，设置字体颜色为橙色
-      if (column.property === 'name') {
-        return {
-          color: 'orange'
-        }
-      }
-      // 其他列使用默认样式
-      return {}
-    },
     fetchData() {
-      this.isLoading = true
+      // this.isLoading = true
       // 调用API获取任务数据
-      fetchMissions(this.page, this.limit, this.searchObj)
+      fetchMissions(this.id)
         .then(response => {
           this.tableData = response.data // 假设返回的直接就是任务列表
-          this.isLoading = false
+          // this.isLoading = false
         })
         .catch(error => {
           console.error('Error fetching missions:', error)
-          this.isLoading = false
+          // this.isLoading = false
         })
     },
     onSubmit() {
