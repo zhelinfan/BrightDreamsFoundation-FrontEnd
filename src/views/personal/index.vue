@@ -5,7 +5,7 @@
       <div class="top">
         <img :src="require('@/assets/personal_images/top_picture.png')" class="top-picture">
         <div class="avatar-container">
-          <el-avatar  :src="require('@/assets/childnav_images/child.png')" class="avatar" :size="56"/>
+          <el-avatar :src="require('@/assets/childnav_images/child.png')" class="avatar" :size="56" />
           <div class="username-pic">{{ person.username }}</div>
           <div class="flower-container">
             <img :src="require('@/assets/personal_images/flower.png')" class="flower">
@@ -19,17 +19,17 @@
               <div class="title">用户名</div>
               <div v-if="!isEditingUsername" class="valuePart">{{ person.username }}</div>
               <div v-else class="valuePart">
-                <input type="text" v-model="person.username" @keyup.enter="this.isEditingUsername = false"/>
+                <input v-model="person.username" type="text" @keyup.enter="this.isEditingUsername = false">
               </div>
-              <div class="edit-button" @click="isEditingUsername = !isEditingUsername">{{ isEditingUsername ? '确认修改' : '修改' }}</div>
+              <div class="edit-button" @click="saveEditUsername">{{ isEditingUsername ? '确认修改' : '修改' }}</div>
             </div>
             <div class="container">
-              <div class="title">用户名</div>
+              <div class="title">密码</div>
               <div v-if="!isEditingPassword" class="valuePart">{{ person.password }}</div>
               <div v-else class="valuePart">
-                <input type="text" v-model="person.password" @keyup.enter="this.isEditingPassword = false"/>
+                <input v-model="person.password" type="text" @keyup.enter="this.isEditingPassword = false">
               </div>
-              <div class="edit-button" @click="isEditingPassword = !isEditingPassword">{{ isEditingPassword ? '确认修改' : '修改' }}</div>
+              <div class="edit-button" @click="saveEditPassword">{{ isEditingPassword ? '确认修改' : '修改' }}</div>
             </div>
           </div>
         </div>
@@ -37,6 +37,48 @@
       <div class="bottom">
         <div class="personal-info">
           <span class="title2">个人信息</span>
+          <div class="pi-content">
+            <div class="container">
+              <div class="title">学校</div>
+              <div v-if="!isEditingSchool" class="valuePart">{{ person.school }}</div>
+              <div v-else class="valuePart">
+                <input v-model="person.school" type="text" @keyup.enter="this.isEditingSchool = false">
+              </div>
+              <div class="edit-button" @click="saveEditSchool">{{ isEditingSchool ? '确认修改' : '修改' }}</div>
+            </div>
+            <div class="container">
+              <div class="title">班级</div>
+              <div v-if="!isEditingClass" class="valuePart">{{ person.class }}</div>
+              <div v-else class="valuePart">
+                <input v-model="person.class" type="text" @keyup.enter="this.isEditingClass = false">
+              </div>
+              <div class="edit-button" @click="saveEditClass">{{ isEditingClass ? '确认修改' : '修改' }}</div>
+            </div>
+            <div class="container">
+              <div class="title">真实姓名</div>
+              <div v-if="!isEditingTrueName" class="valuePart">{{ person.trueName }}</div>
+              <div v-else class="valuePart">
+                <input v-model="person.trueName" type="text" @keyup.enter="this.isEditingTrueName = false">
+              </div>
+              <div class="edit-button" @click="saveEditTrueName">{{ isEditingTrueName ? '确认修改' : '修改' }}</div>
+            </div>
+            <div class="container">
+              <div class="title">年龄</div>
+              <div v-if="!isEditingAge" class="valuePart">{{ person.age }}</div>
+              <div v-else class="valuePart">
+                <input v-model="person.age" type="text" @keyup.enter="this.isEditingAge = false">
+              </div>
+              <div class="edit-button" @click="saveEditAge">{{ isEditingAge ? '确认修改' : '修改' }}</div>
+            </div>
+            <div class="container">
+              <div class="title">性别</div>
+              <div v-if="!isEditingGender" class="valuePart">{{ person.gender }}</div>
+              <div v-else class="valuePart">
+                <input v-model="person.gender" type="text" @keyup.enter="this.isEditingGender = false">
+              </div>
+              <div class="edit-button" @click="saveEditGender">{{ isEditingGender ? '确认修改' : '修改' }}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -53,15 +95,44 @@ export default {
       flowerNumber: '100',
       isEditingUsername: false,
       isEditingPassword: false,
-      editedValueUsername: '',
+      isEditingSchool: false,
+      isEditingClass: false,
+      isEditingTrueName: false,
+      isEditingAge: false,
+      isEditingGender: false,
       person: {
         username: '小明同学',
-        password: '123'
+        password: '123',
+        school: '大河完小',
+        class: '一年一班',
+        trueName: 'pmh',
+        age: '6',
+        gender: '男'
       }
     }
   },
   methods: {
-
+    saveEditUsername() {
+      this.isEditingUsername = !this.isEditingUsername
+    },
+    saveEditPassword() {
+      this.isEditingPassword = !this.isEditingPassword
+    },
+    saveEditSchool() {
+      this.isEditingSchool = !this.isEditingSchool
+    },
+    saveEditClass() {
+      this.isEditingClass = !this.isEditingClass
+    },
+    saveEditTrueName() {
+      this.isEditingTrueName = !this.isEditingTrueName
+    },
+    saveEditAge() {
+      this.isEditingAge = !this.isEditingAge
+    },
+    saveEditGender() {
+      this.isEditingPassword = !this.isEditingPassword
+    }
   }
 }
 </script>
@@ -185,6 +256,11 @@ export default {
 }
 .as-content{
   position: absolute;
+  top: 38%;
+  left: 7%;
+}
+.pi-content{
+  position: absolute;
   top: 27%;
   left: 7%;
 }
@@ -193,6 +269,10 @@ export default {
 }
 .title{
   font-weight: bold;
-  color: #2d2d2d;
+  font-size: small;
+  color: rgba(98, 98, 98);
+}
+.valuePart{
+  font-size: small;
 }
 </style>
