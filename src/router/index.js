@@ -55,22 +55,6 @@ export const constantRoutes = [
     }
   },
   {
-    path: '/submitHomework',
-    component: () => import('@/views/tasks/submitHomework'),
-    meta: {
-      title: '作业提交',
-      icon: 'el-icon-edit-outline'
-    }
-  },
-  {
-    path: '/checkSubmission',
-    component: () => import('@/views/tasks/checkSubmission.vue'),
-    meta: {
-      title: '查看作业提交状况',
-      icon: 'el-icon-document-checked'
-    }
-  },
-  {
     path: '/task',
     component: () => import('@/views//task/list'), // 使用Layout组件作为包裹
     meta: {
@@ -87,6 +71,24 @@ export const constantRoutes = [
         }
       }
     ]
+  },
+  {
+    path: '/already',
+    component: () => import('@/views/task/already.vue'),
+    meta: {
+      title: '任务列表（已完成）',
+      icon: 'el-icon-user',
+      hidden: true
+    }
+  },
+  {
+    path: '/several',
+    component: () => import('@/views/task/several.vue'),
+    meta: {
+      title: '任务处理情况',
+      icon: 'el-icon-user',
+      hidden: true
+    }
   },
   // {
   //   path: '/detail',
@@ -112,7 +114,7 @@ export const constantRoutes = [
     component: () => import('@/views/task/detail.vue'),
     meta: {
       title: '任务详情',
-      icon: 'child',
+      icon: 'child'
     }
   },
   {
