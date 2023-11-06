@@ -251,7 +251,7 @@ export default {
 .content{
   display: grid;
   place-items: center;
-  height: 90%; /* or any desired height */
+  height: 100%; /* or any desired height */
   padding: 20px;
   background: transparent;
   width: 75%; /* 设置宽度为页面宽度的60% */
@@ -298,8 +298,8 @@ export default {
   bottom: 0; /* 图片位于底部 */
   left: 0; /* 图片位于左侧，可以根据需要调整位置 */
   z-index: -1; /* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 */
-  max-width: 100%; /* 图片最大宽度为100% */
-  height: auto;
+  width: 100%; /* 图片最大宽度为100% */
+  height: 100%;
 }
 .custom-input-style .el-input__inner {
   border: 1px solid #dcdfe6; /* 细边框，淡灰色 */
