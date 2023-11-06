@@ -19,7 +19,7 @@
               <div class="title">用户名</div>
               <div v-if="!isEditingUsername" class="valuePart">{{ person.username }}</div>
               <div v-else class="valuePart">
-                <input v-model="person.username" type="text" @keyup.enter="this.isEditingUsername = false">
+                <input v-model="person.username" type="text" class="input-box" @keyup.enter="this.isEditingUsername = false">
               </div>
               <div class="edit-button" @click="saveEditUsername">{{ isEditingUsername ? '确认修改' : '修改' }}</div>
             </div>
@@ -27,7 +27,7 @@
               <div class="title">密码</div>
               <div v-if="!isEditingPassword" class="valuePart">{{ person.password }}</div>
               <div v-else class="valuePart">
-                <input v-model="person.password" type="text" @keyup.enter="this.isEditingPassword = false">
+                <input v-model="person.password" type="text" class="input-box" @keyup.enter="this.isEditingPassword = false">
               </div>
               <div class="edit-button" @click="saveEditPassword">{{ isEditingPassword ? '确认修改' : '修改' }}</div>
             </div>
@@ -42,7 +42,7 @@
               <div class="title">学校</div>
               <div v-if="!isEditingSchool" class="valuePart">{{ person.school }}</div>
               <div v-else class="valuePart">
-                <input v-model="person.school" type="text" @keyup.enter="this.isEditingSchool = false">
+                <input v-model="person.school" type="text" class="input-box" @keyup.enter="this.isEditingSchool = false"/>
               </div>
               <div class="edit-button" @click="saveEditSchool">{{ isEditingSchool ? '确认修改' : '修改' }}</div>
             </div>
@@ -50,7 +50,7 @@
               <div class="title">班级</div>
               <div v-if="!isEditingClass" class="valuePart">{{ person.class }}</div>
               <div v-else class="valuePart">
-                <input v-model="person.class" type="text" @keyup.enter="this.isEditingClass = false">
+                <input v-model="person.class" type="text" class="input-box" @keyup.enter="this.isEditingClass = false">
               </div>
               <div class="edit-button" @click="saveEditClass">{{ isEditingClass ? '确认修改' : '修改' }}</div>
             </div>
@@ -58,7 +58,7 @@
               <div class="title">真实姓名</div>
               <div v-if="!isEditingTrueName" class="valuePart">{{ person.trueName }}</div>
               <div v-else class="valuePart">
-                <input v-model="person.trueName" type="text" @keyup.enter="this.isEditingTrueName = false">
+                <input v-model="person.trueName" type="text" class="input-box" @keyup.enter="this.isEditingTrueName = false">
               </div>
               <div class="edit-button" @click="saveEditTrueName">{{ isEditingTrueName ? '确认修改' : '修改' }}</div>
             </div>
@@ -66,7 +66,7 @@
               <div class="title">年龄</div>
               <div v-if="!isEditingAge" class="valuePart">{{ person.age }}</div>
               <div v-else class="valuePart">
-                <input v-model="person.age" type="text" @keyup.enter="this.isEditingAge = false">
+                <input v-model="person.age" type="text" class="input-box" @keyup.enter="this.isEditingAge = false">
               </div>
               <div class="edit-button" @click="saveEditAge">{{ isEditingAge ? '确认修改' : '修改' }}</div>
             </div>
@@ -74,7 +74,7 @@
               <div class="title">性别</div>
               <div v-if="!isEditingGender" class="valuePart">{{ person.gender }}</div>
               <div v-else class="valuePart">
-                <input v-model="person.gender" type="text" @keyup.enter="this.isEditingGender = false">
+                <input v-model="person.gender" type="text" class="input-box" @keyup.enter="this.isEditingGender = false">
               </div>
               <div class="edit-button" @click="saveEditGender">{{ isEditingGender ? '确认修改' : '修改' }}</div>
             </div>
@@ -102,7 +102,7 @@ export default {
       isEditingGender: false,
       person: {
         username: '小明同学',
-        password: '123',
+        password: '******',
         school: '大河完小',
         class: '一年一班',
         trueName: 'pmh',
@@ -138,16 +138,25 @@ export default {
 </script>
 
 <style scoped>
-.content-container{
+.wrapper-container{
   position: absolute;
-  bottom: 0;
-  left: 0;
   width: 100%;
-  height: 90%;
+  height: 100%;
   background-color: #efefef;
   display: flex;
   flex-direction: column;
+}
+.content-container{
+  position: absolute;
+  top: 10%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  background-color: #efefef;
 }
 .top{
   position: absolute;
@@ -155,7 +164,6 @@ export default {
   height: 48%;
   flex: 1;
   margin-top: 30px;
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -167,6 +175,7 @@ export default {
   width: 68%;
   height: 40%;
   border: 1px solid #BBBBBB;
+  margin-top: 30px;
 }
 /*top*/
 .top-picture{
@@ -245,27 +254,37 @@ export default {
 .container{
   display: flex;
   flex-direction: row;
+  width: 70%;
+  padding-top: 5px;
 }
 
 .valuePart{
   margin-left: 5px;
 }
 .edit-button{
-  margin-left: 20px;
   color: #1482f0;
+  font-size: small;
+  margin-left: 20px;
 }
 .as-content{
   position: absolute;
   top: 38%;
   left: 7%;
+  width: 50%;
+  display: table-column;
 }
 .pi-content{
   position: absolute;
-  top: 27%;
+  top: 25%;
   left: 7%;
+  width: 50%;
+  display: table-column;
 }
 .container{
   margin-bottom: 10px;
+  height: 26px;
+  display: flex;
+  align-items: center;
 }
 .title{
   font-weight: bold;
@@ -274,5 +293,16 @@ export default {
 }
 .valuePart{
   font-size: small;
+  margin-left: 15px;
+}
+.input-box{
+  /*position: absolute;*/
+  /*left: 20%;*/
+  /*top: 10%;*/
+  font-size: small;
+  border: 1px solid rgba(138, 137, 137, 0.6);
+  width: 120px;
+  height: 20px;
+  border-radius: 3px;
 }
 </style>

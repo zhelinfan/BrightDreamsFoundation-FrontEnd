@@ -31,7 +31,7 @@
     <el-dropdown class="avatar-container" index="5">
       <div class="avatar-wrapper">
         <el-avatar :src="require('@/assets/childnav_images/child.png')" :size="41"></el-avatar>
-        <div class="username">小明同学</div>
+        <div class="username">{{ username }}</div>
       </div>
       <el-dropdown-menu slot="dropdown" class="user-dropdown" >
         <router-link to="/personal">
@@ -62,7 +62,8 @@ export default {
   data() {
     return {
       activeIndex: '1',
-      activeIndex2: '1'
+      activeIndex2: '1',
+      username: '小明同学'
     }
   },
   methods: {
