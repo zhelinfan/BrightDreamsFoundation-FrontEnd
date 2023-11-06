@@ -6,7 +6,7 @@
         <img :src="require('@/assets/personal_images/top_picture.png')" class="top-picture">
         <div class="avatar-container">
           <el-avatar :src="require('@/assets/childnav_images/child.png')" class="avatar" :size="56" />
-          <div class="username-pic">{{ person.username }}</div>
+          <div class="username">{{ person.username }}</div>
           <div class="flower-container">
             <img :src="require('@/assets/personal_images/flower.png')" class="flower">
             <span class="flower-number">{{ flowerNumber }}</span>
@@ -184,7 +184,7 @@ export default {
   top: 23%;
   width: 30%;
 }
-.username-pic{
+.username{
   position: absolute;
   top: 20%;
   left: 18%;

@@ -8,7 +8,7 @@
         <p v-for="(line, index) in textLines" :key="index" :class="{ 'last-line': index === 7 }">{{ line }}</p>
       </transition-group>
       <transition name="button-fade">
-        <el-button v-if="showImage" class="button-transition">开 始 学 习</el-button>
+        <el-button v-if="showImage" class="button-transition" @click="taskSwitch">开 始 学 习</el-button>
       </transition>
     </div>
   </div>
@@ -58,6 +58,9 @@ export default {
         }
       }
       showNextLine()
+    },
+    taskSwitch() {
+      this.$router.push({ path: '/task' })
     }
   }
 }

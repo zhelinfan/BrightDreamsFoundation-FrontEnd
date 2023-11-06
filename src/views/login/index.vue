@@ -55,6 +55,7 @@
 
 <script>
 // import { validUsername } from '@/utils/validate'
+import api from '@/api/user'
 export default {
   name: 'Login',
   data() {
@@ -74,8 +75,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: 'sbfazl',
+        password: '222222'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -108,12 +109,10 @@ export default {
     },
     registerSwitch() {
       // this.loading1 = true
-      console.log(this.$router)
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading1 = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            console.log('welcome')
             this.$router.push({ path: '/register' })
             this.loading1 = false
           }).catch(() => {
@@ -126,18 +125,26 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(response => {
-            // const code = response.code
-            // if (code === '200') {
-            this.$router.push({ path: '/mainpage' })
-            this.loading = false
-            // }
-            // if (code === '2') {
-            //   this.$router.push({ path: '/welcome' })
-            //   this.loading = false
-            // } else {
-            //   alert('用户不存在')
-            // }
+          api.login(this.loginForm).then(response => {
+            const code = response.code
+            console.log(response.data)
+            if (code === 200) {
+              // 把用户存到cookie里
+              const userInfoJSON = JSON.stringify(response.data)
+              const cookieString = `userInfo=${userInfoJSON}; path=/`
+              document.cookie = cookieString
+              if ('token' in response.data) {
+                this.$store.dispatch('user/login', this.loginForm).then(() => {
+                  this.$router.push({ path: '/' })
+                })
+              } else {
+                this.$store.dispatch('user/login', this.loginForm).then(() => {
+                  this.$router.push({ path: '/mainpage' })
+                })
+              }
+            } else {
+              alert(response.message)
+            }
           }).catch(() => {
             this.loading = false
           })

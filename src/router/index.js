@@ -46,6 +46,15 @@ export const constantRoutes = [
     }
   },
   {
+    path: '/personal',
+    component: () => import('@/views/personal/index.vue'),
+    meta: {
+      title: '儿童个人中心',
+      icon: 'el-icon-user',
+      hidden: true
+    }
+  },
+  {
     path: '/mainpage',
     component: () => import('@/views/mainpage/mainpage.vue'),
     meta: {

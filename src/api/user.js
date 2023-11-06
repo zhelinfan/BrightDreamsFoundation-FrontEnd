@@ -1,5 +1,15 @@
 import request from '@/utils/request'
 
+export default {
+  login(loginForm) {
+    return request({
+      url: '/user/login',
+      method: 'post',
+      data: loginForm
+    })
+  }
+}
+
 export function login(data) {
   return request({
     url: '/user/login',
@@ -7,7 +17,6 @@ export function login(data) {
     data
   })
 }
-
 export function getInfo(token) {
   return request({
     url: '/user/info',

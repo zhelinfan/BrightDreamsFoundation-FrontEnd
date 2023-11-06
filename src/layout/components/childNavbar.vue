@@ -31,7 +31,7 @@
     <el-dropdown class="avatar-container" index="5" trigger="click">
       <div class="avatar-wrapper">
         <el-avatar :src="require('@/assets/childnav_images/child.png')" :size="41"></el-avatar>
-        <div class="username-pic">小明同学</div>
+        <div class="username">小明同学</div>
       </div>
       <el-dropdown-menu slot="dropdown" class="user-dropdown">
         <router-link to="">
@@ -103,21 +103,24 @@ export default {
   border-bottom: 2px solid #c7621c; /* 设置底边框样式 */
 }
 .avatar-container{
-  float: right;
-  height: 100%;
-  margin: 8px 40px 8px 10px;
+  position: absolute;
+  right: 3%;
+  width: 9%;
+  height: 90%;
+  margin-top: 8px;
+  margin-bottom: 8px;
   display: flex;
 }
 .user-dropdown{
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   margin-top: 20px;
 }
-.username-pic{
+.username{
+  position: absolute;
   color: #575757;
   font-weight: bold;
-  margin-left: 65px;
+  right: 0;
   margin-top: -30px;
-
 }
 #submenu-item-1-1:hover,#submenu-item-1-2:hover,#submenu-item-1-3:hover{
   background-color: rgba(248, 176, 68, 0.1);
