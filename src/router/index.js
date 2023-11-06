@@ -39,10 +39,10 @@ export const constantRoutes = [
   {
     path: '/register',
     component: () => import('@/views/register/index.vue'),
+    hidden: true,
     meta: {
       title: '儿童注册',
-      icon: 'el-icon-user',
-      hidden: true
+      icon: 'el-icon-user'
     }
   },
   {
