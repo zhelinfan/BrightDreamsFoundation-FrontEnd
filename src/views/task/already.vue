@@ -31,11 +31,6 @@
         <div class="content">
           <el-table :data="tableData" style="width: 100%; max-width: 1200px;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle">
             <el-table-column
-              type="selection"
-              width="55"
-              header-align="center">
-            </el-table-column>
-            <el-table-column
               prop="name"
               label="任务名称"
               width="200"
