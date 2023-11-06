@@ -17,10 +17,10 @@
         fit= 'fill'
         :src="require('@/assets/childnav_images/title.png')">
     </el-menu-item>
-    <el-submenu index="1" id="el-menu-item-1" >
-      <template slot="title">任务广场</template>
-      <el-menu-item index="1" @click="taskSwitch">未完成任务</el-menu-item>
-      <el-menu-item index="1" @click="taskSwitch">已完成任务</el-menu-item>
+    <el-submenu index="1" >
+      <template slot="title" id="el-menu-item-1">任务广场</template>
+      <el-menu-item index="1" id="el-menu-item-1-1" @click="taskSwitch">未完成任务</el-menu-item>
+      <el-menu-item index="1" id="el-menu-item-1-2" @click="taskSwitch">已完成任务</el-menu-item>
     </el-submenu>
     <el-menu-item index="2" class="el-menu-item" id="el-menu-item-2" @click="shopSwitch">积分商城</el-menu-item>
     <el-menu-item index="3" class="el-menu-item" id="el-menu-item-3" @click="chatSwitch">聊天互动</el-menu-item>
@@ -89,6 +89,7 @@ export default {
   opacity: 1;
   margin-right: 0px;
 }
+
 #el-menu-item-1,#el-menu-item-2,#el-menu-item-3{
   color: #c7621c;
 }
@@ -98,6 +99,9 @@ export default {
 }
 #el-menu-item-1.is-active,#el-menu-item-2.is-active,#el-menu-item-3.is-active{
   border-bottom: 2px solid #c7621c; /* 设置底边框样式 */
+}
+#el-menu-item-1{
+  //border: 2px solid #000;
 }
 .avatar-container{
   float: right;
