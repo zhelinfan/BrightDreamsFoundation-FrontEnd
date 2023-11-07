@@ -75,7 +75,7 @@ export default {
     }
     return {
       loginForm: {
-        username: 'sbfazl',
+        username: 'asfzl',
         password: '222222'
       },
       loginRules: {

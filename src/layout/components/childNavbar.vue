@@ -24,9 +24,9 @@
     <el-menu-item id="el-menu-item-1" index="1" class="el-menu-item" @click="mainSwitch">首页</el-menu-item>
     <el-submenu id="submenu" index="2">
       <template id="el-menu-item-2" slot="title">任务广场</template>
-      <el-menu-item id="submenu-item-2-1" index="2-1" @click="taskSwitch">未完成任务</el-menu-item>
-      <el-menu-item id="submenu-item-2-2" index="2-2" @click="taskSwitch">正在审核任务</el-menu-item>
-      <el-menu-item id="submenu-item-2-3" index="2-3" @click="taskSwitch">已完成任务</el-menu-item>
+      <el-menu-item id="submenu-item-2-1" index="2-1" @click="unTaskSwitch">未完成任务</el-menu-item>
+      <el-menu-item id="submenu-item-2-2" index="2-2" @click="severalTaskSwitch">正在审核任务</el-menu-item>
+      <el-menu-item id="submenu-item-2-3" index="2-3" @click="alreadyTaskSwitch">已完成任务</el-menu-item>
     </el-submenu>
     <el-menu-item id="el-menu-item-3" index="3" class="el-menu-item" @click="shopSwitch">积分商城</el-menu-item>
     <el-menu-item id="el-menu-item-4" index="4" class="el-menu-item" @click="chatSwitch">聊天互动</el-menu-item>
@@ -48,14 +48,6 @@
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
-    <!--     <el-submenu index="4" class="el-menu-item" id="el-menu-item-4">-->
-    <!--        <el-avatar :src="require('@/assets/childnav_images/child.png')"></el-avatar>-->
-    <!--      <el-menu-item index="4-1">个人中心</el-menu-item>-->
-    <!--      <el-menu-item index="4-2">退出</el-menu-item>-->
-    <!--      <el-menu-item index="4-3">任务广场</el-menu-item>-->
-    <!--      <el-menu-item index="4-4">积分商城</el-menu-item>-->
-    <!--      <el-menu-item index="4-5">聊天互动</el-menu-item>-->
-    <!--    </el-submenu>-->
   </el-menu>
 </template>
 
@@ -71,6 +63,11 @@ export default {
   },
   created() {
     this.fetchUsername()
+    // setInterval(() => {
+    //   const cookieUsername = this.getCookie().username
+    //   console.log(this.getCookie())
+    //   this.username = cookieUsername
+    // }, 5000)
   },
   methods: {
     getCookie() {
@@ -78,7 +75,7 @@ export default {
       for (let i = 0; i < arr.length; i++) {
         const arr2 = arr[i].split('=')
         if (arr2[0] === ' userInfo') {
-          const userinfo = JSON.parse(arr2[i])
+          const userinfo = JSON.parse(arr[i])
           return userinfo
         }
       }
@@ -93,14 +90,21 @@ export default {
     mainSwitch() {
       this.$router.push({ path: '/mainpage' })
     },
-    taskSwitch() {
+    unTaskSwitch() {
       this.$router.push({ path: '/task' })
+    },
+    severalTaskSwitch() {
+      this.$router.push({ path: '/several' })
+    },
+    alreadyTaskSwitch() {
+      this.$router.push({ path: '/already' })
     },
     shopSwitch() {
     },
     chatSwitch() {
     },
     logOut() {
+      this.$router.push({ path: '/login' })
     }
   }
 }
