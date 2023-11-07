@@ -79,7 +79,7 @@ export default {
   height: 10%; /* 设置头部高度为50像素，根据实际需求调整 */
 }
 .image-icon{
-  display: flex;
+  display:flex;
   width: 10%; /* 让容器宽度占满整个头部 */
   height: 90%; /* 让容器高度占满整个头部 */
 }
