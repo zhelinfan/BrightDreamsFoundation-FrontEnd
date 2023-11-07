@@ -2,157 +2,150 @@
   <div>
     <el-container>
       <ChildNavbar />
-      <el-header style="height: 0px;"></el-header>
-          <el-main>
-            <div class="header">
-                <!-- 这里是查询和查看任务详情按钮 -->
-                <div class="white-box">
-                  <div class="center-content"> <!-- 添加一个包装层 -->
-                    <!-- 这里是查询和查看任务详情按钮 -->
-                    <div class="form">
-                      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                        <el-form-item label="">
-                          <el-input v-model="formInline.name" size="small" placeholder="" class="custom-input-style"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                          <el-button class="custom-button-color" type="warning" icon="el-icon-search" @click="onSubmit" size="small">查询</el-button>
-                          </el-form-item>
-                        <el-form-item>
-                          <el-button class="custom-button-color" type="warning" icon="el-icon-search" @click="taskDetail" size="small">查看任务详情</el-button>
-                        </el-form-item>
-                      </el-form>
-                    </div>
-                  </div>
-                </div>
+      <el-header style="height: 0px;" />
+      <el-main>
+        <div class="header">
+          <!-- 这里是查询和查看任务详情按钮 -->
+          <div class="white-box">
+            <div class="center-content"> <!-- 添加一个包装层 -->
+              <!-- 这里是查询和查看任务详情按钮 -->
+              <div class="form">
                 <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                  <!-- ... 其他表单元素 ... -->
+                  <el-form-item label="">
+                    <el-input v-model="formInline.name" size="small" placeholder="" class="custom-input-style" />
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="taskDetail">查看任务详情</el-button>
+                  </el-form-item>
                 </el-form>
               </div>
-            <div class="content">
-              <el-table :data="tableData" style="width: 100%; max-width: 1200px;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle">
-                <el-table-column
-                  prop="name"
-                  label="任务名称"
-                  width="200"
-                  header-align="center"
-                  :cell-style="nameCellStyle">
-                </el-table-column>
-                <el-table-column
-                  prop="startTime"
-                  label="发布时间"
-                  sortable
-                  width="200"
-                  header-align="center"
-                >
-                </el-table-column>
-                  <el-table-column
-                  prop="stopTime"
-                  label="截止时间"
-                  sortable
-                  width="200"
-                  header-align="center"
-                >
-                </el-table-column>
-                <el-table-column
-                  prop="type"
-                  label="任务类型"
-                  width="180"
-                  header-align="center"
-                  column-key="type"
-                  :filters="[{text: '学习', value: '学习'}, {text: '互动', value: '互动'}]"
-                  :filter-method="filterHandler"
-                >
-                </el-table-column>
-                <el-table-column
-                  prop="award"
-                  label="奖励积分"
-                  width="180"
-                  header-align="center">
-                </el-table-column>
-                <el-table-column  @click="taskDetail" label="操作" width="200" header-align="center">
-                  <template slot-scope="scope">
-                    <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view"  @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
-                  </template>
-                </el-table-column>
-              </el-table>
             </div>
-          </el-main>
-        </el-container>
+          </div>
+          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+            <!-- ... 其他表单元素 ... -->
+          </el-form>
+        </div>
+        <div class="content">
+          <el-table :data="tableData" style="width: 100%; max-width: 1200px;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle">
+            <el-table-column
+              prop="name"
+              label="任务名称"
+              width="200"
+              header-align="center"
+              :cell-style="nameCellStyle"
+            />
+            <el-table-column
+              prop="startTime"
+              label="发布时间"
+              sortable
+              width="200"
+              header-align="center"
+            />
+            <el-table-column
+              prop="stopTime"
+              label="截止时间"
+              sortable
+              width="200"
+              header-align="center"
+            />
+            <el-table-column
+              prop="type"
+              label="任务类型"
+              width="180"
+              header-align="center"
+              column-key="type"
+              :filters="[{text: '学习', value: '学习'}, {text: '互动', value: '互动'}]"
+              :filter-method="filterHandler"
+            />
+            <el-table-column
+              prop="award"
+              label="奖励积分"
+              width="180"
+              header-align="center"
+            />
+            <el-table-column label="操作" width="200" header-align="center" @click="taskDetail">
+              <template slot-scope="scope">
+                <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-main>
+    </el-container>
     <img :src="require('@/assets/mission_images/1.png')" class="image-transition">
   </div>
 </template>
 
 <script>
-import { fetchMissions } from '@/api/task'
+import api from '@/api/task'
 import ChildNavbar from '@/layout/components/childNavbar.vue'
 export default {
   // name: "List",
   components: {
     ChildNavbar
   },
-  data() {
+  data: function() {
     return {
-      formInline: {
+      /* formInline: {
         name: '',
         date: null
-      },
+      },*/
       id: {},
-      // isLoading: true,
-      // total: 0, // 总记录数
-      // page: 1, // 页码
-      // limit: 10, // 每页记录数
-      // searchObj: {}, // 查询条件
-      tableData: []
-      // multipleSelection: [],
-      // dialogVisible: false
+      tableData: [],
+      listForm: {}
     }
   },
   created() {
-    this.fetchData()
+    this.fetchData() // 获取数据
   },
   methods: {
     fetchData() {
-      // this.isLoading = true
-      // 调用API获取任务数据
-      fetchMissions(this.id)
+      api.task(this.listForm)
         .then(response => {
-          this.tableData = response.data // 假设返回的直接就是任务列表
-          // this.isLoading = false
+          const code = response.code
+          if (code === 200) {
+            this.tableData = response.data
+          } else {
+            console.error('Error: ' + '加载失败')
+          }
         })
         .catch(error => {
           console.error('Error fetching missions:', error)
           // this.isLoading = false
         })
-    },
-    onSubmit() {
-      console.log('submit!', this.formInline)
-    },
-    handleSee(index, row) {
-      console.log(index, row)
-    },
-    headerCellStyle() {
-      return {
-        color: '#000000' // 设置颜色为黑色
-      }
-    },
-    cellStyle() {
-      return {
-        textAlign: 'center' // 设置单元格文本居中对齐
-      }
-    },
-    formatter(row, column) {
-      return row.address
-    },
-    filterTag(value, row) {
-      return row.tag === value
-    },
-    filterHandler(value, row, column) {
-      const property = column['property']
-      return row[property] === value
-    },
-    taskDetail() {
-      this.$router.push({ path: '/detail' })
     }
+  },
+  onSubmit() {
+    console.log('submit!', this.formInline)
+  },
+  handleSee(index, row) {
+    console.log(index, row)
+  },
+  headerCellStyle() {
+    return {
+      color: '#000000' // 设置颜色为黑色
+    }
+  },
+  cellStyle() {
+    return {
+      textAlign: 'center' // 设置单元格文本居中对齐
+    }
+  },
+  formatter(row, column) {
+    return row.address
+  },
+  filterTag(value, row) {
+    return row.tag === value
+  },
+  filterHandler(value, row, column) {
+    const property = column['property']
+    return row[property] === value
+  },
+  taskDetail() {
+    this.$router.push({ path: '/detail' })
   }
 }
 </script>
