@@ -19,15 +19,23 @@
               <div class="title">用户名</div>
               <div v-if="!isEditingUsername" class="valuePart">{{ person.username }}</div>
               <div v-else class="valuePart">
-                <input v-model="person.username" type="text" class="input-box" @keyup.enter="this.isEditingUsername = false">
+                <el-input v-model="person.username" size="mini" class="el-input" type="text" @keyup.enter="this.isEditingUsername = false" />
               </div>
               <div class="edit-button" @click="saveEditUsername">{{ isEditingUsername ? '确认修改' : '修改' }}</div>
             </div>
             <div class="container">
               <div class="title">密码</div>
-              <div v-if="!isEditingPassword" class="valuePart">{{ person.password }}</div>
+              <div v-if="!isEditingPassword" class="valuePart" :type="passwordType">******</div>
               <div v-else class="valuePart">
-                <input v-model="person.password" type="text" class="input-box" @keyup.enter="this.isEditingPassword = false">
+                <el-input
+                  ref="password"
+                  v-model="person.password"
+                  size="mini"
+                  class="el-input"
+                  :type="passwordType"
+                  show-password
+                  @keyup.enter="this.isEditingPassword = false"
+                />
               </div>
               <div class="edit-button" @click="saveEditPassword">{{ isEditingPassword ? '确认修改' : '修改' }}</div>
             </div>
@@ -42,7 +50,14 @@
               <div class="title">学校</div>
               <div v-if="!isEditingSchool" class="valuePart">{{ person.school }}</div>
               <div v-else class="valuePart">
-                <input v-model="person.school" type="text" class="input-box" @keyup.enter="this.isEditingSchool = false"/>
+                <el-select v-model="person.school" size="mini" type="text" class="el-input" @keyup.enter="this.isEditingSchool = false" >
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
               </div>
               <div class="edit-button" @click="saveEditSchool">{{ isEditingSchool ? '确认修改' : '修改' }}</div>
             </div>
@@ -50,7 +65,7 @@
               <div class="title">班级</div>
               <div v-if="!isEditingClass" class="valuePart">{{ person.class }}</div>
               <div v-else class="valuePart">
-                <input v-model="person.class" type="text" class="input-box" @keyup.enter="this.isEditingClass = false">
+                <el-input v-model="person.class" size="mini" type="text" class="input-box" @keyup.enter="this.isEditingClass = false" />
               </div>
               <div class="edit-button" @click="saveEditClass">{{ isEditingClass ? '确认修改' : '修改' }}</div>
             </div>
@@ -58,7 +73,7 @@
               <div class="title">真实姓名</div>
               <div v-if="!isEditingTrueName" class="valuePart">{{ person.trueName }}</div>
               <div v-else class="valuePart">
-                <input v-model="person.trueName" type="text" class="input-box" @keyup.enter="this.isEditingTrueName = false">
+                <el-input v-model="person.trueName" size="mini" type="text" class="input-box" @keyup.enter="this.isEditingTrueName = false" />
               </div>
               <div class="edit-button" @click="saveEditTrueName">{{ isEditingTrueName ? '确认修改' : '修改' }}</div>
             </div>
@@ -66,7 +81,14 @@
               <div class="title">年龄</div>
               <div v-if="!isEditingAge" class="valuePart">{{ person.age }}</div>
               <div v-else class="valuePart">
-                <input v-model="person.age" type="text" class="input-box" @keyup.enter="this.isEditingAge = false">
+                <el-select v-model="person.age" size="mini" type="text" class="el-input" @keyup.enter="this.isEditingAge = false" >
+                  <el-option
+                    v-for="item in age_options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
               </div>
               <div class="edit-button" @click="saveEditAge">{{ isEditingAge ? '确认修改' : '修改' }}</div>
             </div>
@@ -74,7 +96,14 @@
               <div class="title">性别</div>
               <div v-if="!isEditingGender" class="valuePart">{{ person.gender }}</div>
               <div v-else class="valuePart">
-                <input v-model="person.gender" type="text" class="input-box" @keyup.enter="this.isEditingGender = false">
+                <el-select v-model="person.gender" size="mini" type="text" class="el-input" @keyup.enter="this.isEditingGender = false" >
+                  <el-option
+                    v-for="item in gender_options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
               </div>
               <div class="edit-button" @click="saveEditGender">{{ isEditingGender ? '确认修改' : '修改' }}</div>
             </div>
@@ -87,12 +116,56 @@
 
 <script>
 import ChildNavbar from '@/layout/components/childNavbar.vue'
+import api from '@/api/personal'
 export default {
   name: 'Personal',
   components: { ChildNavbar },
   data() {
     return {
+      options: [{
+        value: '1',
+        label: '大河完小'
+      }, {
+        value: '2',
+        label: '阳光小学'
+      }, {
+        value: '3',
+        label: '明光小学'
+      }
+      ],
+      age_options: [{
+        value: '6',
+        label: '6'
+      }, {
+        value: '7',
+        label: '7'
+      }, {
+        value: '8',
+        label: '8'
+      }, {
+        value: '9',
+        label: '9'
+      }, {
+        value: '10',
+        label: '10'
+      }, {
+        value: '11',
+        label: '11'
+      }, {
+        value: '12',
+        label: '12'
+      }
+      ],
+      gender_options: [{
+        value: '0',
+        label: '男'
+      }, {
+        value: '1',
+        label: '女'
+      }
+      ],
       flowerNumber: '100',
+      passwordType: 'password',
       isEditingUsername: false,
       isEditingPassword: false,
       isEditingSchool: false,
@@ -102,7 +175,7 @@ export default {
       isEditingGender: false,
       person: {
         username: '小明同学',
-        password: '******',
+        password: '111111s',
         school: '大河完小',
         class: '一年一班',
         trueName: 'pmh',
@@ -111,7 +184,47 @@ export default {
       }
     }
   },
+  created() {
+    this.fetchPersonalInfo()
+  },
   methods: {
+    getCookie() {
+      const arr = document.cookie.split(';')
+      for (let i = 0; i < arr.length; i++) {
+        const arr2 = arr[i].split('=')
+        if (arr2[0] === ' userInfo') {
+          const userinfo = JSON.parse(arr2[i])
+          return userinfo
+        }
+      }
+      return ''
+    },
+    fetchPersonalInfo() {
+      api.getUserInfo(18).then(response => {
+        const userInfo = response.data
+        this.person.username = this.getCookie().username
+        this.person.password = this.getCookie().password
+        this.person.school = userInfo.school
+        this.person.class = userInfo.clazz
+        this.person.trueName = userInfo.realName
+        this.person.age = userInfo.age
+        if (this.getCookie().gender === 0) {
+          this.person.gender = '男'
+        } else {
+          this.person.gender = '女'
+        }
+      })
+    },
+    showPwd() {
+      if (this.passwordType === 'password') {
+        this.passwordType = ''
+      } else {
+        this.passwordType = 'password'
+      }
+      this.$nextTick(() => {
+        this.$refs.password.focus()
+      })
+    },
     saveEditUsername() {
       this.isEditingUsername = !this.isEditingUsername
     },
@@ -119,6 +232,7 @@ export default {
       this.isEditingPassword = !this.isEditingPassword
     },
     saveEditSchool() {
+      console.log(this.options)
       this.isEditingSchool = !this.isEditingSchool
     },
     saveEditClass() {
@@ -131,17 +245,17 @@ export default {
       this.isEditingAge = !this.isEditingAge
     },
     saveEditGender() {
-      this.isEditingPassword = !this.isEditingPassword
+      this.isEditingGender = !this.isEditingGender
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .wrapper-container{
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 107%;
   background-color: #efefef;
   display: flex;
   flex-direction: column;
@@ -163,7 +277,7 @@ export default {
   width: 68%;
   height: 48%;
   flex: 1;
-  margin-top: 30px;
+  top: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -171,9 +285,9 @@ export default {
 .bottom{
   background-color: #fff;
   position: absolute;
-  bottom: 0;
+  top: 53%;
   width: 68%;
-  height: 40%;
+  height: 41%;
   border: 1px solid #BBBBBB;
   margin-top: 30px;
 }
@@ -254,12 +368,18 @@ export default {
 .container{
   display: flex;
   flex-direction: row;
-  width: 70%;
-  padding-top: 5px;
+  width: 90%;
+  padding-top: 4px;
+  margin-bottom: 8px;
+  height: 31px;
+  align-items: center;
+  border-bottom: 1px solid #d9d9d9;
+  /*border: 1px solid #000;*/
 }
 
 .valuePart{
   margin-left: 5px;
+  color: rgba(84, 84, 84);
 }
 .edit-button{
   color: #1482f0;
@@ -268,23 +388,15 @@ export default {
 }
 .as-content{
   position: absolute;
-  top: 38%;
+  top: 36%;
   left: 7%;
   width: 50%;
-  display: table-column;
 }
 .pi-content{
   position: absolute;
-  top: 25%;
+  top: 21%;
   left: 7%;
   width: 50%;
-  display: table-column;
-}
-.container{
-  margin-bottom: 10px;
-  height: 26px;
-  display: flex;
-  align-items: center;
 }
 .title{
   font-weight: bold;
@@ -293,16 +405,25 @@ export default {
 }
 .valuePart{
   font-size: small;
-  margin-left: 15px;
+  margin-left: 13px;
 }
-.input-box{
-  /*position: absolute;*/
-  /*left: 20%;*/
-  /*top: 10%;*/
-  font-size: small;
-  border: 1px solid rgba(138, 137, 137, 0.6);
-  width: 120px;
-  height: 20px;
-  border-radius: 3px;
+/*.input-box{*/
+/*  font-size: small;*/
+/*  border: 1px solid rgba(138, 137, 137, 0.6);*/
+/*  width: 120px;*/
+/*  height: 25px;*/
+/*  padding-left: 8px;*/
+/*  border-radius: 3px;*/
+/*  align-content: center;*/
+/*}*/
+.show-pwd {
+  font-size: 16px;
+  color: #484848;
+  cursor: pointer;
+  user-select: none;
+  margin-left: 3px;
+}
+.el-input{
+  margin-bottom: 3px;
 }
 </style>
