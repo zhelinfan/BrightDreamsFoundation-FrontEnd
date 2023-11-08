@@ -271,8 +271,8 @@ export default {
 }
 /* 可以选择添加悬停状态的样式改变 */
 .button-color:hover {
-  background-color: darkorange  !important; /* 更深的巧克力色为悬停状态 */
-  border-color: darkorange   !important;
+  background-color: chocolate  !important; /* 更深的巧克力色为悬停状态 */
+  border-color: chocolate   !important;
 }
 .white{
   display: flex;
@@ -302,7 +302,7 @@ export default {
 .text-center {
   text-align: center;
   font-weight: bold;
-  font-size: 22px;
+  font-size: 16px;
   color: #FDAD7A;
 }
 </style>
