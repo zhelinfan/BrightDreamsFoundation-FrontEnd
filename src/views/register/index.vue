@@ -113,8 +113,8 @@
             v-for="item in age_options"
             :key="item.value"
             :label="item.label"
-            :value="item.value"
-          />
+            :value="item.value">
+          </el-option>
         </el-select>
       </el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleRegister">注册你的新账户啦！</el-button>

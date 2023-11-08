@@ -115,6 +115,14 @@ export const constantRoutes = [
       icon: 'el-icon-document-checked'
     }
   },
+  {
+    path: '/market',
+    component: () => import('@/views/awardMarket/market.vue'),
+    meta: {
+      title: '积分商城',
+      icon: 'el-icon-document-checked'
+    }
+  },
   // {
   //   path: '/detail',
   //   component: Layout, // 使用Layout组件作为包裹
