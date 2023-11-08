@@ -21,12 +21,7 @@
     <el-main class="main1">
       <el-aside class="aside-style">
         <div class="white">
-          <img :src="require('@/assets/market_images/images.png')" class="image-transition">
-          <div class="text-center">小同学,你好！</div>
-          <div class="text-center">快用积分换取心仪的物品吧！</div>
-          <div class="text-center">可用积分：X</div>
         </div>
-
       </el-aside>
       <el-main>
         <div class="centered-container">
@@ -41,18 +36,6 @@
 
     <el-main class="main2">
       <div class="centered-container"> <!-- 移除点号前缀 -->
-        <div class="white-line">
-          <el-dropdown>
-            <el-button class="orangebutton">
-              更多菜单<i class="el-icon-arrow-down el-icon--right" />
-            </el-button>
-            <el-dropdown-menu>
-              <el-dropdown-item>按热度</el-dropdown-item>
-              <el-dropdown-item>按兑换积分升序</el-dropdown-item>
-              <el-dropdown-item>按兑换积分降序</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
         <div class="white-box">
           <div class="box">
             <el-row>
@@ -227,6 +210,7 @@ export default {
 .white-box {
   background-color: #ffffff; /* 设置背景颜色为白色 */
   padding: 30px; /* 添加内边距以增加长方形框的大小 */
+  border: 1px solid #ccc; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
   display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
   width: 92%;
