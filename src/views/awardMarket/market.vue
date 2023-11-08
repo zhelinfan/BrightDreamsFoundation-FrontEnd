@@ -4,7 +4,7 @@
     <el-main class="main0">
       <div class="search-container" style="display: flex;">
         <div class="image-icon">
-          <img :src="require('@/assets/market_images/gift.png')" class="image-transition">
+          <img :src="require('@/assets/market_images/gift.png')" class="image-transition" alt="">
         </div>
         <div class="select">
           <!--          <el-form :inline="true">-->
@@ -21,7 +21,12 @@
     <el-main class="main1">
       <el-aside class="aside-style">
         <div class="white">
+          <img :src="require('@/assets/market_images/images.png')" class="image-transition">
+          <div class="text-center">小同学,你好！</div>
+          <div class="text-center">快用积分换取心仪的物品吧！</div>
+          <div class="text-center">可用积分：X</div>
         </div>
+
       </el-aside>
       <el-main>
         <div class="centered-container">
@@ -36,6 +41,18 @@
 
     <el-main class="main2">
       <div class="centered-container"> <!-- 移除点号前缀 -->
+        <div class="white-line">
+          <el-dropdown>
+            <el-button class="orangebutton">
+              排序<i class="el-icon-arrow-down el-icon--right" />
+            </el-button>
+            <el-dropdown-menu>
+              <el-dropdown-item>按热度</el-dropdown-item>
+              <el-dropdown-item>按兑换积分升序</el-dropdown-item>
+              <el-dropdown-item>按兑换积分降序</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
         <div class="white-box">
           <div class="box">
             <el-row>
@@ -46,7 +63,7 @@
                     <span>好吃的汉堡</span>
                     <div class="bottom clearfix">
                       <time class="time">{{ currentDate }}</time>
-                      <el-button type="text" class="button">操作按钮</el-button>
+                      <el-button type="text" class="button" @click="open">查看</el-button>
                     </div>
                   </div>
                 </el-card>
@@ -60,7 +77,7 @@
                     <span>好吃的汉堡</span>
                     <div class="bottom clearfix">
                       <time class="time">{{ currentDate }}</time>
-                      <el-button type="text" class="button">操作按钮</el-button>
+                      <el-button type="text" class="button" @click="open">查看</el-button>
                     </div>
                   </div>
                 </el-card>
@@ -70,7 +87,7 @@
         </div>
       </div> <!-- 移除不需要的斜杠 -->
     </el-main>
-
+    <el-input-number v-model="num" :step="1"></el-input-number>
   </el-container>
 
 </template>
@@ -84,10 +101,63 @@ export default {
   },
   data() {
     return {
-      circleUrl: "require('@/assets/market_images/image.jpg')",
-      squareUrl: 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
-      sizeList: ['large', 'medium', 'small'],
-      input: ''
+      input: '',
+      num: 1
+    }
+  },
+  methods: {
+    open() {
+      const h = this.$createElement
+      const imgSrc = 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'// 替换成你的图片地址
+      const messageContent = [
+        h('div', { style: 'text-align: center;' }, [
+          h('img', {
+            style: 'max-width: 100%;',
+            attrs: { src: imgSrc }
+          })
+        ]),
+        h('p', null, '商品名称'),
+        h('p', null, '商品描述'),
+        h('p', null, '商品兑换积分'),
+        h('el-input-number', {
+          props: {
+            value: this.num,
+            min: 1,
+            max: 10,
+            label: '描述文字',
+            step: 1 // 设置步长为2
+          },
+          on: {
+            change: this.handleChange
+          }
+        })
+      ]
+      this.$msgbox({
+        title: '商品详情',
+        message: h('div', null, messageContent),
+        showCancelButton: true,
+        confirmButtonText: '兑换',
+        cancelButtonText: '取消',
+        beforeClose: (action, instance, done) => {
+          if (action === 'confirm') {
+            instance.confirmButtonLoading = true
+            instance.confirmButtonText = '兑换中...'
+            setTimeout(() => {
+              done()
+              setTimeout(() => {
+                instance.confirmButtonLoading = false
+              }, 300)
+            }, 3000)
+          } else {
+            done()
+          }
+        }
+      }).then(action => {
+        this.$message({
+          type: 'info',
+          message: 'action: ' + action
+        })
+      })
     }
   }
 }
@@ -202,15 +272,14 @@ export default {
   padding: 30px; /* 添加内边距以增加长方形框的大小 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
   display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
-  width: 11.1%;
+  width: 9.5%;
   height: 60%;
-  transform: translateX(-641px) translateY(20px); /* 向左移动20像素，向下移动20像素 */
+  transform: translateX(-654.5px) translateY(20px); /* 向左移动20像素，向下移动20像素 */
   transition: box-shadow 0.3s; /* 添加过渡效果让阴影变化更平滑 */
 }
 .white-box {
   background-color: #ffffff; /* 设置背景颜色为白色 */
   padding: 30px; /* 添加内边距以增加长方形框的大小 */
-  border: 1px solid #ccc; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
   display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
   width: 92%;
