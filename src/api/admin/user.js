@@ -3,7 +3,7 @@
 */
 import request from '@/utils/request'
 
-const api_name = '/user'
+const api_name = '/userInfo'
 
 export default {
 
