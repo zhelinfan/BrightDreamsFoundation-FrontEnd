@@ -1,10 +1,17 @@
 import request from '@/utils/request'
 export default {
-  task(id) {
+  getUncompleteTask(id) {
     return request({
       url: `/mission/get/${id}`,
       method: 'get',
       data: id
+    })
+  },
+  search(id, keywords) {
+    return request({
+      url: `/mission/searchUncompleted/${id}`,
+      method: 'post',
+      data: { keywords, id }
     })
   },
   fetchMissions(id) {

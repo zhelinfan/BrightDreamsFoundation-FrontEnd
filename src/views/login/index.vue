@@ -122,6 +122,7 @@ export default {
       })
     },
     handleLogin() {
+      // debug
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true

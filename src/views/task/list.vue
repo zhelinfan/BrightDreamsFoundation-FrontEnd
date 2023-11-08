@@ -12,7 +12,7 @@
               <div class="form">
                 <el-form :inline="true" :model="formInline" class="demo-form-inline">
                   <el-form-item label="">
-                    <el-input v-model="formInline.name" size="small" placeholder="" class="custom-input-style" />
+                    <el-input v-model="keywords" size="small" placeholder="" class="custom-input-style" />
                   </el-form-item>
                   <el-form-item>
                     <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
@@ -29,7 +29,7 @@
           </el-form>
         </div>
         <div class="content">
-          <el-table :data="tableData" style="width: 100%; max-width: 1200px;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle">
+          <el-table :data="tableData" style="width: 100%; max-width: 1200px;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle" max-height="250">
             <el-table-column
               prop="name"
               label="任务名称"
@@ -93,59 +93,116 @@ export default {
         name: '',
         date: null
       },*/
-      id: {},
-      tableData: [],
-      listForm: {}
+      userId: {},
+      tableData: [{
+        id: '',
+        name: '',
+        startTime: '',
+        stopTime: '',
+        typeNum: '',
+        type: '',
+        award: ''
+      }
+      ],
+      listForm: {},
+      formInline: '',
+      keywords: ''
     }
   },
   created() {
     this.fetchData() // 获取数据
   },
   methods: {
+    typeJudge(number) {
+      if (number === 0) {
+        return '上传文件任务'
+      } else if (number === 1) {
+        return '上传视频任务'
+      } else if (number === 2) {
+        return '聊天任务'
+      } else if (number === 3) {
+        return '视频通话任务'
+      }
+    },
     fetchData() {
-      api.task(this.listForm)
-        .then(response => {
-          const code = response.code
-          if (code === 200) {
-            this.tableData = response.data
-          } else {
-            console.error('Error: ' + '加载失败')
+      api.getUncompleteTask(18).then(response => {
+        const code = response.code
+        const array = response.data
+        if (code === 200) {
+          this.tableData[0].id = array[0].id
+          this.tableData[0].name = array[0].missionName
+          this.tableData[0].startTime = array[0].releaseDate
+          this.tableData[0].stopTime = array[0].deadline
+          this.tableData[0].type = this.typeJudge(array[0].kind)
+          this.tableData[0].typeNum = array[0].kind
+          this.tableData[0].award = array[0].reward
+          for (let i = 1; i < array.length; i++) {
+            const temp = {
+              id: '',
+              name: '',
+              startTime: '',
+              stopTime: '',
+              type: '',
+              award: ''
+            }
+            temp.id = array[i].id
+            temp.name = array[i].missionName
+            temp.startTime = array[i].releaseDate
+            temp.stopTime = array[i].deadline
+            temp.type = this.typeJudge(array[i].kind)
+            temp.typeNum = array[i].kind
+            temp.award = array[i].reward
+            this.tableData.push(temp)
           }
-        })
+        } else {
+          console.error('Error: ' + '加载失败')
+        }
+      })
         .catch(error => {
           console.error('Error fetching missions:', error)
           // this.isLoading = false
         })
+    },
+    getCookie() {
+      const arr = document.cookie.split(';')
+      for (let i = 0; i < arr.length; i++) {
+        const arr2 = arr[i].split('=')
+        if (arr2[0] === ' userInfo') {
+          const userinfo = JSON.parse(arr[i])
+          return userinfo
+        }
+      }
+      return ''
+    },
+    onSubmit() {
+
+    },
+    handleSee(index, row) {
+      console.log(index, row)
+    },
+    headerCellStyle() {
+      return {
+        color: '#000000' // 设置颜色为黑色
+      }
+    },
+    cellStyle() {
+      return {
+        textAlign: 'center' // 设置单元格文本居中对齐
+      }
+    },
+    formatter(row, column) {
+      return row.address
+    },
+    filterTag(value, row) {
+      return row.tag === value
+    },
+    filterHandler(value, row, column) {
+      const property = column['property']
+      return row[property] === value
+    },
+    taskDetail() {
+      this.$router.push({ path: '/detail' })
     }
-  },
-  onSubmit() {
-    console.log('submit!', this.formInline)
-  },
-  handleSee(index, row) {
-    console.log(index, row)
-  },
-  headerCellStyle() {
-    return {
-      color: '#000000' // 设置颜色为黑色
-    }
-  },
-  cellStyle() {
-    return {
-      textAlign: 'center' // 设置单元格文本居中对齐
-    }
-  },
-  formatter(row, column) {
-    return row.address
-  },
-  filterTag(value, row) {
-    return row.tag === value
-  },
-  filterHandler(value, row, column) {
-    const property = column['property']
-    return row[property] === value
-  },
-  taskDetail() {
-    this.$router.push({ path: '/detail' })
   }
 }
 </script>

@@ -92,12 +92,9 @@
 <script>
 import api from '@/api/task'
 import { zip } from 'mockjs/src/mock/random/address'
-import ChildNavbar from '@/layout/components/childNavbar.vue'
+
 export default {
   name: 'SubmitHomework',
-  components: {
-    ChildNavbar
-  },
   data() {
     return {
       file: null,
@@ -166,192 +163,46 @@ export default {
 
 <style scoped>
 
-.container{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-.main{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #efefef;
-  display: flex;
-}
-.work-main{
-  position: absolute;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  height: 100%;
-  width: 95%;
-  overflow: hidden;
-}
-.m-left {
-  position: absolute;
-  top: 5%;
-  left: 12%;
-  height: 90%;
-  width: 40%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
-  border: 1px solid #ffffff; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
-  border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
-}
-.m-left:hover {
-  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3); /* 当鼠标悬浮时，增加阴影的偏移、模糊度和颜色的透明度 */
-}
-.m-right {
-  position: absolute;
-  top: 5%;
-  right: 6%;
-  height: 90%;
-  width: 40%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
-  border: 1px solid #ffffff; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
-  border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
-}
-.m-right:hover {
-  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3); /* 当鼠标悬浮时，增加阴影的偏移、模糊度和颜色的透明度 */
-}
-.dc-info{
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding-bottom: 10px;
-}
-.work-warp{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-direction: column;
+.header {
+  /*border: 2px solid #000000;*/
   background-color: #ffffff;
-  /*background-color: transparent;*/
-  border: 1px solid #ffffff; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
-  border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
+  color: #333;
+  text-align: center;
+  line-height: 40px;
+  width: 600px;
+  margin-left: 650px;
 }
-.wk-cover{
-  /*border: 2px solid #000;*/
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-  border: 1px solid #ffffff; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
-  border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
+.sub-header{
+  border: 2px dashed #c2ebfd;
+  border-radius: 30px;
+  padding: 10px;
+  background-color: #e1f3fc;
+}
+.sub-header p {
+  margin: 1px 0; /* 调整上下边距为 5px，左右边距保持默认值 */
 }
 
-.wk-head{
-  height: 45px;
-  padding: 40px 20px 30px 20px;
-  display: flex;
+.main{
+  /*border: 2px solid #000000;*/
+  margin-top: 20px;
+  justify-content: center;
   align-items: center;
-}
-.wk-head span{
-  color: #000000;
-  font-weight: 550;
-  font-size: 22px;
-}
-.wk-body{
-  padding: 0 20px;
-  height: calc(100% - 45px);
-  overflow-y: auto;
-}
-/* 设置滚动条样式 */
-.wk-body::-webkit-scrollbar {
-  width: 6px; /* 设置滚动条宽度 */
+  width: 900px;
+  position: relative;
+  margin-left: 500px;
 }
 
-.wk-body::-webkit-scrollbar-track {
-  background-color: #f5f5f5; /* 设置滚动条轨道背景色 */
-}
-
-.wk-body::-webkit-scrollbar-thumb {
-  background-color: #b7b7b7; /* 设置滚动条滑块颜色 */
-  border-radius: 3px; /* 设置滚动条滑块的圆角 */
-}
-
-.wk-body::-webkit-scrollbar-thumb:hover {
-  background-color: #706f6f; /* 设置滚动条滑块悬停时的颜色 */
-}
-.desc-title {
-  padding: 0 10px;
-  display: block;
-  border-radius: 4px;
-  border-left:4px solid #d36e25;
-  font-size:15px;
-  font-weight:550;
-}
-.desc-content{
-  margin-top: 10px;
-  padding: 0 14px;
-  line-height: 22px;
-  color: #605e5c;
-  font-size: 13px;
-  font-weight: 500;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  margin-bottom: 10px;
-}
-
-.content{
-  word-break: break-all;
-  white-space: pre-wrap;
-  line-height: 22px;
-  color: #2c2a2a;
-  font-size: 13px;
-  font-weight: 500;
-}
 .el-input{
-  border: 1px solid #eeeeee;
-  border-radius: 5px;
-  width: 85%;
-  margin-left: 7%;
+  border: 2px solid #000000;
+  width: 60%;
   margin-top: 20px;
 }
-
+.describe{
+  font-size: 16px;
+}
 .el-button{
-  background-color: #d1f3ff;
-  color: #2c2a2a;
-  border: 1px solid #85cff8;
-  position: relative;
-  margin-left: 77%;
-  margin-top: 3%;
-}
-.wk-body .desc-content .figure {
-  display: flex;
-  align-items: flex-start;
-}
-#taskImage {
-  transform: scale(0.7);
-  position: relative;
-  margin-left: -17%;
-  margin-top: -10%;
-  margin-bottom: -10%;
-}
-#upload {
-  position: relative;
-  margin-left: 15%;
-  margin-top: 5%;
-}
-#description {
-  position: relative;
-  margin-left: 30%;
-}
-
-.image-transition {
-  position: absolute; /* 设置绝对定位 */
-  bottom: 0; /* 图片位于底部 */
-  left: 0; /* 图片位于左侧，可以根据需要调整位置 */
-  z-index: -1; /* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 */
-  max-width: 100%; /* 图片最大宽度为100% */
-  /*height: 100%;*/
-  object-fit: contain;
+  background-color: #7dd8ff;
+  color: #f5f6fb;
+  margin-top: 20px; /* 增加上方外边距 */
 }
 </style>
