@@ -12,7 +12,7 @@
               <div class="form">
                 <el-form :inline="true" :model="formInline" class="demo-form-inline">
                   <el-form-item label="">
-                    <el-input v-model="formInline.name" size="small" placeholder="" class="custom-input-style" />
+                    <el-input v-model="keywords" size="small" placeholder="" class="custom-input-style" />
                   </el-form-item>
                   <el-form-item>
                     <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
@@ -93,7 +93,7 @@ export default {
         name: '',
         date: null
       },*/
-      id: {},
+      userId: {},
       tableData: [{
         id: '',
         name: '',
@@ -105,7 +105,8 @@ export default {
       }
       ],
       listForm: {},
-      formInline: ''
+      formInline: '',
+      keywords: ''
     }
   },
   created() {
@@ -124,7 +125,7 @@ export default {
       }
     },
     fetchData() {
-      api.task(18).then(response => {
+      api.getUncompleteTask(18).then(response => {
         const code = response.code
         const array = response.data
         if (code === 200) {
@@ -161,36 +162,47 @@ export default {
           console.error('Error fetching missions:', error)
           // this.isLoading = false
         })
+    },
+    getCookie() {
+      const arr = document.cookie.split(';')
+      for (let i = 0; i < arr.length; i++) {
+        const arr2 = arr[i].split('=')
+        if (arr2[0] === ' userInfo') {
+          const userinfo = JSON.parse(arr[i])
+          return userinfo
+        }
+      }
+      return ''
+    },
+    onSubmit() {
+
+    },
+    handleSee(index, row) {
+      console.log(index, row)
+    },
+    headerCellStyle() {
+      return {
+        color: '#000000' // 设置颜色为黑色
+      }
+    },
+    cellStyle() {
+      return {
+        textAlign: 'center' // 设置单元格文本居中对齐
+      }
+    },
+    formatter(row, column) {
+      return row.address
+    },
+    filterTag(value, row) {
+      return row.tag === value
+    },
+    filterHandler(value, row, column) {
+      const property = column['property']
+      return row[property] === value
+    },
+    taskDetail() {
+      this.$router.push({ path: '/detail' })
     }
-  },
-  onSubmit() {
-    console.log('submit!', this.formInline)
-  },
-  handleSee(index, row) {
-    console.log(index, row)
-  },
-  headerCellStyle() {
-    return {
-      color: '#000000' // 设置颜色为黑色
-    }
-  },
-  cellStyle() {
-    return {
-      textAlign: 'center' // 设置单元格文本居中对齐
-    }
-  },
-  formatter(row, column) {
-    return row.address
-  },
-  filterTag(value, row) {
-    return row.tag === value
-  },
-  filterHandler(value, row, column) {
-    const property = column['property']
-    return row[property] === value
-  },
-  taskDetail() {
-    this.$router.push({ path: '/detail' })
   }
 }
 </script>
