@@ -8,32 +8,32 @@
             <div class="work-warp">
               <div class="wk-cover">
                 <div class="wk-head">
-                  <span>任务名称：默写《静夜思》</span>
+                  <span>任务名称:{{ taskName }}</span>
                 </div><!--wk-head-->
                 <div class="wk-body">
                   <div class="desc-item">
                     <div class="desc-title">任务描述</div>
                     <div class="desc-content">
-                      <div class="content">限时2分钟默写诗歌，上传默写照片</div>
+                      <div class="content">{{ taskDesc }}</div>
                       <div class="figure" ><img :src="require('@/assets/task/libai.jpg')" alt="静夜思" id="taskImage"></div>
                     </div>
                   </div><!--desc-item-->
                   <div class="desc-item">
                     <div class="desc-title">任务类型</div>
                     <div class="desc-content">
-                      <div class="content">必做任务</div>
+                      <div class="content">{{ taskType }}</div>
                     </div>
                   </div><!--desc-item-->
                   <div class="desc-item">
                     <div class="desc-title">奖励积分</div>
                     <div class="desc-content">
-                      <div class="content">5</div>
+                      <div class="content">{{ rewardScore }}</div>
                     </div>
                   </div><!--desc-item-->
                   <div class="desc-item">
                     <div class="desc-title">截止时间</div>
                     <div class="desc-content">
-                      <div class="content">2023年11月4日23:59</div>
+                      <div class="content">{{ deadline }}</div>
                     </div>
                   </div><!--desc-item-->
                 </div><!--wk-body-->
@@ -51,13 +51,14 @@
                       id="upload"
                       style="padding-bottom: 20px;"
                       drag
-                      action="https://jsonplaceholder.typicode.com/posts/"
+                      action="http://localhost:9528/mission/upload"
                       :on-preview="handlePreview"
                       :on-remove="handleRemove"
                       :file-list="fileList"
+                      :http-request="empty"
                       :before-upload="beforeUpload"
-                      limit="1"
-                      accept=".zip">
+                      :limit="1"
+                      :accept="accFileType">
                       <i class="el-icon-upload"></i>
                       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                       <div class="el-upload__tip" slot="tip">只能上传一个zip文件，文件大小不得超过1000KB</div>
@@ -75,7 +76,7 @@
                   </div>
                   <div class="desc-item">
                     <div class="btn-container">
-                      <el-button round class="el-button" id="submit">提交</el-button>
+                      <el-button round class="el-button" id="submit" @click="getUrl">提交</el-button>
                     </div>
                   </div>
                 </div>
@@ -89,7 +90,7 @@
 </template>
 
 <script>
-
+import api from '@/api/task'
 import { zip } from 'mockjs/src/mock/random/address'
 import ChildNavbar from '@/layout/components/childNavbar.vue'
 export default {
@@ -99,17 +100,45 @@ export default {
   },
   data() {
     return {
+      file: null,
+      fileURL: '#',
       fileList: [],
       uploadFileSizeLimit: 1000, // 文件大小限制为1000KB
-      textarea: ''
+      textarea: '',
+      taskName: '',
+      taskDesc: '',
+      taskType: '',
+      rewardScore: '',
+      deadline: '',
+      accFileType: ''
     }
   },
+  created() {
+    this.fetchData()
+  },
   methods: {
+    fetchData() {
+      api.loadSingleMission(1).then(response => {
+        console.log(response.data)
+        this.taskName = response.data.missionName
+        this.deadline = response.data.deadline
+        this.taskDesc = response.data.description
+        this.rewardScore = response.data.reward
+        switch (response.data.kind) {
+          case 0:this.taskType = '互动'; break
+          case 1:this.taskType = '互动'; break
+          case 2:this.taskType = '学习'; this.accFileType = '.jpg,.png,.zip,.word'; break
+          case 3:this.taskType = '学习'; this.accFileType = '.mp4'; break
+        }
+      })
+    },
     zip,
     beforeUpload(file) {
       const isLtSize = file.size / 1024 <= this.uploadFileSizeLimit
       if (!isLtSize) {
         this.$message.error(`文件大小超过限制 (${this.uploadFileSizeLimit}KB)`)
+      } else {
+        this.file = file
       }
       return isLtSize
     },
@@ -118,6 +147,17 @@ export default {
     },
     handlePreview(file) {
       console.log(file)
+    },
+    empty() {
+    },
+    getUrl() {
+      console.log(this.file)
+      const formData = new FormData()
+      formData.append('file', this.file)
+      api.getUrl(formData).then(response => {
+        console.log(response.data)
+        this.fileURL = response.data.pictureURL
+      })
     }
   }
 }

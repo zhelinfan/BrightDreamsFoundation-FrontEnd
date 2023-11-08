@@ -8,32 +8,32 @@
             <div class="work-warp">
               <div class="wk-cover">
                 <div class="wk-head">
-                  <span>任务名称：默写《静夜思》</span>
+                  <span>任务名称：{{ taskName }}</span>
                 </div><!--wk-head-->
                 <div class="wk-body">
                   <div class="desc-item">
                     <div class="desc-title">任务描述</div>
                     <div class="desc-content">
-                      <div class="content">限时2分钟默写诗歌，上传默写照片</div>
-                      <div class="figure" ><img :src="require('@/assets/task/libai.jpg')" alt="静夜思" id="taskImage"></div>
+                      <div class="content">{{ taskDesc }}</div>
+                      <div class="figure"><img id="taskImage" :src="require('@/assets/task/libai.jpg')" alt="静夜思"></div>
                     </div>
                   </div><!--desc-item-->
                   <div class="desc-item">
                     <div class="desc-title">任务类型</div>
                     <div class="desc-content">
-                      <div class="content">必做任务</div>
+                      <div class="content">{{ taskType }}</div>
                     </div>
                   </div><!--desc-item-->
                   <div class="desc-item">
                     <div class="desc-title">奖励积分</div>
                     <div class="desc-content">
-                      <div class="content">5</div>
+                      <div class="content">{{ rewardScore }}</div>
                     </div>
                   </div><!--desc-item-->
                   <div class="desc-item">
                     <div class="desc-title">截止时间</div>
                     <div class="desc-content">
-                      <div class="content">2023年11月4日23:59</div>
+                      <div class="content">{{ deadline }}</div>
                     </div>
                   </div><!--desc-item-->
                 </div><!--wk-body-->
@@ -51,33 +51,33 @@
                     <div class="content">
                       <div class="dc-info">
                         <span class="dc-label">任务状态:</span>
-                        <div id="taskState"><el-tag>审核中</el-tag></div>
+                        <div id="taskState"><el-tag :type="taskStateType">{{ taskState }}</el-tag></div>
                       </div>
                     </div>
                   </div>
                   <div class="desc-item">
                     <div class="desc-title">任务提交时间</div>
-                    <div class="desc-content">2023年11月3日12:56</div>
+                    <div class="desc-content">{{ submitTime }}</div>
                   </div>
                   <div class="desc-item">
                     <div class="desc-title">提交文件</div>
                     <div class="desc-content">
-                      <el-tooltip class="item" effect="dark" content="Right Center 提示文字" placement="right">
-                        <el-button id="download" size="mini" round>下载</el-button>
-                      </el-tooltip>
+                      <el-popconfirm :title="'是否下载\'' + fileName + '\'?'" @onConfirm="download">
+                        <el-button slot="reference" id="download" size="mini" round>下载</el-button>-->
+                      </el-popconfirm>
                     </div>
                   </div>
                   <div class="desc-item">
                     <div class="desc-title">作业描述</div>
-                    <div class="desc-content">description提交人对作业的描述</div>
+                    <div class="desc-content">{{ hkDescription }}</div>
                   </div>
                   <div class="desc-item">
                     <div class="desc-title">志愿者评语</div>
-                    <div class="desc-content">comment志愿者评语</div>
+                    <div class="desc-content">{{ comment }}</div>
                   </div>
                   <div class="desc-item">
                     <div class="desc-title">志愿者评分</div>
-                    <div class="desc-content">4</div>
+                    <div class="desc-content">{{ finalScore }}</div>
                   </div>
                 </div>
               </div>
@@ -91,11 +91,83 @@
 </template>
 
 <script>
+import api from '@/api/task'
 import ChildNavbar from '@/layout/components/childNavbar.vue'
 export default {
   name: 'CheckSubmission',
   components: {
     ChildNavbar
+  },
+  data() {
+    return {
+      taskName: '',
+      taskDesc: '',
+      taskType: '',
+      rewardScore: '',
+      deadline: '',
+      taskState: '',
+      taskStateType: '',
+      submitTime: '',
+      // 用url存储提交的文件
+      fileName: '',
+      hkDescription: '',
+      comment: '',
+      finalScore: ''
+    }
+  },
+  created() {
+    this.fetchData()
+  },
+  methods: {
+    fetchData() {
+      // this.page = current
+      console.log('enter')
+      api.checkSubmission(18, 1).then(response => {
+        console.log(response.data)
+        this.submitTime = response.data.finishDate
+        this.fileName = response.data.submissionURL
+        this.finalScore = response.data.rate
+        this.comment = response.data.comment
+        this.hkDescription = response.data.description
+        switch (response.data.status) {
+          case 0:this.taskState = '审核中'; break
+          case 1:this.taskState = '通过'; this.taskStateType = 'success'; break
+          case 2:this.taskState = '不通过'; this.taskStateType = 'danger'; break
+        }
+      })
+      api.loadSingleMission(1).then(response => {
+        this.taskName = response.data.missionName
+        this.deadline = response.data.deadline
+        this.taskDesc = response.data.description
+        this.rewardScore = response.data.reward
+        switch (response.data.kind) {
+          case 0:
+            this.taskType = '互动'
+            break
+          case 1:
+            this.taskType = '互动'
+            break
+          case 2:
+            this.taskType = '学习'
+            break
+          case 3:
+            this.taskType = '学习'
+            break
+        }
+      })
+    },
+    download() {
+      const name = this.fileName.slice(this.fileName.lastIndexOf('/') + 1)
+      fetch(this.fileName).then(res => res.blob()).then(blob => {
+        const link = document.createElement('a')
+        link.href = URL.createObjectURL(blob)
+        link.download = name
+        document.body.appendChild(link)
+        link.click()
+        window.URL.revokeObjectURL(link.href)
+        document.body.removeChild(link)
+      })
+    }
   }
 }
 </script>
@@ -243,7 +315,6 @@ export default {
   font-size: 13px;
   font-weight: 500;
 }
-
 #taskState {
   padding-left: 10px;
 }
