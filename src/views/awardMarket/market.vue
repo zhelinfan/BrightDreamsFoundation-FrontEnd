@@ -2,19 +2,18 @@
   <el-container class="container-bg">
     <ChildNavbar />
     <el-main class="main0">
-      <div style="display: flex; align-items: flex-end; justify-content: space-between;">
+      <div class="search-container" style="display: flex;">
         <div class="image-icon">
           <img :src="require('@/assets/market_images/gift.png')" class="image-transition">
         </div>
-        <div style="display: flex; flex-direction: column; align-items: flex-end;">
-          <el-form :inline="true">
-            <el-form-item>
-              <el-input v-model="input" placeholder="请输入物品名称进行查询" />
-            </el-form-item>
-            <el-form-item>
-              <el-button class="button-color">查询</el-button>
-            </el-form-item>
-          </el-form>
+        <div class="select">
+          <!--          <el-form :inline="true">-->
+          <!--            <el-form-item>-->
+          <el-input v-model="input" class="search-input" placeholder="请输入物品名称进行查询" />
+          <!--            </el-form-item>-->
+          <!--            <el-form-item>-->
+          <el-button class="button-color">查询</el-button>
+          <!--            </el-form-item>-->
         </div>
       </div>
     </el-main>
@@ -22,7 +21,12 @@
     <el-main class="main1">
       <el-aside class="aside-style">
         <div class="white">
+          <img :src="require('@/assets/market_images/images.png')" class="image-transition">
+          <div class="text-center">小同学,你好！</div>
+          <div class="text-center">快用积分换取心仪的物品吧！</div>
+          <div class="text-center">可用积分：X</div>
         </div>
+
       </el-aside>
       <el-main>
         <div class="centered-container">
@@ -37,6 +41,18 @@
 
     <el-main class="main2">
       <div class="centered-container"> <!-- 移除点号前缀 -->
+        <div class="white-line">
+          <el-dropdown>
+            <el-button class="orangebutton">
+              更多菜单<i class="el-icon-arrow-down el-icon--right" />
+            </el-button>
+            <el-dropdown-menu>
+              <el-dropdown-item>按热度</el-dropdown-item>
+              <el-dropdown-item>按兑换积分升序</el-dropdown-item>
+              <el-dropdown-item>按兑换积分降序</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
         <div class="white-box">
           <div class="box">
             <el-row>
@@ -80,20 +96,34 @@
 import ChildNavbar from '@/layout/components/childNavbar.vue'
 
 export default {
-  data () {
-    return {
-      circleUrl: "require('@/assets/market_images/image.jpg')",
-      squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
-      sizeList: ["large", "medium", "small"]
-    }
-  },
   components: {
     ChildNavbar
+  },
+  data() {
+    return {
+      circleUrl: "require('@/assets/market_images/image.jpg')",
+      squareUrl: 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
+      sizeList: ['large', 'medium', 'small'],
+      input: ''
+    }
   }
 }
 </script>
 
 <style scoped>
+.search-container{
+}
+.select{
+  position: absolute;
+  top: 15%;
+  left: 36%;
+  height: 10%;
+  width: 38%;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+}
+
 .container-bg {
   height: 190vh;
   background-color: #efefef; /* 设置背景颜色为灰色，你可以根据需要更改颜色值 */
@@ -110,7 +140,7 @@ export default {
 .image-icon{
   display:flex;
   width: 35%; /* 让容器宽度占满整个头部 */
-  height: 90%; /* 让容器高度占满整个头部 */
+  height: 100%; /* 让容器高度占满整个头部 */
 }
 .image-container {
   display: flex;
@@ -136,12 +166,12 @@ export default {
   flex-direction:row;
   width: 100%; /* 设置宽度为屏幕宽度的60% */
   margin-left: auto; /* 将 main1 向右移动 */
-  height:50%; /* 设置高度为100%以填充整个高度 */
+  height:51%; /* 设置高度为100%以填充整个高度 */
 }
 
 .main2 {
   width: 100%; /* 设置宽度为页面宽度的30% */
-  height: 60%; /* 设置高度为页面高度的70% */
+  height: 65%; /* 设置高度为页面高度的70% */
 }
 .time {
   font-size: 13px;
@@ -181,12 +211,22 @@ export default {
   display: flex;
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
+  flex-direction: column;
+  z-index:1;
 }
-
+.white-line{
+  background-color: #ffffff; /* 设置背景颜色为白色 */
+  padding: 30px; /* 添加内边距以增加长方形框的大小 */
+  border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
+  display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
+  width: 11.1%;
+  height: 60%;
+  transform: translateX(-641px) translateY(20px); /* 向左移动20像素，向下移动20像素 */
+  transition: box-shadow 0.3s; /* 添加过渡效果让阴影变化更平滑 */
+}
 .white-box {
   background-color: #ffffff; /* 设置背景颜色为白色 */
   padding: 30px; /* 添加内边距以增加长方形框的大小 */
-  border: 1px solid #ccc; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
   display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
   width: 92%;
@@ -208,18 +248,36 @@ export default {
 .custom-header {
   height: 100%; /* 设置头部高度为视窗高度的10% */
 }
+.search-input{
+  position: absolute;
+  top: 30%;
+  left: 0;
+  width: 80%;
+}
 .button-color {
-  background-color: chocolate !important;
-  border-color: chocolate !important;
+  position: absolute;
+  top: 30%;
+  right: 0;
+  width: 16%;
+  height: 43%;
+  background-color: #FDAD7A !important;
+  border-color: #FDAD7A !important;
   color: white; /* 设置文字颜色为白色，您可以根据需要选择不同的颜色 */
 }
-
+.orangebutton{
+  background-color: #FDAD7A !important;
+  border-color: #FDAD7A !important;
+  color: white;
+}
 /* 可以选择添加悬停状态的样式改变 */
 .button-color:hover {
   background-color: darkorange  !important; /* 更深的巧克力色为悬停状态 */
   border-color: darkorange   !important;
 }
 .white{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #ffffff; /* 设置背景颜色为白色 */
   padding: 30px; /* 添加内边距以增加长方形框的大小 */
   border: 1px solid #ccc; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
@@ -233,7 +291,18 @@ export default {
 .aside-style{
   margin-top: 1.2%;
   margin-left: 4%;
-  width:50%;
-  height:92.5%;
+  width:80%;
+  height:94.5%;
+}
+.avatar {
+  width: 50px; /* 调整头像的尺寸 */
+  height: 50px;
+  border-radius: 50%; /* 使头像呈圆形 */
+}
+.text-center {
+  text-align: center;
+  font-weight: bold;
+  font-size: 22px;
+  color: #FDAD7A;
 }
 </style>
