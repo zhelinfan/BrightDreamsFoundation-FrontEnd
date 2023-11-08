@@ -71,9 +71,9 @@
             </div>
             <div class="container">
               <div class="title">真实姓名</div>
-              <div v-if="!isEditingTrueName" class="valuePart">{{ person.trueName }}</div>
+              <div v-if="!isEditingTrueName" class="valuePart">{{ person.realName }}</div>
               <div v-else class="valuePart">
-                <el-input v-model="person.trueName" size="mini" type="text" class="input-box" @keyup.enter="this.isEditingTrueName = false" />
+                <el-input v-model="person.realName" size="mini" type="text" class="input-box" @keyup.enter="this.isEditingTrueName = false" />
               </div>
               <div class="edit-button" @click="saveEditTrueName">{{ isEditingTrueName ? '确认修改' : '修改' }}</div>
             </div>
@@ -174,14 +174,16 @@ export default {
       isEditingAge: false,
       isEditingGender: false,
       person: {
+        id: '',
         username: '小明同学',
         password: '111111s',
         school: '大河完小',
         class: '一年一班',
-        trueName: 'pmh',
+        realName: 'pmh',
         age: '6',
         gender: '男'
-      }
+      },
+      user: ''
     }
   },
   created() {
@@ -193,7 +195,7 @@ export default {
       for (let i = 0; i < arr.length; i++) {
         const arr2 = arr[i].split('=')
         if (arr2[0] === ' userInfo') {
-          const userinfo = JSON.parse(arr2[i])
+          const userinfo = JSON.parse(arr[i])
           return userinfo
         }
       }
@@ -201,13 +203,14 @@ export default {
     },
     fetchPersonalInfo() {
       api.getUserInfo(18).then(response => {
-        const userInfo = response.data
-        this.person.username = this.getCookie().username
-        this.person.password = this.getCookie().password
-        this.person.school = userInfo.school
-        this.person.class = userInfo.clazz
-        this.person.trueName = userInfo.realName
-        this.person.age = userInfo.age
+        this.user = response.data
+        this.person.id = this.user.id
+        this.person.username = this.user.username
+        this.person.password = this.user.password
+        this.person.school = this.user.school
+        this.person.class = this.user.clazz
+        this.person.realName = this.user.realName
+        this.person.age = this.user.age
         if (this.getCookie().gender === 0) {
           this.person.gender = '男'
         } else {
@@ -227,25 +230,44 @@ export default {
     },
     saveEditUsername() {
       this.isEditingUsername = !this.isEditingUsername
+      this.user.username = this.person.username
+      const updatedUserInfoJSON = JSON.stringify(this.user)
+      document.cookie = `userInfo=${updatedUserInfoJSON}; path=/`
+      api.updateUserInfo(this.user)
     },
     saveEditPassword() {
       this.isEditingPassword = !this.isEditingPassword
+      this.user.password = this.person.password
+      const updatedUserInfoJSON = JSON.stringify(this.user)
+      document.cookie = `userInfo=${updatedUserInfoJSON}; path=/`
+      api.updateUserInfo(this.user)
     },
     saveEditSchool() {
-      console.log(this.options)
       this.isEditingSchool = !this.isEditingSchool
+      this.user.school = this.person.school
+      const updatedUserInfoJSON = JSON.stringify(this.user)
+      document.cookie = `userInfo=${updatedUserInfoJSON}; path=/`
+      api.updateUserInfo(this.user)
     },
     saveEditClass() {
       this.isEditingClass = !this.isEditingClass
+      this.user.class = this.person.class
+      api.updateUserInfo(this.user)
     },
     saveEditTrueName() {
       this.isEditingTrueName = !this.isEditingTrueName
+      this.user.realName = this.person.realName
+      api.updateUserInfo(this.user)
     },
     saveEditAge() {
       this.isEditingAge = !this.isEditingAge
+      this.user.age = this.person.age
+      api.updateUserInfo(this.user)
     },
     saveEditGender() {
       this.isEditingGender = !this.isEditingGender
+      this.user.gender = this.person.gender
+      api.updateUserInfo(this.user)
     }
   }
 }

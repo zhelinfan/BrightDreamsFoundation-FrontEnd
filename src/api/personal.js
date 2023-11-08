@@ -8,6 +8,12 @@ export default {
       method: 'get',
       data: id
     })
+  },
+  updateUserInfo(user) {
+    return request({
+      url: '/userInfo/update',
+      method: 'put',
+      data: user
+    })
   }
-
 }
