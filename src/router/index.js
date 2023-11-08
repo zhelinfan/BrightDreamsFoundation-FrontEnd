@@ -36,7 +36,120 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
+  {
+    path: '/register',
+    component: () => import('@/views/register/index.vue'),
+    hidden: true,
+    meta: {
+      title: '儿童注册',
+      icon: 'el-icon-user'
+    }
+  },
+  {
+    path: '/personal',
+    component: () => import('@/views/personal/index.vue'),
+    meta: {
+      title: '儿童个人中心',
+      icon: 'el-icon-user',
+      hidden: true
+    }
+  },
+  {
+    path: '/mainpage',
+    component: () => import('@/views/mainpage/mainpage.vue'),
+    meta: {
+      title: '儿童主页面',
+      icon: 'el-icon-user',
+      hidden: true
+    }
+  },
+  {
+    path: '/task',
+    component: () => import('@/views//task/list'), // 使用Layout组件作为包裹
+    meta: {
+      title: '任务列表',
+      icon: 'child'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/task/list.vue'),
+        meta: {
+          title: '任务列表',
+          icon: 'child'
+        }
+      }
+    ]
+  },
+  {
+    path: '/already',
+    component: () => import('@/views/task/already.vue'),
+    meta: {
+      title: '任务列表（已完成）',
+      icon: 'el-icon-user',
+      hidden: true
+    }
+  },
+  {
+    path: '/several',
+    component: () => import('@/views/task/several.vue'),
+    meta: {
+      title: '任务处理情况',
+      icon: 'el-icon-user',
+      hidden: true
+    }
+  },
+  {
+    path: '/submitHomework',
+    component: () => import('@/views/tasks/submitHomework'),
+    meta: {
+      title: '作业提交',
+      icon: 'el-icon-edit-outline'
+    }
+  },
+  {
+    path: '/checkSubmission',
+    component: () => import('@/views/tasks/checkSubmission.vue'),
+    meta: {
+      title: '查看作业提交状况',
+      icon: 'el-icon-document-checked'
+    }
+  },
+  {
+    path: '/market',
+    component: () => import('@/views/awardMarket/market.vue'),
+    meta: {
+      title: '积分商城',
+      icon: 'el-icon-document-checked'
+    }
+  },
+  // {
+  //   path: '/detail',
+  //   component: Layout, // 使用Layout组件作为包裹
+  //   redirect: 'task-detail', // 可能需要一个默认的子路由
+  //   meta: {
+  //     title: '任务详情',
+  //     icon: 'child'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'task-detail',
+  //       component: () => import('@/views/task/detail.vue'),
+  //       meta: {
+  //         title: '任务详情',
+  //         icon: 'child'
+  //       }
+  //     }
+  //   ]
+  // },
+  {
+    path: '/detail',
+    component: () => import('@/views/task/detail.vue'),
+    meta: {
+      title: '任务详情',
+      icon: 'child'
+    }
+  },
   {
     path: '/404',
     component: () => import('@/views/404'),
@@ -108,32 +221,6 @@ export const constantRoutes = [
         name: 'donation',
         component: () => import('@/views/donation/index'),
         meta: { title: '捐赠流水', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/mission',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'mission',
-        component: () => import('@/views/mission/index'),
-        meta: { title: '任务发布', icon: 'el-icon-s-order' }
-      }
-    ]
-  },
-
-  {
-    path: '/data',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'data',
-        component: () => import('@/views/data/index'),
-        meta: { title: '数据中控', icon: 'dashboard' }
       }
     ]
   },
