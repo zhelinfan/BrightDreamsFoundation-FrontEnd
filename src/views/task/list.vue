@@ -110,7 +110,7 @@ export default {
     }
   },
   created() {
-    this.fetchData() // 获取数据
+    this.getCookie()// 获取数据
   },
   methods: {
     typeJudge(number) {
@@ -124,8 +124,27 @@ export default {
         return '视频通话任务'
       }
     },
+    setData(array_i) {
+      const temp = {
+        id: '',
+        name: '',
+        startTime: '',
+        stopTime: '',
+        type: '',
+        award: ''
+      }
+      temp.id = array_i.id
+      temp.name = array_i.missionName
+      temp.startTime = array_i.releaseDate
+      temp.stopTime = array_i.deadline
+      temp.type = this.typeJudge(array_i.kind)
+      temp.typeNum = array_i.kind
+      temp.award = array_i.reward
+      this.tableData.push(temp)
+    },
     fetchData() {
-      api.getUncompleteTask(18).then(response => {
+      api.getUncompleteTask(this.userId).then(response => {
+        console.log('enter')
         const code = response.code
         const array = response.data
         if (code === 200) {
@@ -137,45 +156,43 @@ export default {
           this.tableData[0].typeNum = array[0].kind
           this.tableData[0].award = array[0].reward
           for (let i = 1; i < array.length; i++) {
-            const temp = {
-              id: '',
-              name: '',
-              startTime: '',
-              stopTime: '',
-              type: '',
-              award: ''
-            }
-            temp.id = array[i].id
-            temp.name = array[i].missionName
-            temp.startTime = array[i].releaseDate
-            temp.stopTime = array[i].deadline
-            temp.type = this.typeJudge(array[i].kind)
-            temp.typeNum = array[i].kind
-            temp.award = array[i].reward
-            this.tableData.push(temp)
+            this.setData(array[i])
           }
         } else {
           console.error('Error: ' + '加载失败')
         }
       })
-        .catch(error => {
-          console.error('Error fetching missions:', error)
-          // this.isLoading = false
-        })
+      // .catch(error => {
+      //   console.error('Error fetching missions:', error)
+      //   // this.isLoading = false
+      // })
     },
     getCookie() {
       const arr = document.cookie.split(';')
       for (let i = 0; i < arr.length; i++) {
         const arr2 = arr[i].split('=')
-        if (arr2[0] === ' userInfo') {
-          const userinfo = JSON.parse(arr[i])
-          return userinfo
+        if (arr2[0] === 'userInfo' || arr2[0] === ' userInfo') {
+          const userinfo = JSON.parse(arr2[1])
+          console.log('enter')
+          this.userId = userinfo.id
+          // return userinfo
+          console.log(this.userId)
+          this.fetchData()
         }
       }
       return ''
     },
     onSubmit() {
-
+      console.log(this.keywords)
+      console.log(this.userId)
+      const formData = new FormData()
+      formData.append('keywords', this.keywords)
+      if (this.keywords === '') {
+      } else {
+        api.search(formData, this.userId).then(response => {
+          console.log(response.data)
+        })
+      }
     },
     handleSee(index, row) {
       console.log(index, row)

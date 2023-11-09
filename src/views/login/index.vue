@@ -75,7 +75,7 @@ export default {
     }
     return {
       loginForm: {
-        username: 'asfzl',
+        username: 'asdfzl',
         password: '222222'
       },
       loginRules: {
@@ -132,6 +132,7 @@ export default {
               // 把用户存到cookie里
               const userInfoJSON = JSON.stringify(response.data)
               const cookieString = `userInfo=${userInfoJSON}; path=/`
+              console.log(document.cookie)
               document.cookie = cookieString
               if ('token' in response.data) {
                 this.$store.dispatch('user/login', this.loginForm).then(() => {

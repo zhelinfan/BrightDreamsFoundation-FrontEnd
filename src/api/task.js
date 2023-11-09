@@ -7,11 +7,11 @@ export default {
       data: id
     })
   },
-  search(id, keywords) {
+  search(formData, id) {
     return request({
       url: `/mission/searchUncompleted/${id}`,
       method: 'post',
-      data: { keywords, id }
+      data: formData
     })
   },
   fetchMissions(id) {

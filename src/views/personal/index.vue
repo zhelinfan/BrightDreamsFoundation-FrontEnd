@@ -123,13 +123,13 @@ export default {
   data() {
     return {
       options: [{
-        value: '1',
+        value: '大河完小',
         label: '大河完小'
       }, {
-        value: '2',
+        value: '阳光小学',
         label: '阳光小学'
       }, {
-        value: '3',
+        value: '明光小学',
         label: '明光小学'
       }
       ],
@@ -243,7 +243,7 @@ export default {
       api.updateUserInfo(this.user)
     },
     saveEditSchool() {
-      this.isEditingSchool = !this.isEditingSchool
+      this.isEditingSchool = !this.isEditingSschool
       this.user.school = this.person.school
       const updatedUserInfoJSON = JSON.stringify(this.user)
       document.cookie = `userInfo=${updatedUserInfoJSON}; path=/`
