@@ -10,7 +10,7 @@
             <div class="center-content"> <!-- 添加一个包装层 -->
               <!-- 这里是查询和查看任务详情按钮 -->
               <div class="form">
-                <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                <el-form :inline="true" class="demo-form-inline">
                   <el-form-item label="">
                     <el-input v-model="keywords" size="small" placeholder="" class="custom-input-style" />
                   </el-form-item>
@@ -24,7 +24,7 @@
               </div>
             </div>
           </div>
-          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form :inline="true" class="demo-form-inline">
             <!-- ... 其他表单元素 ... -->
           </el-form>
         </div>
@@ -35,7 +35,6 @@
               label="任务名称"
               width="200"
               header-align="center"
-              :cell-style="nameCellStyle"
             />
             <el-table-column
               prop="startTime"
@@ -110,7 +109,7 @@ export default {
     }
   },
   created() {
-    this.fetchData() // 获取数据
+    this.getCookie()// 获取数据
   },
   methods: {
     typeJudge(number) {
@@ -124,58 +123,84 @@ export default {
         return '视频通话任务'
       }
     },
+    setData(array) {
+      this.tableData[0].id = array[0].id
+      this.tableData[0].name = array[0].missionName
+      this.tableData[0].startTime = array[0].releaseDate
+      this.tableData[0].stopTime = array[0].deadline
+      this.tableData[0].type = this.typeJudge(array[0].kind)
+      this.tableData[0].typeNum = array[0].kind
+      this.tableData[0].award = array[0].reward
+      for (let i = 1; i < array.length; i++) {
+        const temp = {
+          id: '',
+          name: '',
+          startTime: '',
+          stopTime: '',
+          type: '',
+          award: ''
+        }
+        temp.id = array[i].id
+        temp.name = array[i].missionName
+        temp.startTime = array[i].releaseDate
+        temp.stopTime = array[i].deadline
+        temp.type = this.typeJudge(array[i].kind)
+        temp.typeNum = array[i].kind
+        temp.award = array[i].reward
+        this.tableData.push(temp)
+      }
+    },
     fetchData() {
-      api.getUncompleteTask(18).then(response => {
+      api.getUncompleteTask(this.userId).then(response => {
         const code = response.code
         const array = response.data
         if (code === 200) {
-          this.tableData[0].id = array[0].id
-          this.tableData[0].name = array[0].missionName
-          this.tableData[0].startTime = array[0].releaseDate
-          this.tableData[0].stopTime = array[0].deadline
-          this.tableData[0].type = this.typeJudge(array[0].kind)
-          this.tableData[0].typeNum = array[0].kind
-          this.tableData[0].award = array[0].reward
-          for (let i = 1; i < array.length; i++) {
-            const temp = {
-              id: '',
-              name: '',
-              startTime: '',
-              stopTime: '',
-              type: '',
-              award: ''
-            }
-            temp.id = array[i].id
-            temp.name = array[i].missionName
-            temp.startTime = array[i].releaseDate
-            temp.stopTime = array[i].deadline
-            temp.type = this.typeJudge(array[i].kind)
-            temp.typeNum = array[i].kind
-            temp.award = array[i].reward
-            this.tableData.push(temp)
-          }
+          this.setData(array)
         } else {
           console.error('Error: ' + '加载失败')
         }
       })
-        .catch(error => {
-          console.error('Error fetching missions:', error)
-          // this.isLoading = false
-        })
+      // .catch(error => {
+      //   console.error('Error fetching missions:', error)
+      //   // this.isLoading = false
+      // })
     },
     getCookie() {
       const arr = document.cookie.split(';')
       for (let i = 0; i < arr.length; i++) {
         const arr2 = arr[i].split('=')
-        if (arr2[0] === ' userInfo') {
-          const userinfo = JSON.parse(arr[i])
-          return userinfo
+        if (arr2[0] === 'userInfo' || arr2[0] === ' userInfo') {
+          const userinfo = JSON.parse(arr2[1])
+          this.userId = userinfo.id
+          // return userinfo
+          console.log(this.userId)
+          this.fetchData()
         }
       }
       return ''
     },
     onSubmit() {
-
+      console.log(this.keywords)
+      console.log(this.userId)
+      const formData = new FormData()
+      formData.append('keywords', this.keywords)
+      if (this.keywords === '') {
+        this.fetchData()
+      } else {
+        api.search(formData, this.userId).then(response => {
+          // console.log(response.data)
+          this.tableData = [{
+            id: '',
+            name: '',
+            startTime: '',
+            stopTime: '',
+            typeNum: '',
+            type: '',
+            award: ''
+          }]
+          this.setData(response.data)
+        })
+      }
     },
     handleSee(index, row) {
       console.log(index, row)

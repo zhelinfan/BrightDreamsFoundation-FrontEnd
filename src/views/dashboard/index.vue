@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">欢迎来到明光筑梦项目！</div>
-    <div>这个项目纯粹是啥呗</div>
   </div>
 </template>
 
