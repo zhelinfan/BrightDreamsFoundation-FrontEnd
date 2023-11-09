@@ -185,7 +185,7 @@ export default {
       const formData = new FormData()
       formData.append('keywords', this.keywords)
       if (this.keywords === '') {
-        console.log('empty')
+        this.fetchData()
       } else {
         api.search(formData, this.userId).then(response => {
           // console.log(response.data)
