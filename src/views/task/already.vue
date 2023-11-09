@@ -122,8 +122,8 @@ export default {
       this.tableData[0].id = array[0].id
       this.tableData[0].name = array[0].mission.missionName
       this.tableData[0].finishTime = array[0].finishDate
-      this.tableData[0].type = this.typeJudge(array[0].kind)
-      this.tableData[0].typeNum = array[0].mission.kind
+      this.tableData[0].type = this.typeJudge(array[0].mission.kind)
+      this.tableData[0].typeNum = array[0].kind
       this.tableData[0].award = array[0].mission.reward
       this.tableData[0].status = array[0].status
       for (let i = 1; i < array.length; i++) {

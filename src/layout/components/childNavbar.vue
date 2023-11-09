@@ -99,6 +99,7 @@ export default {
       this.$router.push({ path: '/already' })
     },
     shopSwitch() {
+      this.$router.push({ path: '/market' })
     },
     chatSwitch() {
     },
