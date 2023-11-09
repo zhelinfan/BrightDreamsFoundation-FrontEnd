@@ -25,8 +25,7 @@
     <el-submenu id="submenu" index="2">
       <template id="el-menu-item-2" slot="title">任务广场</template>
       <el-menu-item id="submenu-item-2-1" index="2-1" @click="unTaskSwitch">未完成任务</el-menu-item>
-      <el-menu-item id="submenu-item-2-2" index="2-2" @click="severalTaskSwitch">正在审核任务</el-menu-item>
-      <el-menu-item id="submenu-item-2-3" index="2-3" @click="alreadyTaskSwitch">已完成任务</el-menu-item>
+      <el-menu-item id="submenu-item-2-2" index="2-2" @click="alreadyTaskSwitch">已完成任务</el-menu-item>
     </el-submenu>
     <el-menu-item id="el-menu-item-3" index="3" class="el-menu-item" @click="shopSwitch">积分商城</el-menu-item>
     <el-menu-item id="el-menu-item-4" index="4" class="el-menu-item" @click="chatSwitch">聊天互动</el-menu-item>
@@ -93,9 +92,9 @@ export default {
     unTaskSwitch() {
       this.$router.push({ path: '/task' })
     },
-    severalTaskSwitch() {
-      this.$router.push({ path: '/several' })
-    },
+    // severalTaskSwitch() {
+    //   this.$router.push({ path: '/several' })
+    // },
     alreadyTaskSwitch() {
       this.$router.push({ path: '/already' })
     },

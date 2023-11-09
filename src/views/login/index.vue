@@ -136,7 +136,7 @@ export default {
               document.cookie = cookieString
               if ('token' in response.data) {
                 this.$store.dispatch('user/login', this.loginForm).then(() => {
-                  this.$router.push({ path: '/' })
+                  this.$router.push({ path: 'total' })
                 })
               } else {
                 this.$store.dispatch('user/login', this.loginForm).then(() => {
