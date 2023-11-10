@@ -3,6 +3,9 @@
     <ChildNavbar />
     <div class="main">
       <div class="work-main">
+        <div class="item-title">
+          <span style="font-weight: bold; font-size: 24px;">积分历史收支记录</span>
+        </div>
         <div class="left">
           <div class="item">
             <div class="header">
@@ -331,9 +334,15 @@ export default {
 }
 .item{
   position: absolute;
-  /*border: 3px solid #f56c6c;*/
+  border: 3px solid #f56c6c;
   top: 15%;
   left: 3%;
+}
+
+.item-title {
+  position: absolute;
+  top: 7%;
+  left: 5%;
 }
 .header {
   background-color: #7facf1;
@@ -343,6 +352,7 @@ export default {
   /*border: 1px solid #000000;*/
   border-radius: 8px;
   margin-bottom: 10px;
+  top: 17%;
   height: 45px;
 }
 .body {
