@@ -1,5 +1,5 @@
 <template>
-  <div class="container-bg">
+  <div class="container-bg" >
     <ChildNavbar />
     <div class="main0">
       <div class="search-container" style="display: flex;">

@@ -39,7 +39,7 @@
         <router-link to="/personal">
           <el-dropdown-item>个人中心</el-dropdown-item>
         </router-link>
-        <router-link to="">
+        <router-link to="/rewardHistory">
           <el-dropdown-item>历史积分</el-dropdown-item>
         </router-link>
         <el-dropdown-item divided @click.native="logOut">
@@ -102,6 +102,7 @@ export default {
       this.$router.push({ path: '/market' })
     },
     chatSwitch() {
+      this.$router.push({ path: '/chat' })
     },
     logOut() {
       this.$router.push({ path: '/login' })
@@ -111,6 +112,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-menu{
+  //background-color: #f9ead8;
+  background-color: #ffffff;
+}
 #el-menu-item-0{
   opacity: 1;
   margin-right: 0px;
