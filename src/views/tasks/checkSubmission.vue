@@ -142,16 +142,16 @@ export default {
         this.rewardScore = response.data.reward
         switch (response.data.kind) {
           case 0:
-            this.taskType = '互动'
+            this.taskType = '上传文件任务'
             break
           case 1:
-            this.taskType = '互动'
+            this.taskType = '上传视频任务'
             break
           case 2:
-            this.taskType = '学习'
+            this.taskType = '聊天任务'
             break
           case 3:
-            this.taskType = '学习'
+            this.taskType = '视频通话任务'
             break
         }
       })
