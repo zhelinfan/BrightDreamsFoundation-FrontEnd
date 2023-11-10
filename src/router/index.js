@@ -123,6 +123,14 @@ export const constantRoutes = [
       icon: 'el-icon-document-checked'
     }
   },
+  {
+    path: '/rewardHistory',
+    component: () => import('@/views/awardMarket/rewardHistory.vue'),
+    meta: {
+      title: '积分收支历史记录',
+      icon: 'el-icon-notebook-2'
+    }
+  },
   // {
   //   path: '/detail',
   //   component: Layout, // 使用Layout组件作为包裹
@@ -142,14 +150,6 @@ export const constantRoutes = [
   //     }
   //   ]
   // },
-  {
-    path: '/detail',
-    component: () => import('@/views/task/detail.vue'),
-    meta: {
-      title: '任务详情',
-      icon: 'child'
-    }
-  },
   {
     path: '/404',
     component: () => import('@/views/404'),

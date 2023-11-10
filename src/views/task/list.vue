@@ -17,9 +17,6 @@
                   <el-form-item>
                     <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
                   </el-form-item>
-                  <el-form-item>
-                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="taskDetail">查看任务详情</el-button>
-                  </el-form-item>
                 </el-form>
               </div>
             </div>
@@ -154,6 +151,7 @@ export default {
       api.getUncompleteTask(this.userId).then(response => {
         const code = response.code
         const array = response.data
+        console.log(response.data)
         if (code === 200) {
           this.setData(array)
         } else {
@@ -204,6 +202,12 @@ export default {
     },
     handleSee(index, row) {
       console.log(index, row)
+      this.$router.push({
+        path: '/submitHomework',
+        query: {
+          id: row.id // 假设id是row对象中的属性
+        }
+      })
     },
     headerCellStyle() {
       return {
@@ -224,9 +228,6 @@ export default {
     filterHandler(value, row, column) {
       const property = column['property']
       return row[property] === value
-    },
-    taskDetail() {
-      this.$router.push({ path: '/detail' })
     }
   }
 }

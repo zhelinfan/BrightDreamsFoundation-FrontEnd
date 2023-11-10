@@ -2,212 +2,143 @@
   <div>
     <el-container>
       <ChildNavbar />
-      <el-header style="height: 0px;"></el-header>
+      <el-header style="height: 0px;" />
       <el-main>
-        <div class="header">
-          <!-- 这里是查询和查看任务详情按钮 -->
-          <div class="white-box">
-            <div class="center-content"> <!-- 添加一个包装层 -->
-              <!-- 这里是查询和查看任务详情按钮 -->
-              <div class="form">
-                <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                  <el-form-item label="">
-                    <el-input v-model="formInline.name" size="small" placeholder="" class="custom-input-style"></el-input>
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" @click="onSubmit" size="small">查询</el-button>
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" @click="taskDetail" size="small">查看任务详情</el-button>
-                  </el-form-item>
-                </el-form>
-              </div>
-            </div>
-          </div>
-          <el-form :inline="true" :model="formInline" class="demo-form-inline">
-            <!-- ... 其他表单元素 ... -->
-          </el-form>
-        </div>
         <div class="content">
+          <div style="margin-bottom: 20px; width: 50%; border-radius: 60px;">
+            <el-input placeholder="请输入内容" v-model="input3" class="input-with-select ">
+              <span class="blue-bold">提交记录</span>
+              <el-button slot="append" icon="el-icon-search"></el-button>
+            </el-input>
+          </div>
           <el-table :data="tableData" style="width: 100%; max-width: 1200px;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle">
             <el-table-column
               prop="name"
               label="任务名称"
-              width="200"
+              width="280"
               header-align="center"
-              :cell-style="nameCellStyle">
-            </el-table-column>
+            />
             <el-table-column
-              prop="startTime"
-              label="发布时间"
+              prop="finishTime"
+              label="提交时间"
               sortable
-              width="200"
+              width="300"
               header-align="center"
-            >
-            </el-table-column>
-            <el-table-column
-              prop="stopTime"
-              label="截止时间"
-              sortable
-              width="200"
-              header-align="center"
-            >
-            </el-table-column>
-            <el-table-column
-              prop="type"
-              label="任务类型"
-              width="180"
-              header-align="center"
-              column-key="type"
-              :filters="[{text: '学习', value: '学习'}, {text: '互动', value: '互动'}]"
-              :filter-method="filterHandler"
-            >
-            </el-table-column>
-            <el-table-column
-              prop="award"
-              label="奖励积分"
-              width="180"
-              header-align="center">
-            </el-table-column>
+            />
             <el-table-column
               prop="status"
               label="状态"
-              width="180"
-              header-align="center">
-            </el-table-column>
-            <el-table-column  @click="taskDetail" label="操作" width="200" header-align="center">
+              width="293"
+              header-align="center"
+            />
+            <el-table-column label="操作" width="300" header-align="center" @click="taskDetail">
               <template slot-scope="scope">
-                <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view"  @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
+                <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
               </template>
             </el-table-column>
           </el-table>
         </div>
       </el-main>
     </el-container>
-    <img :src="require('@/assets/mission_images/1.png')" class="image-transition">
+    <img :src="require('@/assets/task/animal.jpg')" class="image-transition">
   </div>
 </template>
 
 <script>
-import { fetchMissions } from '@/api/task'
+import api from '@/api/task'
 import ChildNavbar from '@/layout/components/childNavbar.vue'
 export default {
   // name: "List",
   components: {
     ChildNavbar
   },
-  data() {
+  data: function() {
     return {
-      tableData: [
-        {
-          name: '数据分析',
-          startTime: '2023-11-01 08:00',
-          stopTime: '2023-11-07 18:00',
-          type: '学习',
-          award: 50,
-          status: '已完成'
-        },
-        {
-          name: '市场调研',
-          startTime: '2023-11-02 09:00',
-          stopTime: '2023-11-08 19:00',
-          type: '互动',
-          award: 60,
-          status: '审核中'
-        },
-        {
-          name: '数据分析',
-          startTime: '2023-11-01 08:00',
-          stopTime: '2023-11-07 18:00',
-          type: '学习',
-          award: 50,
-          status: '待审核'
-        },
-        {
-          name: '市场调研',
-          startTime: '2023-11-02 09:00',
-          stopTime: '2023-11-08 19:00',
-          type: '互动',
-          award: 60,
-          status: '已完成'
-        },
-        {
-          name: '数据分析',
-          startTime: '2023-11-01 08:00',
-          stopTime: '2023-11-07 18:00',
-          type: '学习',
-          award: 50,
-          status: '审核中'
-        },
-        {
-          name: '市场调研',
-          startTime: '2023-11-02 09:00',
-          stopTime: '2023-11-08 19:00',
-          type: '互动',
-          award: 60,
-          status: '待审核'
-        },
-        {
-          name: '数据分析',
-          startTime: '2023-11-01 08:00',
-          stopTime: '2023-11-07 18:00',
-          type: '学习',
-          award: 50,
-          status: '已完成'
-        },
-        {
-          name: '市场调研',
-          startTime: '2023-11-02 09:00',
-          stopTime: '2023-11-08 19:00',
-          type: '互动',
-          award: 60,
-          status: '已完成'
-        }
-      ],
-      formInline: {
+      userId: {},
+      tableData: [{
+        id: '',
         name: '',
-        date: null
-      },
-      isLoading: true,
-      total: 0, // 总记录数
-      page: 1, // 页码
-      limit: 10, // 每页记录数
-      searchObj: {}, // 查询条件
-      // tableData: [],
-      multipleSelection: [],
-      mission: {},
-      dialogVisible: false
+        finishTime: '',
+        status: ''
+      }
+      ],
+      listForm: {},
+      formInline: '',
+      keywords: ''
     }
   },
   created() {
-    this.fetchData()
+    this.getCookie()
   },
   methods: {
-    nameCellStyle({ row, column, rowIndex, columnIndex }) {
-      // 如果是任务名称列，设置字体颜色为橙色
-      if (column.property === 'name') {
-        return {
-          color: 'orange'
+    setData(array) {
+      this.tableData[0].id = array[0].id
+      this.tableData[0].name = array[0].mission.missionName
+      this.tableData[0].finishTime = array[0].finishDate
+      this.tableData[0].status = array[0].status
+      for (let i = 1; i < array.length; i++) {
+        const temp = {
+          id: '',
+          name: '',
+          finishTime: '',
+          status: ''
         }
+        temp.id = array[i].id
+        temp.name = array[i].mission.missionName
+        temp.finishTime = array[i].finishDate
+        temp.status = array[i].status
+        this.tableData.push(temp)
       }
-      // 其他列使用默认样式
-      return {}
     },
     fetchData() {
-      this.isLoading = true
-      // 调用API获取任务数据
-      fetchMissions(this.page, this.limit, this.searchObj)
-        .then(response => {
-          this.tableData = response.data // 假设返回的直接就是任务列表
-          this.isLoading = false
-        })
-        .catch(error => {
-          console.error('Error fetching missions:', error)
-          this.isLoading = false
-        })
+      api.getSubmitTask(this.userId).then(response => {
+        console.log(response.data)
+        const code = response.code
+        const array = response.data
+        if (code === 200) {
+          this.setData(array)
+        } else {
+          console.error('Error: ' + '加载失败')
+        }
+      })
+      // .catch(error => {
+      //   console.error('Error fetching missions:', error)
+      //   // this.isLoading = false
+      // })
+    },
+    getCookie() {
+      const arr = document.cookie.split(';')
+      for (let i = 0; i < arr.length; i++) {
+        const arr2 = arr[i].split('=')
+        if (arr2[0] === 'userInfo' || arr2[0] === ' userInfo') {
+          const userinfo = JSON.parse(arr2[1])
+          this.userId = userinfo.id
+          // return userinfo
+          console.log(this.userId)
+          this.fetchData()
+        }
+      }
+      return ''
     },
     onSubmit() {
-      console.log('submit!', this.formInline)
+      console.log(this.keywords)
+      console.log(this.userId)
+      const formData = new FormData()
+      formData.append('keywords', this.keywords)
+      if (this.keywords === '') {
+        this.fetchData()
+      } else {
+        api.search(formData, this.userId).then(response => {
+          // console.log(response.data)
+          this.tableData = [{
+            id: '',
+            name: '',
+            finishTime: '',
+            status: ''
+          }]
+          this.setData(response.data)
+        })
+      }
     },
     handleSee(index, row) {
       console.log(index, row)
@@ -259,7 +190,7 @@ export default {
   place-items: center;
   height: 90%; /* or any desired height */
   padding: 20px;
-  background: transparent;
+  background:transparent;
   width: 75%; /* 设置宽度为页面宽度的60% */
   margin: 0 auto; /* 添加自动边距以在页面中居中 */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 设置默认的阴影效果 */
@@ -275,7 +206,7 @@ export default {
   background-color: transparent; /* 设置背景颜色为白色 */
   padding: 10px; /* 添加内边距以增加长方形框的大小 */
   border: 1px solid #ccc; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
-  border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
+  border-radius: 5px; /* 添加圆角以使框看起来更圆滑 */
   display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
   width: 80%;
   height: 140px;
@@ -300,13 +231,14 @@ export default {
   height: 100%; /* 设置高度为100%以充满 .white-box 的高度 */
 }
 .image-transition {
-  position: absolute; /* 设置绝对定位 */
-  top:6%;
-  bottom: 0; /* 图片位于底部 */
-  left: 0; /* 图片位于左侧，可以根据需要调整位置 */
-  z-index: -1; /* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 */
-  max-width: 100%; /* 图片最大宽度为100% */
-  height: auto;
+  position: fixed; /* 设置为固定定位，相对于视口 */
+  top: 0; /* 图片位于顶部 */
+  left: 0; /* 图片位于左侧 */
+  width: 100%; /* 图片宽度为100%，覆盖整个视口宽度 */
+  height: 100%; /* 图片高度为100%，覆盖整个视口高度 */
+  z-index: -1; /* 将图片放在其他内容之下 */
+  object-fit: cover; /* 确保图片覆盖整个容器且不失真 */
+  opacity:0.8;
 }
 .custom-input-style .el-input__inner {
   border: 1px solid #dcdfe6; /* 细边框，淡灰色 */
@@ -333,14 +265,22 @@ export default {
   box-shadow: 0 0 8px rgba(245, 108, 108, 0.3); /* 错误状态的外阴影 */
 }
 .custom-button-color {
-  background-color: chocolate !important; /* 重要性提升，确保覆盖默认样式 */
-  border-color: chocolate !important;
+  background-color: black !important; /* 重要性提升，确保覆盖默认样式 */
+  border-color: black !important;
 }
 
 /* 可以选择添加悬停状态的样式改变 */
 .custom-button-color:hover {
-  background-color: darkorange  !important; /* 更深的巧克力色为悬停状态 */
-  border-color: darkorange   !important;
+  background-color: gray  !important; /* 更深的巧克力色为悬停状态 */
+  border-color: gray   !important;
+}
+.label-blue-bold {
+  color: blue;
+  font-weight: bold;
+}
+
+.input-with-button .el-input-group__append {
+  background-color: #fff;
 }
 
 </style>

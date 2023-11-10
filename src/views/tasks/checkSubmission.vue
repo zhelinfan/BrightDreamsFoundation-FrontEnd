@@ -112,8 +112,14 @@ export default {
       fileName: '',
       hkDescription: '',
       comment: '',
-      finalScore: ''
+      finalScore: '',
+      userId: '',
+      missionId: ''
     }
+  },
+  mounted() {
+    this.userId = this.$route.query.userId
+    this.missionId = this.$route.query.missionId
   },
   created() {
     this.fetchData()
@@ -122,7 +128,7 @@ export default {
     fetchData() {
       // this.page = current
       console.log('enter')
-      api.checkSubmission(18, 1).then(response => {
+      api.checkSubmission(this.userId, this.missionId).then(response => {
         console.log(response.data)
         this.submitTime = response.data.finishDate
         this.fileName = response.data.submissionURL
@@ -135,23 +141,23 @@ export default {
           case 2:this.taskState = '不通过'; this.taskStateType = 'danger'; break
         }
       })
-      api.loadSingleMission(1).then(response => {
+      api.loadSingleMission(this.missionId).then(response => {
         this.taskName = response.data.missionName
         this.deadline = response.data.deadline
         this.taskDesc = response.data.description
         this.rewardScore = response.data.reward
         switch (response.data.kind) {
           case 0:
-            this.taskType = '互动'
+            this.taskType = '上传文件任务'
             break
           case 1:
-            this.taskType = '互动'
+            this.taskType = '上传视频任务'
             break
           case 2:
-            this.taskType = '学习'
+            this.taskType = '聊天任务'
             break
           case 3:
-            this.taskType = '学习'
+            this.taskType = '视频通话任务'
             break
         }
       })

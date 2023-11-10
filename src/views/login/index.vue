@@ -127,7 +127,7 @@ export default {
           this.loading = true
           api.login(this.loginForm).then(response => {
             const code = response.code
-            console.log(response.data)
+            console.log(response)
             if (code === 200) {
               // 把用户存到cookie里
               const userInfoJSON = JSON.stringify(response.data)

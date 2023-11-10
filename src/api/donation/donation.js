@@ -3,7 +3,6 @@ import request from '@/utils/request'
 const api_name = '/donation'
 
 export default {
-
   /*
   获取donation分页列表(带搜索)
   */

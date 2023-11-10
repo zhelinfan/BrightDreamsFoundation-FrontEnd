@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <ChildNavbar />
-      <el-header style="height: 0px;"></el-header>
+      <el-header style="height: 0px;" />
       <el-main>
         <div class="header">
           <!-- 这里是查询和查看任务详情按钮 -->
@@ -10,21 +10,18 @@
             <div class="center-content"> <!-- 添加一个包装层 -->
               <!-- 这里是查询和查看任务详情按钮 -->
               <div class="form">
-                <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                <el-form :inline="true" class="demo-form-inline">
                   <el-form-item label="">
-                    <el-input v-model="formInline.name" size="small" placeholder="" class="custom-input-style"></el-input>
+                    <el-input size="small" placeholder="" class="custom-input-style" />
                   </el-form-item>
                   <el-form-item>
-                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" @click="onSubmit" size="small">查询</el-button>
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" @click="taskDetail" size="small">查看任务详情</el-button>
+                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
                   </el-form-item>
                 </el-form>
               </div>
             </div>
           </div>
-          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form :inline="true" class="demo-form-inline">
             <!-- ... 其他表单元素 ... -->
           </el-form>
         </div>
@@ -35,24 +32,7 @@
               label="任务名称"
               width="200"
               header-align="center"
-              :cell-style="nameCellStyle">
-            </el-table-column>
-            <el-table-column
-              prop="startTime"
-              label="发布时间"
-              sortable
-              width="200"
-              header-align="center"
-            >
-            </el-table-column>
-            <el-table-column
-              prop="stopTime"
-              label="截止时间"
-              sortable
-              width="200"
-              header-align="center"
-            >
-            </el-table-column>
+            />
             <el-table-column
               prop="type"
               label="任务类型"
@@ -61,23 +41,29 @@
               column-key="type"
               :filters="[{text: '学习', value: '学习'}, {text: '互动', value: '互动'}]"
               :filter-method="filterHandler"
-            >
-            </el-table-column>
+            />
+            <el-table-column
+              prop="finishTime"
+              label="完成时间"
+              width="220"
+              header-align="center"
+              column-key="type"
+            />
             <el-table-column
               prop="award"
               label="奖励积分"
               width="180"
-              header-align="center">
-            </el-table-column>
+              header-align="center"
+            />
             <el-table-column
               prop="status"
               label="状态"
               width="180"
-              header-align="center">
-            </el-table-column>
-            <el-table-column  @click="taskDetail" label="操作" width="200" header-align="center">
+              header-align="center"
+            />
+            <el-table-column label="操作" width="200" header-align="center" @click="taskDetail">
               <template slot-scope="scope">
-                <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view"  @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
+                <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -89,125 +75,125 @@
 </template>
 
 <script>
-import { fetchMissions } from '@/api/task'
+import api from '@/api/task'
 import ChildNavbar from '@/layout/components/childNavbar.vue'
 export default {
   // name: "List",
   components: {
     ChildNavbar
   },
-  data() {
+  data: function() {
     return {
-      tableData: [
-        {
-          name: '数据分析',
-          startTime: '2023-11-01 08:00',
-          stopTime: '2023-11-07 18:00',
-          type: '学习',
-          award: 50,
-          status: '已完成'
-        },
-        {
-          name: '市场调研',
-          startTime: '2023-11-02 09:00',
-          stopTime: '2023-11-08 19:00',
-          type: '互动',
-          award: 60,
-          status: '已完成'
-        },
-        {
-          name: '数据分析',
-          startTime: '2023-11-01 08:00',
-          stopTime: '2023-11-07 18:00',
-          type: '学习',
-          award: 50,
-          status: '已完成'
-        },
-        {
-          name: '市场调研',
-          startTime: '2023-11-02 09:00',
-          stopTime: '2023-11-08 19:00',
-          type: '互动',
-          award: 60,
-          status: '已完成'
-        },
-        {
-          name: '数据分析',
-          startTime: '2023-11-01 08:00',
-          stopTime: '2023-11-07 18:00',
-          type: '学习',
-          award: 50,
-          status: '已完成'
-        },
-        {
-          name: '市场调研',
-          startTime: '2023-11-02 09:00',
-          stopTime: '2023-11-08 19:00',
-          type: '互动',
-          award: 60,
-          status: '已完成'
-        },
-        {
-          name: '数据分析',
-          startTime: '2023-11-01 08:00',
-          stopTime: '2023-11-07 18:00',
-          type: '学习',
-          award: 50,
-          status: '已完成'
-        },
-        {
-          name: '市场调研',
-          startTime: '2023-11-02 09:00',
-          stopTime: '2023-11-08 19:00',
-          type: '互动',
-          award: 60,
-          status: '已完成'
-        }
-      ],
-      formInline: {
+      userId: {},
+      tableData: [{
+        id: '',
         name: '',
-        date: null
-      },
-      isLoading: true,
-      total: 0, // 总记录数
-      page: 1, // 页码
-      limit: 10, // 每页记录数
-      searchObj: {}, // 查询条件
-      // tableData: [],
-      multipleSelection: [],
-      mission: {},
-      dialogVisible: false
+        finishTime: '',
+        typeNum: '',
+        type: '',
+        award: '',
+        status: ''
+      }
+      ],
+      listForm: {},
+      formInline: '',
+      keywords: ''
     }
   },
   created() {
-    this.fetchData()
+    this.getCookie()
   },
   methods: {
-    nameCellStyle({ row, column, rowIndex, columnIndex }) {
-      // 如果是任务名称列，设置字体颜色为橙色
-      if (column.property === 'name') {
-        return {
-          color: 'orange'
-        }
+    typeJudge(number) {
+      if (number === 0) {
+        return '上传文件任务'
+      } else if (number === 1) {
+        return '上传视频任务'
+      } else if (number === 2) {
+        return '聊天任务'
+      } else if (number === 3) {
+        return '视频通话任务'
       }
-      // 其他列使用默认样式
-      return {}
+    },
+    setData(array) {
+      this.tableData[0].id = array[0].id
+      this.tableData[0].name = array[0].mission.missionName
+      this.tableData[0].finishTime = array[0].finishDate
+      this.tableData[0].type = this.typeJudge(array[0].mission.kind)
+      this.tableData[0].typeNum = array[0].kind
+      this.tableData[0].award = array[0].mission.reward
+      this.tableData[0].status = array[0].status
+      for (let i = 1; i < array.length; i++) {
+        const temp = {
+          id: '',
+          name: '',
+          type: '',
+          finishTime: '',
+          award: '',
+          status: ''
+        }
+        temp.id = array[i].id
+        temp.name = array[i].missionName
+        temp.finishTime = array[i].finishDate
+        temp.type = this.typeJudge(array[i].kind)
+        temp.typeNum = array[i].kind
+        temp.award = array[i].reward
+        temp.status = array[i].status
+        this.tableData.push(temp)
+      }
     },
     fetchData() {
-      this.isLoading = true
-      // 调用API获取任务数据
-      fetchMissions(this.page, this.limit, this.searchObj)
-        .then(response => {
-          this.tableData = response.data // 假设返回的直接就是任务列表
-          this.isLoading = false
-        })
-        .catch(error => {
-          console.error('Error fetching missions:', error)
-          this.isLoading = false
-        })
+      api.getCompleteTask(this.userId).then(response => {
+        console.log(response.data)
+        const code = response.code
+        const array = response.data
+        if (code === 200) {
+          this.setData(array)
+        } else {
+          console.error('Error: ' + '加载失败')
+        }
+      })
+      // .catch(error => {
+      //   console.error('Error fetching missions:', error)
+      //   // this.isLoading = false
+      // })
+    },
+    getCookie() {
+      const arr = document.cookie.split(';')
+      for (let i = 0; i < arr.length; i++) {
+        const arr2 = arr[i].split('=')
+        if (arr2[0] === 'userInfo' || arr2[0] === ' userInfo') {
+          const userinfo = JSON.parse(arr2[1])
+          this.userId = userinfo.id
+          // return userinfo
+          console.log(this.userId)
+          this.fetchData()
+        }
+      }
+      return ''
     },
     onSubmit() {
-      console.log('submit!', this.formInline)
+      console.log(this.keywords)
+      console.log(this.userId)
+      const formData = new FormData()
+      formData.append('keywords', this.keywords)
+      if (this.keywords === '') {
+        this.fetchData()
+      } else {
+        api.search(formData, this.userId).then(response => {
+          // console.log(response.data)
+          this.tableData = [{
+            id: '',
+            name: '',
+            finishTime: '',
+            typeNum: '',
+            type: '',
+            award: '',
+            status: ''
+          }]
+          this.setData(response.data)
+        })
+      }
     },
     handleSee(index, row) {
       console.log(index, row)
