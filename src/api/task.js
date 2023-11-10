@@ -58,7 +58,7 @@ export default {
   },
   getCompleteTask(id) {
     return request({
-      url: `/mission/get/${id}`,
+      url: `/mission/getCompleted/${id}}`,
       method: 'get',
       data: id
     })
