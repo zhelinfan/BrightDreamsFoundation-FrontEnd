@@ -49,9 +49,16 @@ export default {
       data: file
     })
   },
-  getCompleteTask(id) {
+  getSubmitTask(id) {
     return request({
       url: `/missionHistory/get/${id}`,
+      method: 'get',
+      data: id
+    })
+  },
+  getCompleteTask(id) {
+    return request({
+      url: `/mission/get/${id}`,
       method: 'get',
       data: id
     })

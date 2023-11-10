@@ -17,9 +17,6 @@
                   <el-form-item>
                     <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
                   </el-form-item>
-                  <el-form-item>
-                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="taskDetail">查看任务详情</el-button>
-                  </el-form-item>
                 </el-form>
               </div>
             </div>
