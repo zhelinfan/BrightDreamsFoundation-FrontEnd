@@ -70,6 +70,7 @@ export default {
   },
   data() {
     return {
+      userId: '',
       total_income: '',
       total_outcome: '',
       duration: [],
@@ -94,9 +95,9 @@ export default {
       myChartStyle: { width: '102%', height: '95%' }
     }
   },
-  // mounted() {
-  //   this.createCharts()
-  // },
+  mounted() {
+    this.userId = this.$route.query.missionId
+  },
   created() {
     this.fetchData()
   },
@@ -158,7 +159,7 @@ export default {
     },
     fetchData(current = 1) {
       this.page = current
-      api.getAllHistory(17).then(response => {
+      api.getAllHistory(this.userId).then(response => {
         this.completeArray = response.data
         if (response.code === 200) {
           this.completeTableData = this.setData(this.completeArray)
@@ -214,10 +215,6 @@ export default {
           }
         ]
       }
-      console.log(this.total_income)
-      console.log(this.total_outcome)
-      console.log(Number(this.total_income))
-      console.log(Number(this.total_outcome))
       this.pieChart = echarts.init(document.getElementById('pieChart'))
       this.pieChart.setOption(options)
       window.addEventListener('resize', () => {
@@ -334,7 +331,7 @@ export default {
 }
 .item{
   position: absolute;
-  border: 3px solid #f56c6c;
+  /*border: 3px solid #f56c6c;*/
   top: 15%;
   left: 3%;
 }
