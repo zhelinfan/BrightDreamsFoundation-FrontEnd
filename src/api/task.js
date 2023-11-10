@@ -48,6 +48,13 @@ export default {
       method: 'post',
       data: file
     })
+  },
+  getCompleteTask(id) {
+    return request({
+      url: `/missionHistory/get/${id}`,
+      method: 'get',
+      data: id
+    })
   }
 }
 

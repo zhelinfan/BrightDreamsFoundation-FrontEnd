@@ -151,14 +151,6 @@ export const constantRoutes = [
   //   ]
   // },
   {
-    path: '/detail',
-    component: () => import('@/views/task/detail.vue'),
-    meta: {
-      title: '任务详情',
-      icon: 'child'
-    }
-  },
-  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true

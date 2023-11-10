@@ -25,6 +25,8 @@
           <div class="text-center">小同学,你好！</div>
           <div class="text-center">快用积分换取心仪的物品吧！</div>
           <div class="text-center">可用积分：X</div>
+          <el-button class="orangebutton">商品记录</el-button>
+          <el-button class="orangebutton">积分记录</el-button>
         </div>
 
       </el-aside>
@@ -321,6 +323,10 @@ export default {
   background-color: #FDAD7A !important;
   border-color: #FDAD7A !important;
   color: white;
+}
+.orangebutton:hover {
+  background-color: chocolate !important;
+  border-color: chocolate !important;
 }
 /* 可以选择添加悬停状态的样式改变 */
 .button-color:hover {
