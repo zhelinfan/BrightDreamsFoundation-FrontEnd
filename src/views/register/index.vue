@@ -93,7 +93,7 @@
         <el-input
           :key="classType"
           ref="class"
-          v-model="registerForm.class"
+          v-model="registerForm.clazz"
           :type="classType"
           placeholder="班级"
           name="class"
@@ -195,7 +195,7 @@ export default {
       ],
       registerForm: {
         school: '',
-        class: '',
+        clazz: '',
         realName: '',
         gender: '',
         age: '',
@@ -232,7 +232,7 @@ export default {
   methods: {
     trimRealName() {
       this.registerForm.school = this.registerForm.school.trim()
-      this.registerForm.class = this.registerForm.class.trim()
+      this.registerForm.clazz = this.registerForm.clazz.trim()
       this.registerForm.realName = this.registerForm.realName.trim()
       this.registerForm.gender = this.registerForm.gender.trim()
       this.registerForm.age = this.registerForm.age.trim()
