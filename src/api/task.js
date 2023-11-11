@@ -69,6 +69,13 @@ export default {
       method: 'post',
       data: formData
     })
+  },
+  search3(formData, id) {
+    return request({
+      url: `/missionHistory/search/${id}`,
+      method: 'post',
+      data: formData
+    })
   }
 }
 

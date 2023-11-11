@@ -65,6 +65,7 @@ export default {
   data: function() {
     return {
       userId: {},
+      missionId: {},
       tableData: [{
         id: '',
         name: '',
@@ -155,8 +156,8 @@ export default {
       if (this.keywords === '') {
         this.fetchData()
       } else {
-        api.search(formData, this.userId).then(response => {
-          // console.log(response.data)
+        api.search3(formData, this.userId).then(response => {
+          console.log(response.data)
           this.tableData = [{
             id: '',
             name: '',

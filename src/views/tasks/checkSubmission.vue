@@ -137,8 +137,8 @@ export default {
     handleSee() {
       console.log('handleSee')
       this.$router.push({
-        path: '/several',
-        query: { missionId: this.missionId }
+        query: { missionId: this.missionId },
+        path: '/several'
       })
     },
     getCookie() {
