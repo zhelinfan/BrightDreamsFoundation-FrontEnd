@@ -353,7 +353,7 @@ $light_gray: #ffb859;
 .register-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  background-color: #f9ead8;
   overflow: hidden;
 
   .register-form {

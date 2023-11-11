@@ -225,7 +225,7 @@ $light_gray:#eee;
 
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  background-color: #f9ead8;
   overflow: hidden;
 
   .login-form {

@@ -3,7 +3,7 @@
     <ChildNavbar />
     <div class="image-container">
 <!--      <div class="image-front"></div>-->
-      <img :src="require('@/assets/main_images/main2.png')" class="image-transition">
+      <img :src="require('@/assets/main_images/main1.jpg')" class="image-transition">
       <transition-group name="fade" tag="p" class="letter">
         <p v-for="(line, index) in textLines" :key="index" :class="{ 'last-line': index === 7 }">{{ line }}</p>
       </transition-group>
@@ -29,7 +29,7 @@ export default {
   },
   mounted() {
     const textContent = [
-      '亲爱的孩子：',
+      '亲爱的孩子',
       '我们将陪伴你',
       '度过心灵的孤独时刻',
       '领略知识的美妙',
@@ -73,21 +73,21 @@ export default {
 //image
 .image-transition {
   position: absolute; /* 设置绝对定位 */
-  bottom: 0; /* 图片位于底部 */
+  top:5%; /* 图片位于底部 */
   left: 0; /* 图片位于左侧，可以根据需要调整位置 */
   z-index: -1; /* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 */
-  max-width: 100%; /* 图片最大宽度为100% */
-  height: auto;
+  width: 100%; /* 图片最大宽度为100% */
+  height: 110%;
 }
 //button
 .button-transition {
   position: absolute;
-  top: 75%;
-  left: 39%;
+  top: 88%;
+  left: 30%;
   width: 260px; /* 初始宽度 */
   height: 58px; /* 初始高度 */
   filter: brightness(1); /* 初始亮度较低 */
-  background-color: #69daef;
+  background-color: #9cd9cf;
   border: 3px solid #4ea3b0;
   color: #fff;
   font-weight: bold;
@@ -122,11 +122,11 @@ export default {
 .letter{
   position: absolute;
   top: 30%;
-  left: 21%;
+  left: 30%;
   width: 300px;
   text-align: left;
   font-family: fangsong;
-  font-size: large;
+  font-size: larger;
 }
 .last-line {
   margin-left: 80px; /* 调整最后一行文本的左边距 */

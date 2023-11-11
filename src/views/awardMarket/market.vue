@@ -1,114 +1,201 @@
 <template>
-  <el-container class="container-bg">
+  <div class="container-bg" >
     <ChildNavbar />
-    <el-main class="main0">
+    <div class="main0">
       <div class="search-container" style="display: flex;">
         <div class="image-icon">
-          <img :src="require('@/assets/market_images/gift.png')" class="image-transition" alt="">
+          <img src="https://bruce-pan-bucket.oss-cn-beijing.aliyuncs.com/img/gift.png" class="image-transition1">
         </div>
         <div class="select">
           <!--          <el-form :inline="true">-->
           <!--            <el-form-item>-->
-          <el-input v-model="input" class="search-input" placeholder="请输入物品名称进行查询" />
+          <el-input v-model="searchInput" class="search-input" placeholder="请输入物品名称进行查询" />
           <!--            </el-form-item>-->
           <!--            <el-form-item>-->
-          <el-button class="button-color">查询</el-button>
+          <el-button class="button-color" @click="searchGood">查询</el-button>
           <!--            </el-form-item>-->
         </div>
       </div>
-    </el-main>
+    </div>
 
-    <el-main class="main1">
+    <div class="main1">
       <el-aside class="aside-style">
         <div class="white">
-          <img :src="require('@/assets/market_images/images.png')" class="image-transition">
-          <div class="text-center">小同学,你好！</div>
-          <div class="text-center">快用积分换取心仪的物品吧！</div>
-          <div class="text-center">可用积分：X</div>
-          <el-button class="orangebutton">商品记录</el-button>
-          <el-button class="orangebutton">积分记录</el-button>
+          <img src="https://bruce-pan-bucket.oss-cn-beijing.aliyuncs.com/img/images.png" class="image-transition2">
+          <div class="text">
+            <div class="text-center">小同学,你好！</div>
+            <div class="text-center">快用积分换取心仪的物品吧！</div>
+            <div class="text-center">可用积分：X</div>
+          </div>
         </div>
 
       </el-aside>
-      <el-main>
+      <div>
         <div class="centered-container">
           <div class="white-boxs">
             <div class="image-container">
-              <img :src="require('@/assets/market_images/charity.jpg')" class="image-transition">
+              <img src="https://bruce-pan-bucket.oss-cn-beijing.aliyuncs.com/img/charity.jpg" class="image-transition3">
             </div>
           </div>
         </div>
-      </el-main>
-    </el-main>
-
-    <el-main class="main2">
-      <div class="centered-container"> <!-- 移除点号前缀 -->
-        <div class="white-line">
-          <el-dropdown>
-            <el-button class="orangebutton">
-              排序<i class="el-icon-arrow-down el-icon--right" />
-            </el-button>
-            <el-dropdown-menu>
-              <el-dropdown-item>按热度</el-dropdown-item>
-              <el-dropdown-item>按兑换积分升序</el-dropdown-item>
-              <el-dropdown-item>按兑换积分降序</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
-        <div class="white-box">
+      </div>
+    </div>
+    <div class="white-line">
+      <el-dropdown class="el-dropdown" @command="handleCommand">
+        <el-button class="orangebutton">
+          排序<i class="el-icon-arrow-down el-icon--right" />
+        </el-button>
+        <el-dropdown-menu>
+          <el-dropdown-item command="popularity">按热度</el-dropdown-item>
+          <el-dropdown-item command="0">按兑换积分升序</el-dropdown-item>
+          <el-dropdown-item command="1">按兑换积分降序</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <div class="white-border" />
+    </div>
+    <div class="main2">
+      <div class="centered-container2"> <!-- 移除点号前缀 -->
+        <el-main class="white-box">
           <div class="box">
-            <el-row>
-              <el-col v-for="(o, index) in 5" :key="index" :span="4" :offset="index > 0 ? 1 : 0">
+            <el-row v-for="(o, indexRow) in rowNum" :key="indexRow" :span="4" :offset="indexRow > 0 ? 1 : 0" style="margin-top: 20px">
+              <el-col v-for="(o, indexCol) in columnNum" :key="indexCol" :span="4" :offset="indexCol > 0 ? 1 : 0">
                 <el-card :body-style="{ padding: '0px' }" class="card-hover">
                   <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
                   <div style="padding: 14px;">
-                    <span>好吃的汉堡</span>
+                    <span>{{ goodList[indexCol+indexRow*5].goodName }}</span>
+                    <div class="cost-container">
+                      <img src="@/assets/personal_images/flower.png" class="flower">
+                      <span class="cost">{{ goodList[indexCol+indexRow*5].cost }}</span>
+                    </div>
                     <div class="bottom clearfix">
                       <time class="time">{{ currentDate }}</time>
-                      <el-button type="text" class="button" @click="open">查看</el-button>
+                      <el-button type="text" class="button" @click="open(goodList[indexCol+indexRow*5])">查看</el-button>
                     </div>
                   </div>
                 </el-card>
               </el-col>
             </el-row>
-            <el-row style="margin-top: 5%;">
-              <el-col v-for="(o, index) in 5" :key="index" :span="4" :offset="index > 0 ? 1 : 0">
+            <el-row v-for="(o, indexRow) in rowNumSingle" :key="indexRow" :span="4" :offset="indexRow > 0 ? 1 : 0" style="margin-top: 20px">
+              <el-col v-for="(o, indexCol) in columnNumSingle" :key="indexCol" :span="4" :offset="indexCol > 0 ? 1 : 0">
                 <el-card :body-style="{ padding: '0px' }" class="card-hover">
                   <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
                   <div style="padding: 14px;">
-                    <span>好吃的汉堡</span>
+                    <span>{{ goodList[indexCol+rowNum*columnNum].goodName }}</span>
+                    <div class="cost-container">
+                      <img src="@/assets/personal_images/flower.png" class="flower">
+                      <span class="cost">{{ goodList[indexCol+rowNum*columnNum].cost }}</span>
+                    </div>
                     <div class="bottom clearfix">
                       <time class="time">{{ currentDate }}</time>
-                      <el-button type="text" class="button" @click="open">查看</el-button>
+                      <el-button type="text" class="button" @click="open(goodList[indexCol+rowNum*columnNum])">查看</el-button>
                     </div>
                   </div>
                 </el-card>
               </el-col>
             </el-row>
           </div>
-        </div>
+        </el-main>
       </div> <!-- 移除不需要的斜杠 -->
-    </el-main>
-    <el-input-number v-model="num" :step="1"></el-input-number>
-  </el-container>
+    </div>
+    <!--    <el-input-number v-model="num" :step="1"></el-input-number>-->
+    <!--    <el-dialog-->
+    <!--      title="提示"-->
+    <!--      :visible.sync="dialogVisible"-->
+    <!--      width="30%"-->
+    <!--      :before-close="handleClose">-->
+    <!--      <span>这是一段信息</span>-->
+    <!--      <span slot="footer" class="dialog-footer">-->
+    <!--    <el-select placeholder="请选择活动区域">-->
+    <!--      <el-option label="区域一" value="shanghai"></el-option>-->
+    <!--      <el-option label="区域二" value="beijing"></el-option>-->
+    <!--    </el-select>-->
+    <!--    <el-input-number :visible.sync="dialogVisible" value="1" :min="1" :max="10" :step="1"></el-input-number>-->
+    <!--    <el-button @click="dialogVisible = false">取 消</el-button>-->
+    <!--    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>-->
+    <!--  </span>-->
+    <!--    </el-dialog>-->
+  </div>
 
 </template>
 
 <script>
 import ChildNavbar from '@/layout/components/childNavbar.vue'
-
+import api from '@/api/awardMarket'
 export default {
   components: {
     ChildNavbar
   },
   data() {
     return {
-      input: '',
-      num: 1
+      searchInput: '',
+      amount: 1,
+      rowNum: 4,
+      columnNum: 5,
+      rowNumSingle: 0,
+      columnNumSingle: 0,
+      currentDate: '',
+      dialogVisible: false,
+      goodList: [{
+        id: '',
+        goodName: '',
+        description: '',
+        cost: '',
+        stock: ''
+      }],
+      order: [{
+        userId: '',
+        goodId: '',
+        amount: '',
+        total: '',
+        createDate: ''
+      }]
     }
   },
+  created() {
+    this.fetchData()
+  },
   methods: {
-    open() {
+    fetchData() {
+      api.getGoodList().then(response => {
+        console.log('enter')
+        this.setData(response)
+      })
+    },
+    setData(response) {
+      const goodNum = response.data.length
+      this.rowNum = Math.floor(goodNum / 5)
+      this.rowNumSingle = Math.ceil(goodNum / 5) - Math.floor(goodNum / 5)
+      this.columnNumSingle = goodNum - this.rowNum * this.columnNum
+      // this.goodList = []
+      this.goodList = response.data
+    },
+    getCookie() {
+      const arr = document.cookie.split(';')
+      for (let i = 0; i < arr.length; i++) {
+        const arr2 = arr[i].split('=')
+        if (arr2[0] === 'userInfo' || arr2[0] === ' userInfo') {
+          const userinfo = JSON.parse(arr2[1])
+          return userinfo
+        }
+      }
+      return ''
+    },
+    buyGood(goodItem) {
+      this.order[0].userId = this.getCookie().id
+      this.order[0].goodId = goodItem.id
+      this.order[0].amount = this.amount
+      this.order[0].total = this.amount * goodItem.cost
+
+      const { DateTime } = require('luxon')
+      const currentDateTime = DateTime.now().setZone('Asia/Shanghai')
+      const formattedDateTime = currentDateTime.toFormat('yyyy-MM-dd HH:mm:ss')
+      this.order[0].createDate = formattedDateTime
+      console.log(this.order[0])
+      api.buyGood(this.order[0]).then(response => {
+        console.log(response)
+      })
+    },
+    open(goodItem) {
       const h = this.$createElement
       const imgSrc = 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'// 替换成你的图片地址
       const messageContent = [
@@ -118,22 +205,26 @@ export default {
             attrs: { src: imgSrc }
           })
         ]),
-        h('p', null, '商品名称'),
-        h('p', null, '商品描述'),
-        h('p', null, '商品兑换积分'),
+        h('p', null, '商品名称：' + goodItem.goodName),
+        h('p', null, '商品描述：' + goodItem.description),
+        h('p', null, '商品兑换积分：' + goodItem.cost),
+        // h('img', {
+        //   attrs: { class: 'flower', src: '@/assets/personal_images/flower.png' }
+        // }),
         h('el-input-number', {
           props: {
-            value: this.num,
+            value: this.amount,
             min: 1,
             max: 10,
-            label: '描述文字',
-            step: 1 // 设置步长为2
+            step: 1
+            // label: '描述文字'
           },
           on: {
-            change: this.handleChange
+            // change: this.handleChange
           }
-        })
+        }, null)
       ]
+      // this.$alert('<el-input-number :min="1" :max="10"></el-input-number>')
       this.$msgbox({
         title: '商品详情',
         message: h('div', null, messageContent),
@@ -144,6 +235,7 @@ export default {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
             instance.confirmButtonText = '兑换中...'
+            this.buyGood(goodItem)
             setTimeout(() => {
               done()
               setTimeout(() => {
@@ -160,6 +252,30 @@ export default {
           message: 'action: ' + action
         })
       })
+    },
+    handleCommand(command) {
+      if (command === 'popularity') {
+        api.sortByPopularity().then(response => {
+          this.setData(response)
+        })
+      } else {
+        let type = 1
+        if (command === '0') {
+          type = 0
+        }
+        api.sortByCost(type).then(response => {
+          this.setData(response)
+          console.log(response)
+        })
+      }
+    },
+    searchGood() {
+      const formData = new FormData()
+      formData.append('keywords', this.searchInput)
+      api.search(formData).then(response => {
+        this.setData(response)
+        console.log(response)
+      })
     }
   }
 }
@@ -167,23 +283,30 @@ export default {
 
 <style scoped>
 .search-container{
+  position: absolute;
+  width: 100%;
+  height: 70%;
 }
 .select{
   position: absolute;
-  top: 15%;
+  top: 45%;
   left: 36%;
-  height: 10%;
+  height: 40%;
   width: 38%;
   display: flex;
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
+
 }
 
 .container-bg {
-  height: 190vh;
+  position: absolute;
+  height: 200%;
+  width: 100%;
   background-color: #efefef; /* 设置背景颜色为灰色，你可以根据需要更改颜色值 */
   display: flex;
   flex-direction: column;
+
 }
 .el-container {
   height: 150vh; /* 设置父容器高度为视窗高度的100% */
@@ -206,28 +329,42 @@ export default {
   overflow: hidden; /* 隐藏溢出的内容 */
 }
 
-.image-transition {
-  width: 90%; /* 图片宽度占满容器 */
+.image-transition1 {
+  width: 85%; /* 图片宽度占满容器 */
   height: auto; /* 高度自适应以保持纵横比 */
   border-radius: 10px; /* 设置四个角的圆角半径 */
   transition: transform 0.5s, box-shadow 0.5s; /* 添加过渡效果（可选） */
 }
+.image-transition2 {
+  position: absolute;
+  width: 65%; /* 图片宽度占满容器 */
+  height: auto; /* 高度自适应以保持纵横比 */
+}
+.image-transition3 {
+  /*position: absolute;*/
+  width: 85%; /* 图片宽度占满容器 */
+  /*height: 90%; !* 高度自适应以保持纵横比 *!*/
+  border-radius: 10px; /* 设置四个角的圆角半径 */
+  transition: transform 0.5s, box-shadow 0.5s; /* 添加过渡效果（可选） */
+}
 .main0 {
-  width: 100%; /* 设置宽度为页面宽度的50% */
-  height: 20%; /* 设置高度为页面高度的50% */
+  position: absolute;
+  top: 7%;
+  left: 4%;
+  width: 95%; /* 设置宽度为页面宽度的50% */
+  height: 15%; /* 设置高度为页面高度的50% */
+
 }
 .main1 {
+  position: absolute;
   display: flex;
   flex-direction:row;
+  top: 20%;
   width: 100%; /* 设置宽度为屏幕宽度的60% */
-  margin-left: auto; /* 将 main1 向右移动 */
-  height:51%; /* 设置高度为100%以填充整个高度 */
+  /*margin-left: auto; !* 将 main1 向右移动 *!*/
+  height:28%; /* 设置高度为100%以填充整个高度 */
 }
 
-.main2 {
-  width: 100%; /* 设置宽度为页面宽度的30% */
-  height: 65%; /* 设置高度为页面高度的70% */
-}
 .time {
   font-size: 13px;
   color: #999;
@@ -263,31 +400,63 @@ export default {
   transition: box-shadow 0.3s, transform 0.3s;
 }
 .centered-container {
+  position: absolute;
+  top: 8%;
   display: flex;
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
   flex-direction: column;
   z-index:1;
+  height: 80%;
 }
 .white-line{
+  position: absolute;
   background-color: #ffffff; /* 设置背景颜色为白色 */
   padding: 30px; /* 添加内边距以增加长方形框的大小 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
   display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
-  width: 9.5%;
-  height: 60%;
-  transform: translateX(-654.5px) translateY(20px); /* 向左移动20像素，向下移动20像素 */
+  top: 48%;
+  left: 4%;
+  width: 14%;
+  height: 9%;
+  /*transform: translateX(-654.5px) translateY(20px); !* 向左移动20像素，向下移动20像素 *!*/
   transition: box-shadow 0.3s; /* 添加过渡效果让阴影变化更平滑 */
 }
+.main2 {
+  position: absolute;
+  top: 54%;
+  width: 100%; /* 设置宽度为页面宽度的30% */
+  height: 40%; /* 设置高度为页面高度的70% */
+}
+.centered-container2 {
+  position: absolute;
+  top: 0%;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  flex-direction: column;
+  z-index:1;
+  height: 100%;
+  width: 100%;
+}
+/*.box{*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  width: 100%;*/
+/*  height: 40%;*/
+/*}*/
 .white-box {
+  position: absolute;
   background-color: #ffffff; /* 设置背景颜色为白色 */
   padding: 30px; /* 添加内边距以增加长方形框的大小 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
   display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
+  top: 0;
   width: 92%;
-  height: 100%;
+  height: 110%;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* 设置默认的阴影效果 */
   transition: box-shadow 0.3s; /* 添加过渡效果让阴影变化更平滑 */
+
 }
 .white-boxs{
   background-color: #ffffff; /* 设置背景颜色为白色 */
@@ -295,7 +464,7 @@ export default {
   border: 1px solid #ccc; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
   display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
-  width: 90%;
+  width: 89%;
   height: 100%;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* 设置默认的阴影效果 */
   transition: box-shadow 0.3s; /* 添加过渡效果让阴影变化更平滑 */
@@ -311,22 +480,20 @@ export default {
 }
 .button-color {
   position: absolute;
-  top: 30%;
+  top: 29%;
   right: 0;
   width: 16%;
-  height: 43%;
+  height: 80%;
   background-color: #FDAD7A !important;
-  border-color: #FDAD7A !important;
+  /*border-color: #FDAD7A !important;*/
   color: white; /* 设置文字颜色为白色，您可以根据需要选择不同的颜色 */
 }
 .orangebutton{
+  position: absolute;
+  width: 100%;
   background-color: #FDAD7A !important;
   border-color: #FDAD7A !important;
   color: white;
-}
-.orangebutton:hover {
-  background-color: chocolate !important;
-  border-color: chocolate !important;
 }
 /* 可以选择添加悬停状态的样式改变 */
 .button-color:hover {
@@ -334,24 +501,24 @@ export default {
   border-color: chocolate   !important;
 }
 .white{
-  display: flex;
-  align-items: center;
+  position: absolute;
   justify-content: center;
   background-color: #ffffff; /* 设置背景颜色为白色 */
   padding: 30px; /* 添加内边距以增加长方形框的大小 */
   border: 1px solid #ccc; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
-  display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
-  width: 90%;
-  height: 85%;
+  display: inline-flex; /* 让内部的长方形框与内容排列在同一行 */
+  top: 8%;
+  width: 18%;
+  height: 80%;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* 设置默认的阴影效果 */
   transition: box-shadow 0.3s; /* 添加过渡效果让阴影变化更平滑 */
 }
 .aside-style{
   margin-top: 1.2%;
   margin-left: 4%;
-  width:80%;
-  height:94.5%;
+  width:50%;
+  height:85%;
 }
 .avatar {
   width: 50px; /* 调整头像的尺寸 */
@@ -359,9 +526,37 @@ export default {
   border-radius: 50%; /* 使头像呈圆形 */
 }
 .text-center {
+  /*position: absolute;*/
+  /*top:15%;*/
+  /*margin-top: 10px;*/
   text-align: center;
   font-weight: bold;
   font-size: 16px;
   color: #FDAD7A;
+}
+.el-dropdown{
+  position: absolute;
+  top: 20%;
+  width: 65%;
+  height: 36%;
+}
+.text{
+  position: absolute;
+  top: 70%;
+  display: inline-block;
+}
+.cost-container{
+  display: flex;
+  flex-direction: row;
+}
+.flower{
+  width: 20px;
+  height: 20px;
+  margin-top: 5px;
+}
+.cost{
+  margin-top: 5px;
+  margin-left: 5px;
+  color: chocolate;
 }
 </style>

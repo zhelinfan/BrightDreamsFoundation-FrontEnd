@@ -1,9 +1,11 @@
 <template>
   <div class="wrapper-container">
+    <img src="@/assets/personal_images/back.jpg" class="back">
     <ChildNavbar />
     <div class="content-container">
       <div class="top">
-        <img :src="require('@/assets/personal_images/top_picture.png')" class="top-picture">
+<!--        <img :src="require('@/assets/personal_images/top_picture1.jpg')" class="top-picture">-->
+        <div class="top-picture"></div>
         <div class="avatar-container">
           <el-avatar :src="require('@/assets/childnav_images/child.png')" class="avatar" :size="56" />
           <div class="username">{{ person.username }}</div>
@@ -274,11 +276,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.back{
+  position: absolute;
+  width: 100%;
+  height: 80%;
+}
 .wrapper-container{
   position: absolute;
   width: 100%;
-  height: 107%;
-  background-color: #efefef;
+  height: 137%;
+  //background-color: #fdf4e6;
+  background-color: #f9ead8;
   display: flex;
   flex-direction: column;
 }
@@ -287,38 +295,47 @@ export default {
   top: 10%;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: #efefef;
+  //background-color: #fdf4e6;
+  //background-color: transparent;
 }
 .top{
   position: absolute;
   width: 68%;
-  height: 48%;
+  height: 46%;
   flex: 1;
-  top: 5%;
+  top: 6%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 .bottom{
   background-color: #fff;
   position: absolute;
-  top: 53%;
+  top: 54%;
   width: 68%;
-  height: 41%;
+  height: 39%;
   border: 1px solid #BBBBBB;
   margin-top: 30px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 /*top*/
 .top-picture{
   position: absolute;
   width: 100%;
-  height: 47%;
+  height: 49%;
   z-index: 0;
+  border: 2px solid #ead0c2;
+  background-color: transparent;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
 }
 .avatar-container {
   position: absolute;
@@ -334,7 +351,7 @@ export default {
   top: 20%;
   left: 18%;
   margin-left: 20px;
-  color: #f3f3f3;
+  color: #000000;
 }
 .flower-container{
   /*border: 2px solid #000;*/
@@ -351,7 +368,7 @@ export default {
 .flower-number{
   position: absolute;
   top: 10%;
-  color: #f3f3f3;
+  color: #000000;
   font-size: smaller;
   margin-left: 5px;
 }
@@ -361,7 +378,9 @@ export default {
   bottom: 0;
   width: 100%;
   height: 53%;
-  background-color: #fff;
+  background-color: #ffffff;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 .title1{
   color: chocolate;

@@ -112,8 +112,14 @@ export default {
       fileName: '',
       hkDescription: '',
       comment: '',
-      finalScore: ''
+      finalScore: '',
+      userId: '',
+      missionId: ''
     }
+  },
+  mounted() {
+    this.userId = this.$route.query.userId
+    this.missionId = this.$route.query.missionId
   },
   created() {
     this.fetchData()
@@ -122,7 +128,7 @@ export default {
     fetchData() {
       // this.page = current
       console.log('enter')
-      api.checkSubmission(18, 1).then(response => {
+      api.checkSubmission(this.userId, this.missionId).then(response => {
         console.log(response.data)
         this.submitTime = response.data.finishDate
         this.fileName = response.data.submissionURL
@@ -135,7 +141,7 @@ export default {
           case 2:this.taskState = '不通过'; this.taskStateType = 'danger'; break
         }
       })
-      api.loadSingleMission(1).then(response => {
+      api.loadSingleMission(this.missionId).then(response => {
         this.taskName = response.data.missionName
         this.deadline = response.data.deadline
         this.taskDesc = response.data.description

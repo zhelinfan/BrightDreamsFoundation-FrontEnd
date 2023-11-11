@@ -131,6 +131,14 @@ export const constantRoutes = [
       icon: 'el-icon-notebook-2'
     }
   },
+  {
+    path: '/chat',
+    component: () => import('@/views/chat/textChat.vue'),
+    meta: {
+      title: '聊天',
+      icon: 'el-icon-notebook-2'
+    }
+  },
   // {
   //   path: '/detail',
   //   component: Layout, // 使用Layout组件作为包裹

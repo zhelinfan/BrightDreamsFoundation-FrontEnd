@@ -100,6 +100,7 @@ export default {
   },
   data() {
     return {
+      missionId: '',
       file: null,
       fileURL: '#',
       fileList: [],
@@ -113,12 +114,16 @@ export default {
       accFileType: ''
     }
   },
+  mounted() {
+    this.missionId = this.$route.query.id
+    console.log(this.missionId)
+  },
   created() {
     this.fetchData()
   },
   methods: {
     fetchData() {
-      api.loadSingleMission(1).then(response => {
+      api.loadSingleMission(this.missionId).then(response => {
         console.log(response.data)
         this.taskName = response.data.missionName
         this.deadline = response.data.deadline
