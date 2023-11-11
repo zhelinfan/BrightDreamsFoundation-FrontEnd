@@ -2,36 +2,43 @@
   <div class="wrapper-container">
     <ChildNavbar />
     <div class="content-container">
-      <img src="@/assets/chat_images/back.jpg" class="back">
+      <img src="@/assets/chat_images/back.jpg" class="back" alt="">
       <div class="chat-box">
         <div class="chat-people">
-          <img src="@/assets/market_images/images.png" class="vol-photo">
+          <img src="@/assets/market_images/images.png" class="vol-photo" alt="">
           <div class="volunteer">
             <span class="vol-name">潘giegie</span>
             <span class="vol-sch">东北大学 软件学院</span>
           </div>
         </div>
-        <el-main class="chat-part">
+<!--        <canvas id="myCanvas"></canvas>-->
+        <el-main ref="chatPart" id="chatPart" class="chat-part">
           <div v-for="(item, index) in msgList" :key="index">
             <div v-if="msgList[index].senderId === userId" class="per-message-right">
               <img src="@/assets/childnav_images/child.png" class="child-av">
               <div class="wrapper-mt-right">
-                <BubbleRight v-model="msgList[index].content" class="message-box-right" />
-                <span class="interact-time">{{ new Date(msgList[index].interactTime) }}</span>
+                <BubbleRight
+                  v-if="msgList[index].pictureURL === undefined || msgList[index].pictureURL === ''"
+                  v-model="msgList[index].content"
+                  class="message-box-right"
+                />
+                <BubbleRightImg v-else v-model="msgList[index].pictureURL" class="message-box-right" />
+                <span class="interact-time">{{ msgList[index].interactTime }}</span>
               </div>
             </div>
-            <div  v-else class="per-message-left">
+            <div v-else class="per-message-left">
               <img src="@/assets/market_images/images.png" class="vol-av">
               <div class="wrapper-mt-left">
-                <BubbleLeft v-model="msgList[index].content" class="message-box-left" />
-                <span class="interact-time">{{ new Date(msgList[index].interactTime) }}</span>
+                <BubbleLeft v-if="msgList[index].pictureURL === undefined" v-model="msgList[index].content" class="message-box-left" />
+                <BubbleLeftImg v-else v-model="msgList[index].pictureURL" class="message-box-left" />
+                <span class="interact-time">{{ msgList[index].interactTime }}</span>
               </div>
             </div>
           </div>
         </el-main>
         <div class="control-part">
           <div class="normal">
-            <el-input v-model="msg" class="input-box" size="medium" />
+            <el-input v-model="msg" class="input-box" size="medium" placeholder="输入你想和哥哥/姐姐说的话哦！"/>
             <el-button size="medium" type="primary" icon="el-icon-s-promotion" class="send-button" @click="handleSendMsg" />
             <el-button size="medium" icon="el-icon-plus" circle class="more" />
             <!--            <img src="@/assets/chat_images/plane.png" class="plane">-->
@@ -47,11 +54,25 @@
 import ChildNavbar from '@/layout/components/childNavbar.vue'
 import BubbleLeft from '@/layout/components/BubbleLeft.vue'
 import BubbleRight from '@/layout/components/BubbleRight.vue'
-const socket = new WebSocket('ws://localhost:8080/chat/18')
-
+import BubbleRightImg from '@/layout/components/BubbleRightImg.vue'
+import BubbleLeftImg from '@/layout/components/BubbleLeftImg.vue'
+let userId = ''
+const arr = document.cookie.split(';')
+for (let i = 0; i < arr.length; i++) {
+  const arr2 = arr[i].split('=')
+  if (arr2[0] === 'userInfo' || arr2[0] === ' userInfo') {
+    const userinfo = JSON.parse(arr2[1])
+    userId = userinfo.id
+    // return userinfo
+  }
+}
+const socket = new WebSocket('ws://localhost:8080/chat/' + userId)
+console.log(socket)
 export default {
   name: 'TextChat',
   components: {
+    BubbleLeftImg,
+    BubbleRightImg,
     ChildNavbar,
     BubbleLeft,
     BubbleRight
@@ -60,7 +81,8 @@ export default {
   data() {
     return {
       i: 0,
-      userId: '',
+      userId: userId,
+      receiverId: '',
       inputValue: '',
       msg: '',
       msgList: [
@@ -75,22 +97,40 @@ export default {
     }
   },
   mounted() {
-    this.bindEvent()
-    this.userName = 'asdfzl'
+    // this.bindEvent()
+    setTimeout(() => {
+      this.scrollToButtom()
+    }, 100)
   },
   created() {
-    this.getCookie()
+    this.bindEvent()
+    // this.getCookie()
   },
   methods: {
     handleSendMsg() {
       if (!this.msg.trim().length) {
         return alert('不能发送空消息')
       }
-      socket.send(JSON.stringify({
-        user: this.userName,
-        msg: this.msg,
-        dateTime: new Date()
-      }))
+      const { DateTime } = require('luxon')
+      const currentDateTime = DateTime.now().setZone('Asia/Shanghai')
+      const formattedDateTime = currentDateTime.toFormat('yyyy-MM-dd HH:mm:ss')
+      const messageSend = {
+        senderId: this.userId,
+        receiverId: this.receiverId,
+        interactTime: formattedDateTime,
+        content: this.msg,
+        amount: 1
+      }
+      socket.send(JSON.stringify(messageSend))
+      this.msgList.push(messageSend)
+      this.msg = ''
+      this.scrollToButtom()
+    },
+    scrollToButtom() {
+      this.$nextTick(() => {
+        const elMain = document.getElementById('chatPart')
+        elMain.scrollTop = elMain.scrollHeight
+      })
     },
     getCookie() {
       const arr = document.cookie.split(';')
@@ -105,22 +145,25 @@ export default {
       return ''
     },
     bindEvent() {
-      console.log('绑定事件')
       // socket.addEventListener('close', this.handleClose.bind(this), false)
-      // ws.addEventListener('open', this.handleOpen.bind(this), false)
+      socket.addEventListener('open', this.handleOpen.bind(this), false)
       // socket.addEventListener('error', this.handleError.bind(this), false)
       socket.addEventListener('message', this.handleMessage.bind(this), false)
+    },
+    handleOpen() {
+      // this.$forceUpdate()
     },
     handleMessage({ data }) {
       console.log('message', data)
       if (this.i === 0) {
         this.msgList = JSON.parse(data)
+        this.receiverId = this.msgList[0].receiverId
         this.i++
       } else {
         this.msgList.push(JSON.parse(data))
       }
       // this.msgList[0].content = 'pmh是大猪逼'
-      console.log(this.msgList)
+      this.scrollToButtom()
     }
     // OnOpen() {
     //   socket.onopen = function(event) {
@@ -175,12 +218,13 @@ export default {
 }
 .chat-box{
   position: absolute;
-  top: 8%;
+  top: 7%;
   /*top: 5%;*/
   width: 80%;
-  height: 80%;
+  height: 85%;
   border-radius: 20px;
-  background-color: rgba(156, 218, 208, 0.18);
+  /*background-color: rgba(156, 218, 208, 0.2);*/
+  background-color: rgba(133, 207, 248, 0.4);
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
 }
 .chat-people{
@@ -211,14 +255,14 @@ export default {
 .chat-part{
   position: absolute;
   top: 16%;
-  left:8%;
-  width: 85%;
+  left: 8%;
+  width: 83%;
   height: 72%;
-  /*border: 1px solid #000;*/
+  border-top: 1px solid #ccc;
 }
 .normal{
   position: absolute;
-  top: 86%;
+  top: 90%;
   left: 8%;
   width: 85%;
   height: 10%;

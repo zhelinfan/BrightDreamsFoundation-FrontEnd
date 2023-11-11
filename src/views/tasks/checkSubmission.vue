@@ -15,7 +15,7 @@
                     <div class="desc-title">任务描述</div>
                     <div class="desc-content">
                       <div class="content">{{ taskDesc }}</div>
-                      <div class="figure"><img id="taskImage" :src="require('@/assets/task/libai.jpg')" alt="静夜思"></div>
+                      <div class="figure"><img id="taskImage" :src="pictureURL"></div>
                     </div>
                   </div><!--desc-item-->
                   <div class="desc-item">
@@ -62,7 +62,7 @@
                   <div class="desc-item">
                     <div class="desc-title">提交文件</div>
                     <div class="desc-content">
-                      <el-popconfirm :title="'是否下载\'' + fileName + '\'?'" @onConfirm="download">
+                      <el-popconfirm :title="notation" @onConfirm="download">
                         <el-button slot="reference" id="download" size="mini" round>下载</el-button>-->
                       </el-popconfirm>
                     </div>
@@ -117,11 +117,13 @@ export default {
       submitTime: '',
       // 用url存储提交的文件
       fileName: '',
+      notation: '',
       hkDescription: '',
       comment: '',
       finalScore: '',
       userId: '',
-      missionId: ''
+      missionId: '',
+      pictureURL: ''
     }
   },
   mounted() {
@@ -162,6 +164,11 @@ export default {
         console.log(response.data)
         this.submitTime = response.data.finishDate
         this.fileName = response.data.submissionURL
+        if (this.fileName === null) {
+          this.notation = '未提交任何文件'
+        } else {
+          this.notation = '是否下载' + this.fileName + '?'
+        }
         this.finalScore = response.data.rate
         this.comment = response.data.comment
         this.hkDescription = response.data.description
@@ -172,6 +179,7 @@ export default {
         }
       })
       api.loadSingleMission(this.missionId).then(response => {
+        this.pictureURL = response.data.pictureURL
         this.taskName = response.data.missionName
         this.deadline = response.data.deadline
         this.taskDesc = response.data.description
@@ -193,6 +201,10 @@ export default {
       })
     },
     download() {
+      if (this.fileName === null) {
+        this.$message.error(`无文件可下载！`)
+        return
+      }
       const name = this.fileName.slice(this.fileName.lastIndexOf('/') + 1)
       fetch(this.fileName).then(res => res.blob()).then(blob => {
         const link = document.createElement('a')
@@ -371,11 +383,11 @@ export default {
   align-items: flex-start;
 }
 #taskImage {
-  transform: scale(0.7);
+  transform: scale(0.5);
   position: relative;
-  margin-left: -17%;
-  margin-top: -10%;
-  margin-bottom: -10%;
+  margin-left: -6%;
+  margin-top: -24%;
+  margin-bottom: -20%;
 }
 .image-transition {
   position: absolute; /* 设置绝对定位 */

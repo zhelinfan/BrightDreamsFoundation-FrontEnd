@@ -71,8 +71,8 @@
                   type="textarea"
                   :rows="6"
                   placeholder="描述"
-                  class="el-input">
-                </el-input>
+                  class="el-input"
+                />
               </div>
               <div class="desc-item">
                 <div class="btn-container">
@@ -104,7 +104,7 @@ export default {
       missionId: '',
       pictureURL: '',
       file: null,
-      fileURL: '#',
+      fileURL: '',
       fileList: [],
       uploadFileSizeLimit: 1000, // 文件大小限制为1000KB
       textarea: '',
@@ -181,41 +181,51 @@ export default {
       formData.append('file', this.file)
       api.getUrl(formData).then(response => {
         console.log(response.data)
-        this.fileURL = response.data.pictureURL
+        this.fileURL = response.data
+        return response.data
       })
     },
     submit() {
-      const history = [{
+      const history = {
         id: '',
         userId: '',
         missionId: '',
         finishDate: '',
         submissionURL: '',
-        status: '',
+        status: '0',
         comment: '',
         description: '',
         rate: '',
-        mission: ''
-      }]
+        mission: {}
+      }
       // 首先获取图片URL
-      this.getUrl().then(() => {
+
+      let url = ''
+      console.log(this.file)
+      const formData = new FormData()
+      formData.append('file', this.file)
+      api.getUrl(formData).then(response => {
+        console.log(response.data)
+        url = response.data
+        console.log(url)
         // 确保图片URL已经获取到后，再提交任务
-        history.submissionURL = this.fileURL
+        history.submissionURL = url
         history.userId = this.userId
         history.missionId = this.missionId
         history.description = this.taskDesc
-        history.mission = this.taskName
+        console.log(history)
         api.submit(history).then(response => {
-          if (response.data.status === 200) {
+          console.log(response.code)
+          if (response.code === 200) {
             this.$message.success('成功提交!')
-          } else if (response.data.status === 404) {
+            this.$router.push({
+              path: '/checkSubmission',
+              query: { missionId: this.missionId }
+            }) // 跳转至另一个页面
+          } else if (response.code === 404) {
             this.$message.error('提交失败,你已经提交过这个任务了!')
           }
         })
-          .catch(error => {
-            console.error(error)
-            this.$message.error('提交失败!')
-          })
       })
     }
   }
