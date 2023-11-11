@@ -200,7 +200,10 @@ export default {
     },
     handleSee(index, row) {
       console.log(index, row)
-      this.$router.push({ path: '/submitHomework' })
+      this.$router.push({
+        path: '/submitHomework',
+        query: { missionId: row.id }
+      })
     },
     headerCellStyle() {
       return {
