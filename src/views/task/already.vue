@@ -7,60 +7,58 @@
         <div class="header">
           <!-- 这里是查询和查看任务详情按钮 -->
           <div class="white-box">
-            <div class="center-content"> <!-- 添加一个包装层 -->
-              <!-- 这里是查询和查看任务详情按钮 -->
-              <div class="form">
-                <el-form :inline="true" class="demo-form-inline">
-                  <el-form-item label="">
-                    <el-input size="small" placeholder="" class="custom-input-style" />
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
-                  </el-form-item>
-                </el-form>
+<!-- 添加一个包装层 -->
+              <div class="center-content"> <!-- 添加一个包装层 -->
+                <!-- 这里是查询和查看任务详情按钮 -->
+                <el-input v-model="keywords" size="small" placeholder="" class="custom-input-style" />
+                <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
               </div>
-            </div>
           </div>
           <el-form :inline="true" class="demo-form-inline">
             <!-- ... 其他表单元素 ... -->
           </el-form>
         </div>
         <div class="content">
-          <el-table :data="tableData" style="width: 100%; max-width: 1200px;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle">
+          <el-table :data="tableData" style="width: 90%;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle">
             <el-table-column
               prop="name"
               label="任务名称"
-              width="200"
+              class="column-name"
               header-align="center"
             />
             <el-table-column
               prop="type"
               label="任务类型"
-              width="180"
+              class="column-type"
               header-align="center"
               column-key="type"
-              :filters="[{text: '学习', value: '学习'}, {text: '互动', value: '互动'}]"
+              :filters="[{text: '学习任务', value: '学习任务'}, {text: '互动任务', value: '互动任务'}]"
               :filter-method="filterHandler"
             />
             <el-table-column
               prop="finishTime"
               label="完成时间"
-              width="220"
+              class="column-finishTime"
               header-align="center"
               column-key="type"
             />
             <el-table-column
               prop="award"
               label="奖励积分"
-              width="180"
+              class="column-award"
               header-align="center"
             />
-            <el-table-column label="操作" width="200" header-align="center" @click="taskDetail">
+            <el-table-column
+              label="操作"
+              class="column-action"
+              header-align="center"
+              @click="taskDetail">
               <template slot-scope="scope">
                 <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
               </template>
             </el-table-column>
           </el-table>
+
         </div>
       </el-main>
     </el-container>
@@ -99,13 +97,13 @@ export default {
   methods: {
     typeJudge(number) {
       if (number === 0) {
-        return '上传文件任务'
+        return '学习任务'
       } else if (number === 1) {
-        return '上传视频任务'
+        return '学习任务'
       } else if (number === 2) {
-        return '聊天任务'
+        return '互动任务'
       } else if (number === 3) {
-        return '视频通话任务'
+        return '互动任务'
       }
     },
     setData(array) {
@@ -186,7 +184,7 @@ export default {
     },
     handleSee(index, row) {
       console.log(index, row)
-      this.$router.push({ path: '/submitHomework' })
+      this.$router.push({ path: '/checkSubmission' })
     },
     headerCellStyle() {
       return {
@@ -249,7 +247,9 @@ export default {
   padding: 10px; /* 添加内边距以增加长方形框的大小 */
   border: 1px solid #ccc; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
-  display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
+  display: flex; /* 改为使用flex布局 */
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
   width: 80%;
   height: 140px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* 设置默认的阴影效果 */
@@ -260,10 +260,14 @@ export default {
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3); /* 当鼠标悬浮时，增加阴影的偏移、模糊度和颜色的透明度 */
 }
 .center-content {
+  position: absolute;
+  top: 17%;
+  left: 33%;
+  height: 9%;
+  width: 32%;
   display: flex;
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
-  height: 100%; /* 设置高度为100%以充满 .white-box 的高度 */
 }
 .center-button{
   background-color: transparent;
@@ -314,6 +318,25 @@ export default {
 .custom-button-color:hover {
   background-color: darkorange  !important; /* 更深的巧克力色为悬停状态 */
   border-color: darkorange   !important;
+}
+.column-name {
+  width: 20%; /* 举例：任务名称占20%宽度 */
+}
+
+.column-type {
+  width: 18%; /* 任务类型占18%宽度 */
+}
+
+.column-finishTime {
+  width: 22%; /* 完成时间占22%宽度 */
+}
+
+.column-award {
+  width: 18%; /* 奖励积分占18%宽度 */
+}
+
+.column-action {
+  width: 22%; /* 操作占22%宽度 */
 }
 
 </style>
