@@ -62,6 +62,13 @@ export default {
       method: 'get',
       data: id
     })
+  },
+  search2(formData, id) {
+    return request({
+      url: `/missionHistory/searchCompleted/${id}`,
+      method: 'post',
+      data: formData
+    })
   }
 }
 

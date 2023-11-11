@@ -115,22 +115,6 @@ export default {
         this.tableData.push(temp)
       }
     },
-    fetchData() {
-      api.getSubmitTask(this.userId).then(response => {
-        console.log(response)
-        const code = response.code
-        const array = response.data
-        if (code === 200) {
-          this.setData(array)
-        } else {
-          console.error('Error: ' + '加载失败')
-        }
-      })
-      // .catch(error => {
-      //   console.error('Error fetching missions:', error)
-      //   // this.isLoading = false
-      // })
-    },
     getCookie() {
       const arr = document.cookie.split(';')
       for (let i = 0; i < arr.length; i++) {
@@ -146,6 +130,22 @@ export default {
         }
       }
       return ''
+    },
+    fetchData() {
+      api.getSubmitTask(this.userId, this.missionId).then(response => {
+        console.log(response)
+        const code = response.code
+        const array = response.data
+        if (code === 200) {
+          this.setData(array)
+        } else {
+          console.error('Error: ' + '加载失败')
+        }
+      })
+      // .catch(error => {
+      //   console.error('Error fetching missions:', error)
+      //   // this.isLoading = false
+      // })
     },
     onSubmit() {
       console.log(this.keywords)
