@@ -40,7 +40,7 @@
         </div>
       </el-main>
     </el-container>
-    <img :src="require('@/assets/task/animal.jpg')" class="image-transition">
+    <img :src="require('@/assets/task/several.jpg')" class="image-transition">
   </div>
 </template>
 

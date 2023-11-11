@@ -71,7 +71,7 @@
         </div>
       </el-main>
     </el-container>
-    <img :src="require('@/assets/mission_images/1.png')" class="image-transition">
+    <img :src="require('@/assets/mission_images/background.jpg')" class="image-transition">
   </div>
 </template>
 

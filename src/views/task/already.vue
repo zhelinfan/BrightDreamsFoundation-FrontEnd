@@ -55,12 +55,6 @@
               width="180"
               header-align="center"
             />
-            <el-table-column
-              prop="status"
-              label="状态"
-              width="180"
-              header-align="center"
-            />
             <el-table-column label="操作" width="200" header-align="center" @click="taskDetail">
               <template slot-scope="scope">
                 <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
@@ -70,7 +64,7 @@
         </div>
       </el-main>
     </el-container>
-    <img :src="require('@/assets/mission_images/1.png')" class="image-transition">
+    <img :src="require('@/assets/mission_images/background.jpg')" class="image-transition">
   </div>
 </template>
 
@@ -91,8 +85,7 @@ export default {
         finishTime: '',
         typeNum: '',
         type: '',
-        award: '',
-        status: ''
+        award: ''
       }
       ],
       listForm: {},
@@ -122,23 +115,20 @@ export default {
       this.tableData[0].type = this.typeJudge(array[0].mission.kind)
       this.tableData[0].typeNum = array[0].kind
       this.tableData[0].award = array[0].mission.reward
-      this.tableData[0].status = array[0].status
       for (let i = 1; i < array.length; i++) {
         const temp = {
           id: '',
           name: '',
           type: '',
           finishTime: '',
-          award: '',
-          status: ''
+          award: ''
         }
         temp.id = array[i].id
-        temp.name = array[i].missionName
+        temp.name = array[i].mission.missionName
         temp.finishTime = array[i].finishDate
-        temp.type = this.typeJudge(array[i].kind)
+        temp.type = this.typeJudge(array[i].mission.kind)
         temp.typeNum = array[i].kind
-        temp.award = array[i].reward
-        temp.status = array[i].status
+        temp.award = array[i].mission.reward
         this.tableData.push(temp)
       }
     },
@@ -188,8 +178,7 @@ export default {
             finishTime: '',
             typeNum: '',
             type: '',
-            award: '',
-            status: ''
+            award: ''
           }]
           this.setData(response.data)
         })
@@ -197,6 +186,7 @@ export default {
     },
     handleSee(index, row) {
       console.log(index, row)
+      this.$router.push({ path: '/submitHomework' })
     },
     headerCellStyle() {
       return {
@@ -217,9 +207,6 @@ export default {
     filterHandler(value, row, column) {
       const property = column['property']
       return row[property] === value
-    },
-    taskDetail() {
-      this.$router.push({ path: '/detail' })
     }
   }
 }
