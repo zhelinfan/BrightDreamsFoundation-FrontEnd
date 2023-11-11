@@ -196,8 +196,8 @@ export default {
       const arr = document.cookie.split(';')
       for (let i = 0; i < arr.length; i++) {
         const arr2 = arr[i].split('=')
-        if (arr2[0] === ' userInfo') {
-          const userinfo = JSON.parse(arr[i])
+        if (arr2[0] === 'userInfo' || arr2[0] === ' userInfo') {
+          const userinfo = JSON.parse(arr2[1])
           return userinfo
         }
       }
