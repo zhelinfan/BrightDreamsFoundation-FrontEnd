@@ -82,7 +82,7 @@
                   <div class="desc-item">
                     <div class="desc-title">历史提交情况</div>
                     <div class="desc-content">
-                      <router-link to="/several">点击查看历史记录</router-link>
+                      <router-link to="/several" @click="handleSee">点击查看历史记录</router-link>
 <!--                      <el-link href="https://element.eleme.io" target="_blank">点击查看历史记录</el-link>-->
                     </div>
                   </div>
@@ -125,17 +125,40 @@ export default {
     }
   },
   mounted() {
-    this.userId = this.$route.query.userId
     this.missionId = this.$route.query.missionId
+    console.log(this.missionId)
   },
   created() {
-    this.fetchData()
+    this.getCookie()
   },
   methods: {
+    handleSee() {
+      console.log('handleSee')
+      this.$router.push({
+        path: '/several',
+        query: { missionId: this.missionId }
+      })
+    },
+    getCookie() {
+      const arr = document.cookie.split(';')
+      for (let i = 0; i < arr.length; i++) {
+        const arr2 = arr[i].split('=')
+        if (arr2[0] === 'userInfo' || arr2[0] === ' userInfo') {
+          const userinfo = JSON.parse(arr2[1])
+          // return userinfo
+          this.userId = userinfo.id
+          console.log(this.userId)
+          this.missionId = this.$route.query.missionId
+          console.log(this.missionId)
+          this.fetchData()
+        }
+      }
+      return ''
+    },
     fetchData() {
       // this.page = current
-      console.log('enter')
-      api.checkSubmission(17, 2).then(response => {
+      console.log('enterFetchData')
+      api.checkSubmission(this.userId, this.missionId).then(response => {
         console.log(response.data)
         this.submitTime = response.data.finishDate
         this.fileName = response.data.submissionURL
@@ -148,7 +171,7 @@ export default {
           case 2:this.taskState = '不通过'; this.taskStateType = 'danger'; break
         }
       })
-      api.loadSingleMission(2).then(response => {
+      api.loadSingleMission(this.missionId).then(response => {
         this.taskName = response.data.missionName
         this.deadline = response.data.deadline
         this.taskDesc = response.data.description

@@ -93,7 +93,7 @@
         <el-input
           :key="classType"
           ref="class"
-          v-model="registerForm.class"
+          v-model="registerForm.clazz"
           :type="classType"
           placeholder="班级"
           name="class"
@@ -160,42 +160,42 @@ export default {
     }
     return {
       options: [{
-        value: '1',
+        value: '大河完小',
         label: '大河完小'
       }, {
-        value: '2',
+        value: '阳光小学',
         label: '阳光小学'
       }, {
-        value: '3',
+        value: '明光小学',
         label: '明光小学'
       }
       ],
       age_options: [{
-        value: '1',
+        value: '6',
         label: '6'
       }, {
-        value: '2',
+        value: '7',
         label: '7'
       }, {
-        value: '3',
+        value: '8',
         label: '8'
       }, {
-        value: '4',
+        value: '9',
         label: '9'
       }, {
-        value: '5',
+        value: '10',
         label: '10'
       }, {
-        value: '6',
+        value: '11',
         label: '11'
       }, {
-        value: '7',
+        value: '12',
         label: '12'
       }
       ],
       registerForm: {
         school: '',
-        class: '',
+        clazz: '',
         realName: '',
         gender: '',
         age: '',
@@ -232,7 +232,7 @@ export default {
   methods: {
     trimRealName() {
       this.registerForm.school = this.registerForm.school.trim()
-      this.registerForm.class = this.registerForm.class.trim()
+      this.registerForm.clazz = this.registerForm.clazz.trim()
       this.registerForm.realName = this.registerForm.realName.trim()
       this.registerForm.gender = this.registerForm.gender.trim()
       this.registerForm.age = this.registerForm.age.trim()

@@ -59,10 +59,9 @@
               label="操作"
               class="column-action"
               header-align="center"
-              @click="taskDetail"
-            >
+              @click="taskDetail">
               <template slot-scope="scope">
-                <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">去完成</el-button>
+                <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -203,7 +202,7 @@ export default {
       console.log(index, row)
       this.$router.push({
         path: '/submitHomework',
-        params: { missionId: row.id }
+        query: { missionId: row.id }
       })
     },
     headerCellStyle() {

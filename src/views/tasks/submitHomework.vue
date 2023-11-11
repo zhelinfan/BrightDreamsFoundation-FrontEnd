@@ -2,6 +2,7 @@
   <div class="container">
     <ChildNavbar />
     <div class="main">
+      <img :src="require('@/assets/mission_images/sbk.jpg')" class="image-transition">
       <div style="height: 100%;">
         <div class="work-main">
           <div class="m-left">
@@ -84,7 +85,6 @@
           </div><!--right-->
         </div><!--work-main-->
       </div>
-      <img :src="require('@/assets/mission_images/sbk.jpg')" class="image-transition">
     </div><!--main-->
   </div>
 </template>
@@ -118,17 +118,31 @@ export default {
   },
   mounted() {
     this.missionId = this.$route.query.missionId
-    this.userId = this.$route.query.userId
     console.log(this.missionId)
-    console.log(this.userId)
   },
   created() {
-    this.fetchData()
+    this.getCookie()
   },
   methods: {
+    getCookie() {
+      const arr = document.cookie.split(';')
+      for (let i = 0; i < arr.length; i++) {
+        const arr2 = arr[i].split('=')
+        if (arr2[0] === 'userInfo' || arr2[0] === ' userInfo') {
+          const userinfo = JSON.parse(arr2[1])
+          // return userinfo
+          this.userId = userinfo.id
+          console.log(this.userId)
+          this.missionId = this.$route.query.missionId
+          console.log(this.missionId)
+          this.fetchData()
+        }
+      }
+      return ''
+    },
     fetchData() {
       // this.missionId
-      api.loadSingleMission(2).then(response => {
+      api.loadSingleMission(this.missionId).then(response => {
         console.log(response.data)
         this.pictureURL = response.data.pictureURL
         this.taskName = response.data.missionName
@@ -222,7 +236,6 @@ export default {
   top: 8.6%;
   width: 100%;
   height: 100%;
-  z-index: -1;
   background-color: #f8ebd8;
   display: flex;
 }
@@ -380,16 +393,12 @@ export default {
   margin-left: 15%;
   margin-top: 5%;
 }
-#description {
-  position: relative;
-  margin-left: 30%;
-}
 
 .image-transition {
   position: absolute; /* 设置绝对定位 */
   /*top: 0.5%; !* 图片位于底部 *!*/
   left: 0; /* 图片位于左侧，可以根据需要调整位置 */
-  z-index: -1; /* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 */
+  /*z-index: -1; !* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 *!*/
   width: 100%; /* 图片最大宽度为100% */
   /*object-fit: contain;*/
   height: 95%;

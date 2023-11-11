@@ -8,11 +8,11 @@
           <!-- 这里是查询和查看任务详情按钮 -->
           <div class="white-box">
             <div class="write">"再见少年拉满弓，不惧岁月不惧风"</div>
-              <div class="center-content"> <!-- 添加一个包装层 -->
-                <!-- 这里是查询和查看任务详情按钮 -->
-                <el-input v-model="keywords" size="small" placeholder="" class="custom-input-style" />
-                <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
-              </div>
+            <div class="center-content"> <!-- 添加一个包装层 -->
+              <!-- 这里是查询和查看任务详情按钮 -->
+              <el-input v-model="keywords" size="small" placeholder="" class="custom-input-style" />
+              <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
+            </div>
           </div>
           <el-form :inline="true" class="demo-form-inline">
             <!-- ... 其他表单元素 ... -->
@@ -52,7 +52,8 @@
               label="操作"
               class="column-action"
               header-align="center"
-              @click="taskDetail">
+              @click="taskDetail"
+            >
               <template slot-scope="scope">
                 <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
               </template>
@@ -183,8 +184,13 @@ export default {
       }
     },
     handleSee(index, row) {
+      console.log('handleSee')
       console.log(index, row)
-      this.$router.push({ path: '/checkSubmission' })
+      console.log(row.id)
+      this.$router.push({
+        path: '/checkSubmission',
+        query: { missionId: row.id }
+      })
     },
     headerCellStyle() {
       return {
