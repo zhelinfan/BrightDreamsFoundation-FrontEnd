@@ -49,11 +49,11 @@ export default {
       data: file
     })
   },
-  getSubmitTask(id) {
+  getSubmitTask(userId, missionId) {
     return request({
-      url: `/missionHistory/get/${id}`,
+      url: `/missionHistory/select/${userId}/${missionId}`,
       method: 'get',
-      data: id
+      data: { userId, missionId }
     })
   },
   getCompleteTask(id) {
