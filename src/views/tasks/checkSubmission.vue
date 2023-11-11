@@ -8,7 +8,7 @@
             <div class="work-warp">
               <div class="wk-cover">
                 <div class="wk-head">
-                  <span>任务名称：{{ taskName }}</span>
+                  <span style="color: #b44d2c">任务名称：{{ taskName }}</span>
                 </div><!--wk-head-->
                 <div class="wk-body">
                   <div class="desc-item">
@@ -44,7 +44,7 @@
             <div class="work-warp">
               <div class="wk-cover">
                 <div class="wk-head">
-                  <span>任务提交详情</span>
+                  <span style="color: #b44d2c">任务提交详情</span>
                 </div>
                 <div class="wk-body">
                   <div class="desc-item">
@@ -78,6 +78,13 @@
                   <div class="desc-item">
                     <div class="desc-title">志愿者评分</div>
                     <div class="desc-content">{{ finalScore }}</div>
+                  </div>
+                  <div class="desc-item">
+                    <div class="desc-title">历史提交情况</div>
+                    <div class="desc-content">
+                      <router-link to="/several">点击查看历史记录</router-link>
+<!--                      <el-link href="https://element.eleme.io" target="_blank">点击查看历史记录</el-link>-->
+                    </div>
                   </div>
                 </div>
               </div>
@@ -301,9 +308,10 @@ export default {
   padding: 0 10px;
   display: block;
   border-radius: 4px;
-  border-left:4px solid #99d7cd;
+  border-left:4px solid #b34d2c;
   font-size:15px;
   font-weight:550;
+  color: #b34d2c;
 }
 .desc-content{
   margin-top: 10px;
@@ -327,16 +335,13 @@ export default {
 }
 #taskState {
   padding-left: 10px;
-  width: 12%;
+  width: 14%;
 }
 #tag {
   width: 100%;
   text-align: center;
   /*line-height: normal; !* 根据你的需求调整这个值 *!*/
   font-size: 13px;
-}
-#tag.taskStateType-success {
-  background-color: #67C23A;
 }
 .wk-body .desc-content .figure {
   display: flex;
@@ -359,6 +364,8 @@ export default {
   height: 110%;
 }
 #download {
-  background-color: #9ad8ce;
+  background-color: #fccd5f;
+  border: 2px solid #c1643c;
+  color: #c1643c;
 }
 </style>
