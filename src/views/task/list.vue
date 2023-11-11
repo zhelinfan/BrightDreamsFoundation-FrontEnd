@@ -202,12 +202,7 @@ export default {
     },
     handleSee(index, row) {
       console.log(index, row)
-      this.$router.push({
-        path: '/submitHomework',
-        query: {
-          id: row.id // 假设id是row对象中的属性
-        }
-      })
+      this.$router.push({ path: '/submitHomework' })
     },
     headerCellStyle() {
       return {
