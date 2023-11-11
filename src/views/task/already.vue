@@ -7,7 +7,7 @@
         <div class="header">
           <!-- 这里是查询和查看任务详情按钮 -->
           <div class="white-box">
-<!-- 添加一个包装层 -->
+            <div class="write">"再见少年拉满弓，不惧岁月不惧风"</div>
               <div class="center-content"> <!-- 添加一个包装层 -->
                 <!-- 这里是查询和查看任务详情按钮 -->
                 <el-input v-model="keywords" size="small" placeholder="" class="custom-input-style" />
@@ -338,5 +338,15 @@ export default {
 .column-action {
   width: 22%; /* 操作占22%宽度 */
 }
-
+.write{
+  position: absolute;
+  top: 28%;
+  left: 52%;
+  height: 9%;
+  width: 38%;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  font-family: "FangSong", "STFangsong", "华文仿宋", serif;
+}
 </style>

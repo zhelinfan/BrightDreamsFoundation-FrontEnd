@@ -7,10 +7,11 @@
         <div class="header">
           <!-- 这里是查询和查看任务详情按钮 -->
           <div class="white-box">
+            <div class="write">"等风来，不如追风去"</div>
             <div class="center-content"> <!-- 添加一个包装层 -->
               <!-- 这里是查询和查看任务详情按钮 -->
-                    <el-input v-model="keywords" size="small" placeholder="" class="custom-input-style" />
-                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
+              <el-input v-model="keywords" size="small" placeholder="" class="custom-input-style" />
+              <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
             </div>
           </div>
           <el-form :inline="true" class="demo-form-inline">
@@ -357,5 +358,15 @@ export default {
 .column-action {
   width: 17%;
 }
-
+.write{
+  position: absolute;
+  top: 28%;
+  left: 55%;
+  height: 9%;
+  width: 38%;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  font-family: "FangSong", "STFangsong", "华文仿宋", serif;
+}
 </style>

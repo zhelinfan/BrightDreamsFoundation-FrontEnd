@@ -318,13 +318,13 @@ export default {
 }
 .white-line{
   position: absolute;
-  background-color: #ffffff; /* 设置背景颜色为白色 */
+  background-color: transparent; /* 设置背景颜色为白色 */
   padding: 30px; /* 添加内边距以增加长方形框的大小 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
   display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
-  top: 22%;
+  top: 21%;
   left: 4%;
-  width: 14%;
+  width: 10%;
   height: 9%;
   /*transform: translateX(-654.5px) translateY(20px); !* 向左移动20像素，向下移动20像素 *!*/
   transition: box-shadow 0.3s; /* 添加过渡效果让阴影变化更平滑 */
@@ -414,7 +414,7 @@ export default {
 /*}*/
 .white-box {
   position: absolute;
-  background-color: #ffffff; /* 设置背景颜色为白色 */
+  background-color: transparent; /* 设置背景颜色为白色 */
   padding: 30px; /* 添加内边距以增加长方形框的大小 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
   display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
@@ -450,10 +450,11 @@ export default {
   top: 29%;
   right: 0;
   width: 16%;
-  height: 43%;
+  height: 47%;
   background-color: #FDAD7A !important;
   /*border-color: #FDAD7A !important;*/
   color: white; /* 设置文字颜色为白色，您可以根据需要选择不同的颜色 */
+  font-size: 16px;
 }
 .orangebutton{
   position: absolute;
@@ -461,6 +462,7 @@ export default {
   background-color: #FDAD7A !important;
   border-color: #FDAD7A !important;
   color: white;
+  font-size: 16px;
 }
 /* 可以选择添加悬停状态的样式改变 */
 .button-color:hover {
