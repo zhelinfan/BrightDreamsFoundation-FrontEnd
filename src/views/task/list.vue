@@ -7,18 +7,11 @@
         <div class="header">
           <!-- 这里是查询和查看任务详情按钮 -->
           <div class="white-box">
+            <div class="write">"等风来，不如追风去"</div>
             <div class="center-content"> <!-- 添加一个包装层 -->
               <!-- 这里是查询和查看任务详情按钮 -->
-              <div class="form">
-                <el-form :inline="true" class="demo-form-inline">
-                  <el-form-item label="">
-                    <el-input v-model="keywords" size="small" placeholder="" class="custom-input-style" />
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
-                  </el-form-item>
-                </el-form>
-              </div>
+              <el-input v-model="keywords" size="small" placeholder="" class="custom-input-style" />
+              <el-button class="custom-button-color" type="warning" icon="el-icon-search" size="small" @click="onSubmit">查询</el-button>
             </div>
           </div>
           <el-form :inline="true" class="demo-form-inline">
@@ -26,48 +19,53 @@
           </el-form>
         </div>
         <div class="content">
-          <el-table :data="tableData" style="width: 100%; max-width: 1200px;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle" max-height="250">
+          <el-table :data="tableData" style="width: 90%;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle" max-height="250">
             <el-table-column
               prop="name"
               label="任务名称"
-              width="200"
+              class="column-name"
               header-align="center"
             />
             <el-table-column
               prop="startTime"
               label="发布时间"
               sortable
-              width="200"
+              class="column-startTime"
               header-align="center"
             />
             <el-table-column
               prop="stopTime"
               label="截止时间"
               sortable
-              width="200"
+              class="column-stopTime"
               header-align="center"
             />
             <el-table-column
               prop="type"
               label="任务类型"
-              width="180"
+              class="column-type"
               header-align="center"
               column-key="type"
-              :filters="[{text: '学习', value: '学习'}, {text: '互动', value: '互动'}]"
+              :filters="[{text: '学习任务', value: '学习任务'}, {text: '互动任务', value: '互动任务'}]"
               :filter-method="filterHandler"
             />
             <el-table-column
               prop="award"
               label="奖励积分"
-              width="180"
+              class="column-award"
               header-align="center"
             />
-            <el-table-column label="操作" width="200" header-align="center" @click="taskDetail">
+            <el-table-column
+              label="操作"
+              class="column-action"
+              header-align="center"
+              @click="taskDetail">
               <template slot-scope="scope">
                 <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
               </template>
             </el-table-column>
           </el-table>
+
         </div>
       </el-main>
     </el-container>
@@ -111,13 +109,13 @@ export default {
   methods: {
     typeJudge(number) {
       if (number === 0) {
-        return '上传文件任务'
+        return '学习任务'
       } else if (number === 1) {
-        return '上传视频任务'
+        return '学习任务'
       } else if (number === 2) {
-        return '聊天任务'
+        return '互动任务'
       } else if (number === 3) {
-        return '视频通话任务'
+        return '互动任务'
       }
     },
     setData(array) {
@@ -276,10 +274,14 @@ export default {
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3); /* 当鼠标悬浮时，增加阴影的偏移、模糊度和颜色的透明度 */
 }
 .center-content {
+  position: absolute;
+  top: 17%;
+  left: 33%;
+  height: 9%;
+  width: 32%;
   display: flex;
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
-  height: 100%; /* 设置高度为100%以充满 .white-box 的高度 */
 }
 .center-button{
   background-color: transparent;
@@ -322,6 +324,7 @@ export default {
   border-color: #f56c6c; /* 错误状态的边框颜色 */
   box-shadow: 0 0 8px rgba(245, 108, 108, 0.3); /* 错误状态的外阴影 */
 }
+
 .custom-button-color {
   background-color: chocolate !important; /* 重要性提升，确保覆盖默认样式 */
   border-color: chocolate !important;
@@ -332,5 +335,38 @@ export default {
   background-color: darkorange  !important; /* 更深的巧克力色为悬停状态 */
   border-color: darkorange   !important;
 }
+.column-name {
+  width: 17%; /* 示例宽度 */
+}
 
+.column-startTime {
+  width: 17%;
+}
+
+.column-stopTime {
+  width: 17%;
+}
+
+.column-type {
+  width: 16%;
+}
+
+.column-award {
+  width: 16%;
+}
+
+.column-action {
+  width: 17%;
+}
+.write{
+  position: absolute;
+  top: 28%;
+  left: 55%;
+  height: 9%;
+  width: 38%;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  font-family: "FangSong", "STFangsong", "华文仿宋", serif;
+}
 </style>

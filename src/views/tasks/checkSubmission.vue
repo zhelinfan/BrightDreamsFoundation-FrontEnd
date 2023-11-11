@@ -8,7 +8,7 @@
             <div class="work-warp">
               <div class="wk-cover">
                 <div class="wk-head">
-                  <span>任务名称：{{ taskName }}</span>
+                  <span style="color: #b44d2c">任务名称：{{ taskName }}</span>
                 </div><!--wk-head-->
                 <div class="wk-body">
                   <div class="desc-item">
@@ -44,14 +44,14 @@
             <div class="work-warp">
               <div class="wk-cover">
                 <div class="wk-head">
-                  <span>任务提交详情</span>
+                  <span style="color: #b44d2c">任务提交详情</span>
                 </div>
                 <div class="wk-body">
                   <div class="desc-item">
                     <div class="content">
                       <div class="dc-info">
                         <span class="dc-label">任务状态:</span>
-                        <div id="taskState"><el-tag :type="taskStateType">{{ taskState }}</el-tag></div>
+                        <div id="taskState"><el-tag :type="taskStateType" id="tag">{{ taskState }}</el-tag></div>
                       </div>
                     </div>
                   </div>
@@ -79,6 +79,13 @@
                     <div class="desc-title">志愿者评分</div>
                     <div class="desc-content">{{ finalScore }}</div>
                   </div>
+                  <div class="desc-item">
+                    <div class="desc-title">历史提交情况</div>
+                    <div class="desc-content">
+                      <router-link to="/several">点击查看历史记录</router-link>
+<!--                      <el-link href="https://element.eleme.io" target="_blank">点击查看历史记录</el-link>-->
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -86,7 +93,7 @@
         </div><!--work-main-->
       </div>
     </div><!--main-->
-    <img :src="require('@/assets/mission_images/1.png')" class="image-transition">
+    <img :src="require('@/assets/mission_images/csbk.jpg')" class="image-transition">
   </div><!--container-->
 </template>
 
@@ -128,7 +135,7 @@ export default {
     fetchData() {
       // this.page = current
       console.log('enter')
-      api.checkSubmission(this.userId, this.missionId).then(response => {
+      api.checkSubmission(17, 2).then(response => {
         console.log(response.data)
         this.submitTime = response.data.finishDate
         this.fileName = response.data.submissionURL
@@ -141,7 +148,7 @@ export default {
           case 2:this.taskState = '不通过'; this.taskStateType = 'danger'; break
         }
       })
-      api.loadSingleMission(this.missionId).then(response => {
+      api.loadSingleMission(2).then(response => {
         this.taskName = response.data.missionName
         this.deadline = response.data.deadline
         this.taskDesc = response.data.description
@@ -188,7 +195,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #efefef;
+  /*background-color: #efefef;*/
   display: flex;
 }
 .work-main{
@@ -210,8 +217,9 @@ export default {
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
-  border: 1px solid #ffffff; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
+  border: 1px solid #f8ebd8; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
+  background-color: transparent;
 }
 .m-left:hover {
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3); /* 当鼠标悬浮时，增加阴影的偏移、模糊度和颜色的透明度 */
@@ -226,8 +234,9 @@ export default {
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
-  border: 1px solid #ffffff; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
+  border: 1px solid #f8ebd8; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
+  background-color: transparent;
 }
 .m-right:hover {
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3); /* 当鼠标悬浮时，增加阴影的偏移、模糊度和颜色的透明度 */
@@ -247,8 +256,9 @@ export default {
   flex-direction: column;
   background-color: #ffffff;
   /*background-color: transparent;*/
-  border: 1px solid #ffffff; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
+  border: 1px solid #f8ebd8; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
+  background-color: transparent;
 }
 .wk-cover{
   /*border: 2px solid #000;*/
@@ -256,8 +266,9 @@ export default {
   width: 100%;
   height: 100%;
   box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-  border: 1px solid #ffffff; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
+  border: 1px solid #f8ebd8; /* 添加边框样式，可根据需要调整边框的颜色和宽度 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
+  background-color: transparent;
 }
 
 .wk-head{
@@ -297,9 +308,10 @@ export default {
   padding: 0 10px;
   display: block;
   border-radius: 4px;
-  border-left:4px solid #d36e25;
+  border-left:4px solid #b34d2c;
   font-size:15px;
   font-weight:550;
+  color: #b34d2c;
 }
 .desc-content{
   margin-top: 10px;
@@ -323,6 +335,13 @@ export default {
 }
 #taskState {
   padding-left: 10px;
+  width: 14%;
+}
+#tag {
+  width: 100%;
+  text-align: center;
+  /*line-height: normal; !* 根据你的需求调整这个值 *!*/
+  font-size: 13px;
 }
 .wk-body .desc-content .figure {
   display: flex;
@@ -337,11 +356,16 @@ export default {
 }
 .image-transition {
   position: absolute; /* 设置绝对定位 */
+  top:6%;
   bottom: 0; /* 图片位于底部 */
   left: 0; /* 图片位于左侧，可以根据需要调整位置 */
   z-index: -1; /* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 */
-  max-width: 100%; /* 图片最大宽度为100% */
-  /*height: 100%;*/
-  object-fit: contain;
+  width: 100%; /* 图片最大宽度为100% */
+  height: 110%;
+}
+#download {
+  background-color: #fccd5f;
+  border: 2px solid #c1643c;
+  color: #c1643c;
 }
 </style>

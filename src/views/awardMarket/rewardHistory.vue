@@ -10,7 +10,7 @@
           <div class="item">
             <div class="header">
               <el-dropdown :hide-on-click="false" @command="handleCommand">
-                <span class="el-dropdown-link">
+                <span class="el-dropdown-link" style="font-size: 15px">
                   时间范围<i class="el-icon-arrow-down el-icon--right" />
                 </span>
                 <!--               <el-dropdown-menu slot="dropdown" class="el-dropdown-menu">-->
@@ -20,7 +20,7 @@
                 </el-dropdown-menu>
               </el-dropdown>
               <span style="color: #ffffff">总支出<i class="el-icon-coin" style="color: #ffffff" />{{ total_outcome }}</span>
-              <span style="color: #ffffff; margin-left: 80px">总收入<i class="el-icon-coin" style="color: #ffffff" />{{ total_income }}</span>
+              <span style="color: #ffffff; margin-left: 60px">总收入<i class="el-icon-coin" style="color: #ffffff" />{{ total_income }}</span>
             </div>
             <div class="body">
               <el-table
@@ -34,17 +34,17 @@
                 <el-table-column
                   prop="desc"
                   label="描述"
-                  width="230"
+                  width="240"
                 />
                 <el-table-column
                   prop="time"
                   label="收支时间"
-                  width="210"
+                  width="240"
                 />
                 <el-table-column
                   prop="reward"
                   label="积分"
-                  width="210"
+                  width="240"
                 />
               </el-table>
             </div>
@@ -56,6 +56,7 @@
         </div>
       </div>
     </div>
+    <img :src="require('@/assets/market_images/rhbk.jpg')" class="image-transition">
   </div>
 </template>
 
@@ -159,7 +160,7 @@ export default {
     },
     fetchData(current = 1) {
       this.page = current
-      api.getAllHistory(this.userId).then(response => {
+      api.getAllHistory(17).then(response => {
         this.completeArray = response.data
         if (response.code === 200) {
           this.completeTableData = this.setData(this.completeArray)
@@ -204,12 +205,12 @@ export default {
               { value: parseInt(this.total_income),
                 name: '总收入',
                 itemStyle: {
-                  color: '#FDA552FF' // 设置总收入的颜色为绿色
+                  color: '#9cdcd0' // 设置总收入的颜色为绿色
                 }},
               { value: parseInt(this.total_outcome),
                 name: '总支出',
                 itemStyle: {
-                  color: '#fdb5d5' // 设置总支出的颜色为红色
+                  color: '#fdc5ba' // 设置总支出的颜色为红色
                 }}
             ]
           }
@@ -223,26 +224,26 @@ export default {
     },
     tableHeaderStyle(column) {
       const headItem = {
-        'background-color': '#ffffff',
+        'background-color': '#f8ebd8',
         'color': '#0A1832',
         'border-radius': '16px 0px 0px 16px',
-        'border': '1px solid #FFFFFF!important',
+        'border': '1px solid #f8ebd8!important',
         'border-right': 'none',
         'text-align': 'center'
       }
       const midItem = {
-        'background-color': '#ffffff',
+        'background-color': '#f8ebd8',
         'color': '#0A1832',
-        'border': 'border: 1px solid #FFFFFF!important',
+        'border': 'border: 1px solid #f8ebd8!important',
         'border-right': 'none',
         'border-left': 'none',
         'text-align': 'center'
       }
       const endItem = {
-        'background-color': '#ffffff',
+        'background-color': '#f8ebd8',
         'color': '#0A1832',
         'border-radius': '0px 16px 16px 0px',
-        'border': '1px solid #FFFFFF!important',
+        'border': '1px solid #f8ebd8!important',
         'border-left': 'none',
         'text-align': 'center'
       }
@@ -262,22 +263,22 @@ export default {
       if (row) {
         styleRes.height = '60px'
         if (row.type === 1) {
-          styleRes.background = '#fdeaea'
+          styleRes.background = '#fde0da'
         } else if (row.type === 2) {
-          styleRes.background = '#edfbfc'
+          styleRes.background = '#cfeee8'
         } else if (row.type === 3) {
-          styleRes.background = '#fdf6e5'
+          styleRes.background = '#ffe9c8'
         }
         return styleRes
       }
     },
     cellStyle(column) {
       if (column.columnIndex === 0) {
-        return 'color: #0A1832; border-radius: 16px 0px 0px 16px; border: 2px solid #FFFFFF!important; border-right:none; text-align:center'
+        return 'color: #0A1832; border-radius: 16px 0px 0px 16px; border: 2px solid #f8ebd8!important; border-right:none; text-align:center'
       } else if (column.columnIndex === 2) {
-        return 'color: #0A1832; border-radius: 0px 16px 16px 0px; border: 2px solid #FFFFFF!important; border-left:none; text-align:center'
+        return 'color: #0A1832; border-radius: 0px 16px 16px 0px; border: 2px solid #f8ebd8!important; border-left:none; text-align:center'
       } else {
-        return 'color: #0A1832; border: 2px solid #FFFFFF!important; border-left:none; border-right:none; text-align:center'
+        return 'color: #0A1832; border: 2px solid #f8ebd8!important; border-left:none; border-right:none; text-align:center'
       }
     }
   }
@@ -285,6 +286,15 @@ export default {
 </script>
 
 <style scoped>
+.image-transition {
+  position: absolute; /* 设置绝对定位 */
+  top:6%;
+  bottom: 0; /* 图片位于底部 */
+  left: 0; /* 图片位于左侧，可以根据需要调整位置 */
+  z-index: -1; /* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 */
+  width: 100%; /* 图片最大宽度为100% */
+  height: 110%;
+}
 .main {
   position: absolute;
   width: 100%;
@@ -297,22 +307,22 @@ export default {
   left: 3%;
   width: 95%;
   height: 85%;
-  border: 1px solid #ffffff;
-  border-radius: 15px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-  background-color: #ffffff;
 }
 .left {
   /*border: 1px solid #67C23A;*/
   height: 100%;
-  width: 50%;
-  left: 0%
+  width: 55%;
+  left: 0%;
+  border: 1px solid #f8ebd8;
+  border-radius: 15px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  background-color: transparent;
 }
 .right {
   position: absolute;
   /*border: 1px solid #f56c6c;*/
   height: 90%;
-  width: 50%;
+  width: 48%;
   right: 0%;
   top: 10%;
 }
@@ -320,10 +330,10 @@ export default {
   /*border: 1px solid #000000;*/
   cursor: pointer;
   color: #ffffff;
-  margin-right: 240px;
+  margin-right: 320px;
 }
 .el-dropdown-menu {
-  margin-right: 200px;
+  margin-right: 320px;
   /*placement:'bottom';*/
 }
 .el-icon-arrow-down {
@@ -333,16 +343,16 @@ export default {
   position: absolute;
   /*border: 3px solid #f56c6c;*/
   top: 15%;
-  left: 3%;
+  left: 2.5%;
 }
 
 .item-title {
   position: absolute;
-  top: 7%;
-  left: 5%;
+  top: 5%;
+  left: 20%;
 }
 .header {
-  background-color: #7facf1;
+  background-color: #9cdbd0;
   display: flex;
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
@@ -362,6 +372,7 @@ export default {
   border-radius: 15px;
   max-height: 400px;
   overflow: auto;
+  background-color: transparent;
 }
 .el-table::-webkit-scrollbar {
   width: 10px; /* 设置滚动条宽度 */

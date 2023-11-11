@@ -6,37 +6,47 @@
       <el-main>
         <div class="content">
           <div style="margin-bottom: 20px; width: 50%; border-radius: 60px;">
-            <el-input placeholder="请输入内容" v-model="input3" class="input-with-select ">
+            <el-input v-model="input3" placeholder="请输入内容" class="input-with-select ">
               <span class="blue-bold">提交记录</span>
-              <el-button slot="append" icon="el-icon-search"></el-button>
+              <el-button slot="append" icon="el-icon-search" />
             </el-input>
           </div>
-          <el-table :data="tableData" style="width: 100%; max-width: 1200px;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle">
+          <el-table :data="tableData" style="width: 100%;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle">
             <el-table-column
               prop="name"
               label="任务名称"
-              width="280"
+              class="column-name"
               header-align="center"
             />
             <el-table-column
               prop="finishTime"
               label="提交时间"
               sortable
-              width="300"
+              class="column-finishTime"
               header-align="center"
             />
             <el-table-column
               prop="status"
               label="状态"
-              width="293"
+              class="column-status"
+              header-align="center">
+              <template slot-scope="scope">
+      <span :class="{'status-passed': scope.row.status === '通过', 'status-failed': scope.row.status === '不通过', 'status-pending': scope.row.status === '审核中'}">
+        {{ scope.row.status }}
+      </span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="操作"
+              class="column-action"
               header-align="center"
-            />
-            <el-table-column label="操作" width="300" header-align="center" @click="taskDetail">
+              @click="taskDetail">
               <template slot-scope="scope">
                 <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
               </template>
             </el-table-column>
           </el-table>
+
         </div>
       </el-main>
     </el-container>
@@ -71,11 +81,21 @@ export default {
     this.getCookie()
   },
   methods: {
+    typeStatus(number) {
+      if (number === 0) {
+        return '审核中'
+      } else if (number === 1) {
+        return '通过'
+      } else if (number === 2) {
+        return '不通过'
+      }
+    },
     setData(array) {
       this.tableData[0].id = array[0].id
       this.tableData[0].name = array[0].mission.missionName
       this.tableData[0].finishTime = array[0].finishDate
-      this.tableData[0].status = array[0].status
+      this.tableData[0].typeStatus = array[0].status
+      this.tableData[0].status = this.typeStatus(array[0].status)
       for (let i = 1; i < array.length; i++) {
         const temp = {
           id: '',
@@ -86,13 +106,14 @@ export default {
         temp.id = array[i].id
         temp.name = array[i].mission.missionName
         temp.finishTime = array[i].finishDate
-        temp.status = array[i].status
+        temp.status = this.typeStatus(array[i].status)
+        temp.typeStatus = array[i].status
         this.tableData.push(temp)
       }
     },
     fetchData() {
       api.getSubmitTask(this.userId).then(response => {
-        console.log(response.data)
+        console.log(response)
         const code = response.code
         const array = response.data
         if (code === 200) {
@@ -134,6 +155,7 @@ export default {
             id: '',
             name: '',
             finishTime: '',
+            typeStatus: '',
             status: ''
           }]
           this.setData(response.data)
@@ -260,20 +282,17 @@ export default {
 }
 
 /* 如果需要错误状态样式，可以添加 */
-.custom-input-style .el-input.is-error .el-input__inner {
-  border-color: #f56c6c; /* 错误状态的边框颜色 */
-  box-shadow: 0 0 8px rgba(245, 108, 108, 0.3); /* 错误状态的外阴影 */
-}
 .custom-button-color {
-  background-color: black !important; /* 重要性提升，确保覆盖默认样式 */
-  border-color: black !important;
+  background-color: chocolate !important; /* 重要性提升，确保覆盖默认样式 */
+  border-color: chocolate !important;
 }
 
 /* 可以选择添加悬停状态的样式改变 */
 .custom-button-color:hover {
-  background-color: gray  !important; /* 更深的巧克力色为悬停状态 */
-  border-color: gray   !important;
+  background-color: darkorange  !important; /* 更深的巧克力色为悬停状态 */
+  border-color: darkorange   !important;
 }
+
 .label-blue-bold {
   color: blue;
   font-weight: bold;
@@ -281,6 +300,32 @@ export default {
 
 .input-with-button .el-input-group__append {
   background-color: #fff;
+}
+.status-passed {
+  color: green;
+}
+
+.status-failed {
+  color: red;
+}
+
+.status-pending {
+  color: black;
+}
+.column-name {
+  width: 30%; /* 根据内容调整 */
+}
+
+.column-finishTime {
+  width: 30%;
+}
+
+.column-status {
+  width: 20%;
+}
+
+.column-action {
+  width: 20%;
 }
 
 </style>

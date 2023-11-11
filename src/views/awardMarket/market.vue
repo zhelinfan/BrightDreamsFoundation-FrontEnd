@@ -6,38 +6,7 @@
         <div class="image-icon">
           <img src="https://bruce-pan-bucket.oss-cn-beijing.aliyuncs.com/img/gift.png" class="image-transition1">
         </div>
-        <div class="select">
-          <!--          <el-form :inline="true">-->
-          <!--            <el-form-item>-->
-          <el-input v-model="searchInput" class="search-input" placeholder="请输入物品名称进行查询" />
-          <!--            </el-form-item>-->
-          <!--            <el-form-item>-->
-          <el-button class="button-color" @click="searchGood">查询</el-button>
-          <!--            </el-form-item>-->
-        </div>
-      </div>
-    </div>
-
-    <div class="main1">
-      <el-aside class="aside-style">
-        <div class="white">
-          <img src="https://bruce-pan-bucket.oss-cn-beijing.aliyuncs.com/img/images.png" class="image-transition2">
-          <div class="text">
-            <div class="text-center">小同学,你好！</div>
-            <div class="text-center">快用积分换取心仪的物品吧！</div>
-            <div class="text-center">可用积分：X</div>
-          </div>
-        </div>
-
-      </el-aside>
-      <div>
-        <div class="centered-container">
-          <div class="white-boxs">
-            <div class="image-container">
-              <img src="https://bruce-pan-bucket.oss-cn-beijing.aliyuncs.com/img/charity.jpg" class="image-transition3">
-            </div>
-          </div>
-        </div>
+        <div class="write">"在心中种花，人生才不会荒芜。"</div>
       </div>
     </div>
     <div class="white-line">
@@ -52,6 +21,15 @@
         </el-dropdown-menu>
       </el-dropdown>
       <div class="white-border" />
+    </div>
+    <div class="select">
+      <!--          <el-form :inline="true">-->
+      <!--            <el-form-item>-->
+      <el-input v-model="searchInput" class="search-input" placeholder="请输入物品名称进行查询" />
+      <!--            </el-form-item>-->
+      <!--            <el-form-item>-->
+      <el-button class="button-color" @click="searchGood">查询</el-button>
+      <!--            </el-form-item>-->
     </div>
     <div class="main2">
       <div class="centered-container2"> <!-- 移除点号前缀 -->
@@ -96,7 +74,7 @@
           </div>
         </el-main>
       </div> <!-- 移除不需要的斜杠 -->
-    </div>
+    </div><img :src="require('@/assets/market_images/background.jpg')" class="image-transition">
     <!--    <el-input-number v-model="num" :step="1"></el-input-number>-->
     <!--    <el-dialog-->
     <!--      title="提示"-->
@@ -115,7 +93,6 @@
     <!--  </span>-->
     <!--    </el-dialog>-->
   </div>
-
 </template>
 
 <script>
@@ -285,35 +262,17 @@ export default {
 .search-container{
   position: absolute;
   width: 100%;
-  height: 70%;
-}
-.select{
-  position: absolute;
-  top: 45%;
-  left: 36%;
-  height: 40%;
-  width: 38%;
-  display: flex;
-  justify-content: center; /* 水平居中 */
-  align-items: center; /* 垂直居中 */
-
+  height: 90%;
 }
 
 .container-bg {
   position: absolute;
-  height: 200%;
+  height: 100%;
   width: 100%;
-  background-color: #efefef; /* 设置背景颜色为灰色，你可以根据需要更改颜色值 */
+  background-color: transparent; /* 设置背景颜色为灰色，你可以根据需要更改颜色值 */
   display: flex;
   flex-direction: column;
 
-}
-.el-container {
-  height: 150vh; /* 设置父容器高度为视窗高度的100% */
-}
-
-.el-header {
-  height: 10%; /* 设置头部高度为50像素，根据实际需求调整 */
 }
 .image-icon{
   display:flex;
@@ -328,43 +287,69 @@ export default {
   height: 100%; /* 让容器高度占满整个头部 */
   overflow: hidden; /* 隐藏溢出的内容 */
 }
-
+.image-transition {
+  position: absolute; /* 设置绝对定位 */
+  top:5%;
+  bottom: 0; /* 图片位于底部 */
+  left: 0; /* 图片位于左侧，可以根据需要调整位置 */
+  z-index: -1; /* 将图片的 z-index 设置为较小的值，确保它位于所有组件的最下方 */
+  width: 100%; /* 图片最大宽度为100% */
+  height: 100%;
+}
 .image-transition1 {
   width: 85%; /* 图片宽度占满容器 */
   height: auto; /* 高度自适应以保持纵横比 */
   border-radius: 10px; /* 设置四个角的圆角半径 */
   transition: transform 0.5s, box-shadow 0.5s; /* 添加过渡效果（可选） */
 }
-.image-transition2 {
-  position: absolute;
-  width: 65%; /* 图片宽度占满容器 */
-  height: auto; /* 高度自适应以保持纵横比 */
-}
-.image-transition3 {
-  /*position: absolute;*/
-  width: 85%; /* 图片宽度占满容器 */
-  /*height: 90%; !* 高度自适应以保持纵横比 *!*/
-  border-radius: 10px; /* 设置四个角的圆角半径 */
-  transition: transform 0.5s, box-shadow 0.5s; /* 添加过渡效果（可选） */
-}
 .main0 {
   position: absolute;
-  top: 7%;
+  top: 5%;
   left: 4%;
   width: 95%; /* 设置宽度为页面宽度的50% */
-  height: 15%; /* 设置高度为页面高度的50% */
+  height: 16%; /* 设置高度为页面高度的50% */
 
 }
-.main1 {
+.main2 {
   position: absolute;
-  display: flex;
-  flex-direction:row;
-  top: 20%;
-  width: 100%; /* 设置宽度为屏幕宽度的60% */
-  /*margin-left: auto; !* 将 main1 向右移动 *!*/
-  height:28%; /* 设置高度为100%以填充整个高度 */
+  top: 28%;
+  width: 100%; /* 设置宽度为页面宽度的30% */
+  height: 60%; /* 设置高度为页面高度的70% */
 }
-
+.white-line{
+  position: absolute;
+  background-color: transparent; /* 设置背景颜色为白色 */
+  padding: 30px; /* 添加内边距以增加长方形框的大小 */
+  border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
+  display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
+  top: 21%;
+  left: 4%;
+  width: 10%;
+  height: 9%;
+  /*transform: translateX(-654.5px) translateY(20px); !* 向左移动20像素，向下移动20像素 *!*/
+  transition: box-shadow 0.3s; /* 添加过渡效果让阴影变化更平滑 */
+}
+.select{
+  position: absolute;
+  top: 20%;
+  left: 32%;
+  height: 9%;
+  width: 38%;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+}
+.write{
+  position: absolute;
+  top: 70%;
+  left: 20%;
+  height: 9%;
+  width: 38%;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  font-family: "FangSong", "STFangsong", "华文仿宋", serif;
+}
 .time {
   font-size: 13px;
   color: #999;
@@ -409,25 +394,7 @@ export default {
   z-index:1;
   height: 80%;
 }
-.white-line{
-  position: absolute;
-  background-color: #ffffff; /* 设置背景颜色为白色 */
-  padding: 30px; /* 添加内边距以增加长方形框的大小 */
-  border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
-  display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
-  top: 48%;
-  left: 4%;
-  width: 14%;
-  height: 9%;
-  /*transform: translateX(-654.5px) translateY(20px); !* 向左移动20像素，向下移动20像素 *!*/
-  transition: box-shadow 0.3s; /* 添加过渡效果让阴影变化更平滑 */
-}
-.main2 {
-  position: absolute;
-  top: 54%;
-  width: 100%; /* 设置宽度为页面宽度的30% */
-  height: 40%; /* 设置高度为页面高度的70% */
-}
+
 .centered-container2 {
   position: absolute;
   top: 0%;
@@ -447,7 +414,7 @@ export default {
 /*}*/
 .white-box {
   position: absolute;
-  background-color: #ffffff; /* 设置背景颜色为白色 */
+  background-color: transparent; /* 设置背景颜色为白色 */
   padding: 30px; /* 添加内边距以增加长方形框的大小 */
   border-radius: 15px; /* 添加圆角以使框看起来更圆滑 */
   display: inline-block; /* 让内部的长方形框与内容排列在同一行 */
@@ -483,10 +450,11 @@ export default {
   top: 29%;
   right: 0;
   width: 16%;
-  height: 80%;
+  height: 47%;
   background-color: #FDAD7A !important;
   /*border-color: #FDAD7A !important;*/
   color: white; /* 设置文字颜色为白色，您可以根据需要选择不同的颜色 */
+  font-size: 16px;
 }
 .orangebutton{
   position: absolute;
@@ -494,6 +462,7 @@ export default {
   background-color: #FDAD7A !important;
   border-color: #FDAD7A !important;
   color: white;
+  font-size: 16px;
 }
 /* 可以选择添加悬停状态的样式改变 */
 .button-color:hover {
