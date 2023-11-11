@@ -19,8 +19,12 @@
                   <el-dropdown-item v-for="(item, index) in duration" :key="index" :command="item" :disabled="isOptionDisabled(index)">{{ item }}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
-              <span style="color: #ffffff">总支出<i class="el-icon-coin" style="color: #ffffff" />{{ total_outcome }}</span>
-              <span style="color: #ffffff; margin-left: 60px">总收入<i class="el-icon-coin" style="color: #ffffff" />{{ total_income }}</span>
+              <span style="color: #ffffff">总支出
+                  <img :src="require('@/assets/personal_images/flower.png')" class="flower">
+                {{ total_outcome }}</span>
+              <span style="color: #ffffff; margin-left: -60px">总收入
+                <img :src="require('@/assets/personal_images/flower.png')" class="flower">
+                {{ total_income }}</span>
             </div>
             <div class="body">
               <el-table
@@ -286,6 +290,10 @@ export default {
 </script>
 
 <style scoped>
+.flower{
+  max-width: 8%;
+  height: auto;
+}
 .image-transition {
   position: absolute; /* 设置绝对定位 */
   top:6%;
@@ -330,10 +338,10 @@ export default {
   /*border: 1px solid #000000;*/
   cursor: pointer;
   color: #ffffff;
-  margin-right: 320px;
+  margin-right: 280px;
 }
 .el-dropdown-menu {
-  margin-right: 320px;
+  margin-right: 260px;
   /*placement:'bottom';*/
 }
 .el-icon-arrow-down {
