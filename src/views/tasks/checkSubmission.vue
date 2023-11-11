@@ -82,7 +82,10 @@
                   <div class="desc-item">
                     <div class="desc-title">历史提交情况</div>
                     <div class="desc-content">
-                      <router-link to="/several" @click="handleSee">点击查看历史记录</router-link>
+                      <button @click="goTo" id="goToNext">
+                        <span style="text-decoration: underline; color: #589cf5;">点击查看历史记录</span>
+                      </button>
+<!--                      <router-link to="/several">点击查看历史记录</router-link>-->
 <!--                      <el-link href="https://element.eleme.io" target="_blank">点击查看历史记录</el-link>-->
                     </div>
                   </div>
@@ -134,8 +137,7 @@ export default {
     this.getCookie()
   },
   methods: {
-    handleSee() {
-      console.log('handleSee')
+    goTo() {
       this.$router.push({
         query: { missionId: this.missionId },
         path: '/several'
@@ -402,5 +404,18 @@ export default {
   background-color: #fccd5f;
   border: 2px solid #c1643c;
   color: #c1643c;
+}
+
+#goToNext {
+  border: transparent;
+  background-color: transparent;
+  color: #589cf5;
+}
+#goToNext span {
+  transition: 0.3s all;
+}
+
+#goToNext span:hover {
+  transform: translateY(-2px);
 }
 </style>
