@@ -109,16 +109,12 @@ export default {
     },
     registerSwitch() {
       // this.loading1 = true
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading1 = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: '/register' })
-            this.loading1 = false
-          }).catch(() => {
-            this.loading1 = false
-          })
-        }
+      this.loading1 = true
+      this.$store.dispatch('user/login', this.loginForm).then(() => {
+        this.$router.push({ path: '/register' })
+        this.loading1 = false
+      }).catch(() => {
+        this.loading1 = false
       })
     },
     handleLogin() {

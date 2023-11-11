@@ -160,36 +160,36 @@ export default {
     }
     return {
       options: [{
-        value: '1',
+        value: '大河完小',
         label: '大河完小'
       }, {
-        value: '2',
+        value: '阳光小学',
         label: '阳光小学'
       }, {
-        value: '3',
+        value: '明光小学',
         label: '明光小学'
       }
       ],
       age_options: [{
-        value: '1',
+        value: '6',
         label: '6'
       }, {
-        value: '2',
+        value: '7',
         label: '7'
       }, {
-        value: '3',
+        value: '8',
         label: '8'
       }, {
-        value: '4',
+        value: '9',
         label: '9'
       }, {
-        value: '5',
+        value: '10',
         label: '10'
       }, {
-        value: '6',
+        value: '11',
         label: '11'
       }, {
-        value: '7',
+        value: '12',
         label: '12'
       }
       ],
