@@ -29,18 +29,20 @@
               prop="status"
               label="状态"
               class="column-status"
-              header-align="center">
+              header-align="center"
+            >
               <template slot-scope="scope">
-      <span :class="{'status-passed': scope.row.status === '通过', 'status-failed': scope.row.status === '不通过', 'status-pending': scope.row.status === '审核中'}">
-        {{ scope.row.status }}
-      </span>
+                <span :class="{'status-passed': scope.row.status === '通过', 'status-failed': scope.row.status === '不通过', 'status-pending': scope.row.status === '审核中'}">
+                  {{ scope.row.status }}
+                </span>
               </template>
             </el-table-column>
             <el-table-column
               label="操作"
               class="column-action"
               header-align="center"
-              @click="taskDetail">
+              @click="taskDetail"
+            >
               <template slot-scope="scope">
                 <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
               </template>
@@ -62,29 +64,61 @@ export default {
   components: {
     ChildNavbar
   },
-  data: function() {
+  data() {
     return {
-      userId: {},
+      missionId: '',
+      userId: '',
       tableData: [{
         id: '',
         name: '',
         finishTime: '',
         status: ''
-      }
-      ],
+      }],
       listForm: {},
       formInline: '',
       keywords: ''
     }
   },
-  created() {
-    this.getCookie()
-  },
   mounted() {
     this.missionId = this.$route.query.missionId
     console.log(this.missionId)
   },
+  created() {
+    this.getCookie()
+  },
   methods: {
+    getCookie() {
+      const arr = document.cookie.split(';')
+      for (let i = 0; i < arr.length; i++) {
+        const arr2 = arr[i].split('=')
+        if (arr2[0] === 'userInfo' || arr2[0] === ' userInfo') {
+          const userinfo = JSON.parse(arr2[1])
+          // return userinfo
+          this.userId = userinfo.id
+          console.log(this.userId)
+          this.missionId = this.$route.query.missionId
+          console.log(this.missionId)
+          this.fetchData()
+        }
+      }
+      return ''
+    },
+    fetchData() {
+      api.getSubmitTask(this.userId).then(response => {
+        console.log(response)
+        const code = response.code
+        const array = response.data
+        if (code === 200) {
+          this.setData(array)
+        } else {
+          console.error('Error: ' + '加载失败')
+        }
+      })
+      // .catch(error => {
+      //   console.error('Error fetching missions:', error)
+      //   // this.isLoading = false
+      // })
+    },
     typeStatus(number) {
       if (number === 0) {
         return '审核中'
@@ -114,38 +148,6 @@ export default {
         temp.typeStatus = array[i].status
         this.tableData.push(temp)
       }
-    },
-    fetchData() {
-      api.getSubmitTask(this.userId).then(response => {
-        console.log(response)
-        const code = response.code
-        const array = response.data
-        if (code === 200) {
-          this.setData(array)
-        } else {
-          console.error('Error: ' + '加载失败')
-        }
-      })
-      // .catch(error => {
-      //   console.error('Error fetching missions:', error)
-      //   // this.isLoading = false
-      // })
-    },
-    getCookie() {
-      const arr = document.cookie.split(';')
-      for (let i = 0; i < arr.length; i++) {
-        const arr2 = arr[i].split('=')
-        if (arr2[0] === 'userInfo' || arr2[0] === ' userInfo') {
-          const userinfo = JSON.parse(arr2[1])
-          // return userinfo
-          this.userId = userinfo.id
-          console.log(this.userId)
-          this.missionId = this.$route.query.missionId
-          console.log(this.missionId)
-          this.fetchData()
-        }
-      }
-      return ''
     },
     onSubmit() {
       console.log(this.keywords)
