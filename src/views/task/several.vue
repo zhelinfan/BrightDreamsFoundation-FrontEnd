@@ -59,6 +59,7 @@
       </el-main>
     </el-container>
     <img :src="require('@/assets/task/several.jpg')" class="image-transition">
+    <div class="write">"心之所向，素履以往。生如逆旅，一苇以航。"</div>
   </div>
 </template>
 
@@ -366,5 +367,15 @@ export default {
 .column-action {
   width: 20%;
 }
-
+.write{
+  position: absolute;
+  top: 86%;
+  left: 30%;
+  height: 9%;
+  width: 38%;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  font-family: "FangSong", "STFangsong", "华文仿宋", serif;
+}
 </style>
