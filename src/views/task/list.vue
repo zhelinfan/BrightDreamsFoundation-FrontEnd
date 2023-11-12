@@ -7,7 +7,7 @@
         <div class="header">
           <!-- 这里是查询和查看任务详情按钮 -->
           <div class="white-box">
-            <div class="write">"等风来，不如追风去"</div>
+            <div class="write">"等风来，不如追风去。"</div>
             <div class="center-content"> <!-- 添加一个包装层 -->
               <!-- 这里是查询和查看任务详情按钮 -->
               <el-input v-model="keywords" size="small" placeholder="" class="custom-input-style" />
@@ -52,6 +52,7 @@
             <el-table-column
               prop="award"
               label="奖励积分"
+              sortable
               class="column-award"
               header-align="center"
             />
@@ -59,9 +60,10 @@
               label="操作"
               class="column-action"
               header-align="center"
-              @click="taskDetail">
+              @click="taskDetail"
+            >
               <template slot-scope="scope">
-                <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
+                <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">去完成</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -202,10 +204,17 @@ export default {
     },
     handleSee(index, row) {
       console.log(index, row)
-      this.$router.push({
-        path: '/submitHomework',
-        query: { missionId: row.id }
-      })
+      if (row.type === '学习任务' || row.typeNum === 0 || row.typeNum === 1) {
+        this.$router.push({
+          path: '/submitHomework',
+          query: { missionId: row.id }
+        })
+      } else if (row.type === '互动任务' || row.typeNum === 2 || row.typeNum === 3) {
+        this.$router.push({
+          path: '/chat',
+          query: { missionId: row.id }
+        })
+      }
     },
     headerCellStyle() {
       return {

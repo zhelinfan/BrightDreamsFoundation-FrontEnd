@@ -8,7 +8,7 @@
           <div style="margin-bottom: 20px; width: 50%; border-radius: 60px;">
             <el-input v-model="keywords" placeholder="请输入内容" class="input-with-select ">
               <span class="blue-bold">提交记录</span>
-              <el-button slot="append" @click="onSubmit" icon="el-icon-search" />
+              <el-button slot="append" icon="el-icon-search" @click="onSubmit" />
             </el-input>
           </div>
           <el-table :data="tableData" style="width: 100%;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle">
@@ -26,21 +26,29 @@
               header-align="center"
             />
             <el-table-column
+              prop="type"
+              label="任务类型"
+              class="column-finishTime"
+              header-align="center"
+            />
+            <el-table-column
               prop="status"
               label="状态"
               class="column-status"
-              header-align="center">
+              header-align="center"
+            >
               <template slot-scope="scope">
-      <span :class="{'status-passed': scope.row.status === '通过', 'status-failed': scope.row.status === '不通过', 'status-pending': scope.row.status === '审核中'}">
-        {{ scope.row.status }}
-      </span>
+                <span :class="{'status-passed': scope.row.status === '通过', 'status-failed': scope.row.status === '不通过', 'status-pending': scope.row.status === '审核中'}">
+                  {{ scope.row.status }}
+                </span>
               </template>
             </el-table-column>
             <el-table-column
               label="操作"
               class="column-action"
               header-align="center"
-              @click="taskDetail">
+              @click="taskDetail"
+            >
               <template slot-scope="scope">
                 <el-button size="mini" class="custom-button-color" type="warning" icon="el-icon-view" @click="handleSee(scope.$index, scope.row)">查看详情</el-button>
               </template>
@@ -70,6 +78,8 @@ export default {
         id: '',
         name: '',
         finishTime: '',
+        typeNum: '',
+        type: '',
         status: ''
       }
       ],
@@ -86,6 +96,17 @@ export default {
     console.log(this.missionId)
   },
   methods: {
+    typeJudge(number) {
+      if (number === 0) {
+        return '学习任务'
+      } else if (number === 1) {
+        return '学习任务'
+      } else if (number === 2) {
+        return '互动任务'
+      } else if (number === 3) {
+        return '互动任务'
+      }
+    },
     typeStatus(number) {
       if (number === 0) {
         return '审核中'
@@ -107,11 +128,14 @@ export default {
           id: '',
           name: '',
           finishTime: '',
+          type: '',
           status: ''
         }
         temp.id = array[i].id
         temp.name = array[i].mission.missionName
         temp.finishTime = array[i].finishDate
+        temp.type = this.typeJudge(array[i].mission.kind)
+        temp.typeNum = array[i].kind
         temp.typeStatus = array[i].status
         temp.status = this.typeStatus(array[i].status)
         this.tableData.push(temp)
@@ -154,24 +178,31 @@ export default {
       console.log(this.userId)
       const formData = new FormData()
       formData.append('keywords', this.keywords)
-      if (this.keywords === '') {
-        this.fetchData()
-      } else {
-        api.search3(formData, this.userId).then(response => {
-          console.log(response.data)
-          this.tableData = [{
-            id: '',
-            name: '',
-            finishTime: '',
-            typeStatus: '',
-            status: ''
-          }]
-          this.setData(response.data)
-        })
-      }
+      api.search3(formData, this.userId).then(response => {
+        console.log(response.data)
+        this.tableData = [{
+          id: '',
+          name: '',
+          finishTime: '',
+          typeStatus: '',
+          status: ''
+        }]
+        this.setData(response.data)
+      })
     },
     handleSee(index, row) {
       console.log(index, row)
+      if (row.type === '学习任务' || row.typeNum === 0 || row.typeNum === 1) {
+        this.$router.push({
+          path: '/checkSubmission',
+          query: { missionId: row.id }
+        })
+      } else if (row.type === '互动任务' || row.typeNum === 2 || row.typeNum === 3) {
+        this.$router.push({
+          path: '/chat',
+          query: { missionId: row.id }
+        })
+      }
     },
     headerCellStyle() {
       return {
