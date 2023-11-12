@@ -247,7 +247,7 @@ export default {
       api.updateUserInfo(this.user)
     },
     saveEditSchool() {
-      this.isEditingSchool = !this.isEditingSschool
+      this.isEditingSchool = !this.isEditingSchool
       this.user.school = this.person.school
       const updatedUserInfoJSON = JSON.stringify(this.user)
       document.cookie = `userInfo=${updatedUserInfoJSON}; path=/`
@@ -255,7 +255,7 @@ export default {
     },
     saveEditClass() {
       this.isEditingClass = !this.isEditingClass
-      this.user.class = this.person.class
+      this.user.clazz = this.person.class
       api.updateUserInfo(this.user)
     },
     saveEditTrueName() {
