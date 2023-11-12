@@ -97,6 +97,7 @@
       </div>
     </div><!--main-->
     <img :src="require('@/assets/mission_images/csbk.jpg')" class="image-transition">
+    <div class="write">"行远自迩，笃行不怠。"</div>
   </div><!--container-->
 </template>
 
@@ -420,5 +421,16 @@ export default {
 
 #goToNext span:hover {
   text-shadow: 0 6px 6px rgba(101, 99, 99, 0.3);
+}
+.write{
+  position: absolute;
+  top: 90%;
+  left: 45%;
+  height: 9%;
+  width: 38%;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  font-family: "FangSong", "STFangsong", "华文仿宋", serif;
 }
 </style>

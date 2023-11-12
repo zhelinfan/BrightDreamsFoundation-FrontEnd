@@ -85,7 +85,7 @@
           </div><!--right-->
         </div><!--work-main-->
       </div>
-    </div><!--main-->
+    </div><!--main--> <div class="write">"时光不负追梦人，星光不问赶路人。"</div>
   </div>
 </template>
 
@@ -424,5 +424,16 @@ export default {
   background-color: #fccd5f;
   border: 2px solid #c1643c;
   color: #c1643c;
+}
+.write{
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  height: 9%;
+  width: 38%;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  font-family: "FangSong", "STFangsong", "华文仿宋", serif;
 }
 </style>
