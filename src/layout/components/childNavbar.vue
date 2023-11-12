@@ -36,8 +36,14 @@
         <div class="username">{{ username }}</div>
       </div>
       <el-dropdown-menu slot="dropdown" class="user-dropdown">
+        <el-dropdown-item  >
+          <div class="flower-part">
+            <img class="flower" src="@/assets/personal_images/flower.png">
+            <div class="flower-num">{{ flowerNum }}</div>
+          </div>
+        </el-dropdown-item>
         <router-link to="/personal">
-          <el-dropdown-item>个人中心</el-dropdown-item>
+          <el-dropdown-item divided>个人中心</el-dropdown-item>
         </router-link>
         <router-link to="/rewardHistory">
           <el-dropdown-item>历史积分</el-dropdown-item>
@@ -57,7 +63,8 @@ export default {
     return {
       activeIndex: '1',
       activeIndex2: '1',
-      username: '小明同学'
+      username: '小明同学',
+      flowerNum: ''
     }
   },
   created() {
@@ -81,7 +88,9 @@ export default {
       return ''
     },
     fetchUsername() {
-      this.username = this.getCookie().username
+      const userInfo = this.getCookie()
+      this.username = userInfo.username
+      this.flowerNum = userInfo.points
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
@@ -123,10 +132,14 @@ export default {
 #el-menu-item-1,#el-menu-item-3,#el-menu-item-4{
   color: #c7621c;
 }
-#el-menu-item-1:hover,#el-menu-item-3:hover,#el-menu-item-4:hover{
+#el-menu-item-1:hover,#el-menu-item-2:hover,#el-menu-item-3:hover,#el-menu-item-4:hover{
   background-color: rgba(248, 176, 68, 0.1);
   color: #b2571b;
 }
+//#submenu:hover{
+//  background-color: rgba(248, 176, 68, 0.1);
+//  color: #b2571b;
+//}
 #el-menu-item-1.is-active,#el-menu-item-3.is-active,#el-menu-item-4.is-active{
   border-bottom: 2px solid #c7621c; /* 设置底边框样式 */
 }
@@ -158,5 +171,19 @@ export default {
   color: #c7621c;
   background-color: rgba(248, 176, 68, 0.1);
 }
-
+.flower-part{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.flower{
+  width: 20px;
+  height: 20px;
+}
+.flower-num{
+  font-size: small;
+  color: #c7621c;
+  margin-left: 8px;
+}
 </style>
