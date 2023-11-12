@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container>
-      <ChildNavbar />
+      <ChildNavbar v-model="navIndex"/>
       <el-header style="height: 0px;" />
       <el-main>
         <div class="header">
@@ -78,6 +78,7 @@ export default {
   },
   data: function() {
     return {
+      navIndex: '2-2',
       userId: {},
       tableData: [{
         id: '',
