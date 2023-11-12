@@ -12,7 +12,8 @@
           <div class="flower-container">
             <img :src="require('@/assets/personal_images/flower.png')" class="flower">
             <span class="flower-number">{{ flowerNumber }}</span>
-          </div>
+
+          </div> <div class="write">"且将新火试新茶，诗酒趁年华。"</div>
         </div>
         <div class="account-security">
           <span class="title1">账号安全</span>
@@ -466,5 +467,16 @@ export default {
 }
 .el-input{
   margin-bottom: 3px;
+}
+.write{
+  position: absolute;
+  top: 34%;
+  left: 45%;
+  height: 9%;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  font-family: "FangSong", "STFangsong", "华文仿宋", serif;
 }
 </style>

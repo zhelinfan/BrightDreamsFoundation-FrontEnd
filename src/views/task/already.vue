@@ -7,7 +7,7 @@
         <div class="header">
           <!-- 这里是查询和查看任务详情按钮 -->
           <div class="white-box">
-            <div class="write">"再见少年拉满弓，不惧岁月不惧风"</div>
+            <div class="write">"再见少年拉满弓,不惧岁月不惧风。"</div>
             <div class="center-content"> <!-- 添加一个包装层 -->
               <!-- 这里是查询和查看任务详情按钮 -->
               <el-input v-model="keywords" size="small" placeholder="" class="custom-input-style" />
@@ -45,6 +45,7 @@
             <el-table-column
               prop="award"
               label="奖励积分"
+              sortable
               class="column-award"
               header-align="center"
             />
@@ -84,7 +85,8 @@ export default {
         finishTime: '',
         typeNum: '',
         type: '',
-        award: ''
+        award: '',
+        missionId: ''
       }
       ],
       listForm: {},
@@ -114,13 +116,15 @@ export default {
       this.tableData[0].type = this.typeJudge(array[0].mission.kind)
       this.tableData[0].typeNum = array[0].kind
       this.tableData[0].award = array[0].mission.reward
+      this.tableData[0].missionId = array[0].mission.id
       for (let i = 1; i < array.length; i++) {
         const temp = {
           id: '',
           name: '',
           type: '',
           finishTime: '',
-          award: ''
+          award: '',
+          missionId: ''
         }
         temp.id = array[i].id
         temp.name = array[i].mission.missionName
@@ -128,6 +132,7 @@ export default {
         temp.type = this.typeJudge(array[i].mission.kind)
         temp.typeNum = array[i].kind
         temp.award = array[i].mission.reward
+        temp.missionId = array[i].mission.id
         this.tableData.push(temp)
       }
     },
@@ -186,13 +191,18 @@ export default {
       }
     },
     handleSee(index, row) {
-      console.log('handleSee')
       console.log(index, row)
-      console.log(row.id)
-      this.$router.push({
-        path: '/checkSubmission',
-        query: { missionId: row.id }
-      })
+      if (row.type === '学习任务' || row.typeNum === 0 || row.typeNum === 1) {
+        this.$router.push({
+          path: '/checkSubmission',
+          query: { missionId: row.id }
+        })
+      } else if (row.type === '互动任务' || row.typeNum === 2 || row.typeNum === 3) {
+        this.$router.push({
+          path: '/chat',
+          query: { missionId: row.id }
+        })
+      }
     },
     headerCellStyle() {
       return {

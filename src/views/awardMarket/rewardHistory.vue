@@ -160,6 +160,7 @@ export default {
       }
       this.duration = monthsSet
       const returnData = this.tableData
+      this.createCharts()
       return returnData
     },
     fetchData(current = 1) {
@@ -168,7 +169,6 @@ export default {
         this.completeArray = response.data
         if (response.code === 200) {
           this.completeTableData = this.setData(this.completeArray)
-          this.createCharts()
         } else {
           console.error('Error: ' + '加载失败')
         }
