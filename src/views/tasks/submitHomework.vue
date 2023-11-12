@@ -35,53 +35,66 @@
                   <div class="content">{{ deadline }}</div>
                 </div>
               </div><!--desc-item-->
-              <!--                </div>&lt;!&ndash;wk-body&ndash;&gt;-->
-              <!--              </div>&lt;!&ndash;wk-cover&ndash;&gt;-->
-            </div><!--work-wrap-->
-          </div><!--left-->
-          <div class="m-right">
-            <!--            <div class="work-warp">-->
-            <!--              <div class="wk-cover">-->
-            <div class="wk-head"><span>任务提交</span></div>
-            <div class="wk-body">
               <div class="desc-item">
-                <el-upload
-                  id="upload"
-                  class="upload-demo"
-                  style="padding-bottom: 20px; background-color: transparent;"
-                  drag
-                  action="http://localhost:9528/mission/upload"
-                  :on-preview="handlePreview"
-                  :on-remove="handleRemove"
-                  :file-list="fileList"
-                  :http-request="empty"
-                  :before-upload="beforeUpload"
-                  :limit="1"
-                  :accept="accFileType"
-                >
-                  <i class="el-icon-upload" />
-                  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                  <div slot="tip" class="el-upload__tip" style="padding-left: 80px">只能上传一个文件大小不得超过1000KB</div>
-                </el-upload>
-              </div>
-              <div class="desc-item">
-                <el-input
-                  id="description"
-                  v-model="textarea"
-                  type="textarea"
-                  :rows="6"
-                  placeholder="描述"
-                  class="el-input"
-                />
-              </div>
-              <div class="desc-item">
-                <div class="btn-container">
-                  <el-button id="submit" slot="reference" size="mini" round @click="submit">提交</el-button>
+                <div class="desc-title">历史提交情况</div>
+                <div class="desc-content">
+                  <button id="goToNext" @click="goTo">
+                    <span style="text-decoration: underline; color: #589cf5;">点击查看历史记录</span>
+                  </button>
                 </div>
               </div>
-            </div>
+            </div><!--wk-body-->
+            <!--              </div>&lt;!&ndash;wk-cover&ndash;&gt;-->
+            <!--            </div>&lt;!&ndash;work-wrap&ndash;&gt;-->
+          </div><!--left-->
+            <div class="m-right">
+              <!--            <div class="work-warp">-->
+              <!--              <div class="wk-cover">-->
+              <div class="wk-head"><span>任务提交</span></div>
+              <div class="wk-body">
+                <div class="desc-item">
+                  <el-upload
+                    id="upload"
+                    class="upload-demo"
+                    style="padding-bottom: 20px; background-color: transparent;"
+                    drag
+                    action="http://localhost:9528/mission/upload"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :file-list="fileList"
+                    :http-request="empty"
+                    :before-upload="beforeUpload"
+                    :limit="1"
+                    :accept="accFileType"
+                  >
+                    <i class="el-icon-upload" />
+                    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                    <div slot="tip" class="el-upload__tip" style="padding-left: 80px">只能上传一个文件大小不得超过1000KB</div>
+                  </el-upload>
+                </div>
+                <div class="desc-item">
+                  <el-input
+                    id="description"
+                    v-model="textarea"
+                    type="textarea"
+                    :rows="6"
+                    placeholder="描述"
+                    class="el-input"
+                  />
+                </div>
+                <div class="desc-item">
+                  <div class="btn-container">
+                    <el-button id="submit" slot="reference" size="mini" round @click="submit">提交</el-button>
+                  </div>
+                </div>
+              </div>
             <!--              </div>-->
             <!--            </div>-->
+            </div><!--right-->
+          </div><!--work-main-->
+        </div>
+      </div><!--main-->
+    </div>
           </div><!--right-->
         </div><!--work-main-->
       </div>
@@ -124,6 +137,12 @@ export default {
     this.getCookie()
   },
   methods: {
+    goTo() {
+      this.$router.push({
+        query: { missionId: this.missionId },
+        path: '/several'
+      })
+    },
     getCookie() {
       const arr = document.cookie.split(';')
       for (let i = 0; i < arr.length; i++) {
@@ -424,6 +443,21 @@ export default {
   background-color: #fccd5f;
   border: 2px solid #c1643c;
   color: #c1643c;
+}
+#goToNext {
+  border: transparent;
+  background-color: transparent;
+  color: #589cf5;
+}
+#goToNext span {
+  text-decoration: underline;
+  color: #589cf5;
+  transition: text-shadow 0.3s;
+  cursor: pointer;
+}
+
+#goToNext span:hover {
+  text-shadow: 0 6px 6px rgba(101, 99, 99, 0.3);
 }
 .write{
   position: absolute;
