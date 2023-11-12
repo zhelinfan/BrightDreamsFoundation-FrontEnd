@@ -1,6 +1,6 @@
 <template>
   <div class="container-bg" >
-    <ChildNavbar />
+    <ChildNavbar v-model="navIndex"/>
     <div class="main0">
       <div class="search-container" style="display: flex;">
         <div class="image-icon">
@@ -104,6 +104,7 @@ export default {
   },
   data() {
     return {
+      navIndex: '3',
       searchInput: '',
       amount: 1,
       rowNum: 4,

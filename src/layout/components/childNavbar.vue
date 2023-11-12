@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    :default-active="activeIndex2"
+    :default-active="value"
     class="el-menu"
     mode="horizontal"
     active-text-color="#b2571b"
@@ -59,10 +59,21 @@
 <script>
 export default {
   name: 'ChildNavbar',
+  props: ['value'],
+  computed: {
+    model: {
+      get() {
+        return this.value
+      },
+      set(newValue) {
+        console.log(this.newValue)
+        this.$emit('input', newValue) // 通过 $emit 发送 input 事件通知父组件更新 value
+      }
+    }
+  },
   data() {
     return {
       activeIndex: '1',
-      activeIndex2: '1',
       username: '小明同学',
       flowerNum: ''
     }
@@ -93,7 +104,10 @@ export default {
       this.flowerNum = userInfo.points
     },
     handleSelect(key, keyPath) {
-      console.log(key, keyPath)
+      // console.log(key, keyPath)
+      // if (!this.activeIndex2) {
+      //   this.$emit('input', key)
+      // }
     },
     mainSwitch() {
       this.$router.push({ path: '/mainpage' })

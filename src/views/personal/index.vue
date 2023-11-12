@@ -12,7 +12,8 @@
           <div class="flower-container">
             <img :src="require('@/assets/personal_images/flower.png')" class="flower">
             <span class="flower-number">{{ flowerNumber }}</span>
-          </div>
+
+          </div> <div class="write">"且将新火试新茶，诗酒趁年华。"</div>
         </div>
         <div class="account-security">
           <span class="title1">账号安全</span>
@@ -166,7 +167,7 @@ export default {
         label: '女'
       }
       ],
-      flowerNumber: '100',
+      flowerNumber: '',
       passwordType: 'password',
       isEditingUsername: false,
       isEditingPassword: false,
@@ -204,7 +205,8 @@ export default {
       return ''
     },
     fetchPersonalInfo() {
-      api.getUserInfo(18).then(response => {
+      const userId = this.getCookie().id
+      api.getUserInfo(userId).then(response => {
         this.user = response.data
         this.person.id = this.user.id
         this.person.username = this.user.username
@@ -213,6 +215,7 @@ export default {
         this.person.class = this.user.clazz
         this.person.realName = this.user.realName
         this.person.age = this.user.age
+        this.flowerNumber = this.user.points
         if (this.getCookie().gender === 0) {
           this.person.gender = '男'
         } else {
@@ -245,7 +248,7 @@ export default {
       api.updateUserInfo(this.user)
     },
     saveEditSchool() {
-      this.isEditingSchool = !this.isEditingSschool
+      this.isEditingSchool = !this.isEditingSchool
       this.user.school = this.person.school
       const updatedUserInfoJSON = JSON.stringify(this.user)
       document.cookie = `userInfo=${updatedUserInfoJSON}; path=/`
@@ -253,7 +256,7 @@ export default {
     },
     saveEditClass() {
       this.isEditingClass = !this.isEditingClass
-      this.user.class = this.person.class
+      this.user.clazz = this.person.class
       api.updateUserInfo(this.user)
     },
     saveEditTrueName() {
@@ -356,7 +359,7 @@ export default {
 .flower-container{
   /*border: 2px solid #000;*/
   position: absolute;
-  left: 25%;
+  left: 9%;
   top: 66%;
   width: 40%;
   height: 47%;
@@ -368,8 +371,9 @@ export default {
 .flower-number{
   position: absolute;
   top: 10%;
-  color: #000000;
+  color: #d2611d;
   font-size: smaller;
+  font-weight: bold;
   margin-left: 5px;
 }
 .account-security{
@@ -466,5 +470,16 @@ export default {
 }
 .el-input{
   margin-bottom: 3px;
+}
+.write{
+  position: absolute;
+  top: 34%;
+  left: 45%;
+  height: 9%;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  font-family: "FangSong", "STFangsong", "华文仿宋", serif;
 }
 </style>
