@@ -167,7 +167,7 @@ export default {
         label: '女'
       }
       ],
-      flowerNumber: '100',
+      flowerNumber: '',
       passwordType: 'password',
       isEditingUsername: false,
       isEditingPassword: false,
@@ -215,6 +215,7 @@ export default {
         this.person.class = this.user.clazz
         this.person.realName = this.user.realName
         this.person.age = this.user.age
+        this.flowerNumber = this.user.points
         if (this.getCookie().gender === 0) {
           this.person.gender = '男'
         } else {
@@ -358,7 +359,7 @@ export default {
 .flower-container{
   /*border: 2px solid #000;*/
   position: absolute;
-  left: 25%;
+  left: 9%;
   top: 66%;
   width: 40%;
   height: 47%;
@@ -370,8 +371,9 @@ export default {
 .flower-number{
   position: absolute;
   top: 10%;
-  color: #000000;
+  color: #d2611d;
   font-size: smaller;
+  font-weight: bold;
   margin-left: 5px;
 }
 .account-security{
