@@ -147,6 +147,7 @@ export default {
       const messageSend = {
         senderId: this.userId,
         receiverId: this.receiverId,
+        type: 2,
         interactTime: this.getCurrentTime(),
         content: this.msg,
         amount: 1
@@ -166,6 +167,7 @@ export default {
           const messageSend = {
             senderId: this.userId,
             receiverId: this.receiverId,
+            type: 2,
             interactTime: this.getCurrentTime(),
             amount: 1,
             pictureURL: response.data

@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import api from '@/api/user'
 export default {
   name: 'ChildNavbar',
   props: ['value'],
@@ -75,7 +76,8 @@ export default {
     return {
       activeIndex: '1',
       username: '小明同学',
-      flowerNum: ''
+      flowerNum: '',
+      userId: ''
     }
   },
   created() {
@@ -100,8 +102,13 @@ export default {
     },
     fetchUsername() {
       const userInfo = this.getCookie()
-      this.username = userInfo.username
-      this.flowerNum = userInfo.points
+      this.userId = userInfo.id
+      api.getOneUser(this.userId).then(response => {
+        const updatedUserInfoJSON = JSON.stringify(response.data)
+        document.cookie = `userInfo=${updatedUserInfoJSON}; path=/`
+        this.username = response.data.username
+        this.flowerNum = response.data.points
+      })
     },
     handleSelect(key, keyPath) {
       // console.log(key, keyPath)

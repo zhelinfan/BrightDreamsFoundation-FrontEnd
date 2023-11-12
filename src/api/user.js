@@ -7,6 +7,13 @@ export default {
       method: 'post',
       data: loginForm
     })
+  },
+  getOneUser(id) {
+    return request({
+      url: `/userInfo/get/${id}`,
+      method: 'get',
+      data: id
+    })
   }
 }
 
