@@ -57,10 +57,10 @@
                   id="upload"
                   :file-list="image"
                   :limit="1"
-                  :show-file-list="false"
                   accept=".jpg,.png"
                   action="http://localhost:9528/mission/upload"
                   :before-upload="handleSendImg"
+                  :on-error="emptyFileList"
                   class="upload-demo"
                 >
                   <i class="el-icon-picture" />
@@ -136,6 +136,7 @@ export default {
   },
   created() {
     this.bindEvent()
+    this.image = []
     // this.getCookie()
   },
   methods: {
@@ -172,7 +173,7 @@ export default {
           socket.send(JSON.stringify(messageSend))
           this.msgList.push(messageSend)
           this.scrollToButtom()
-          this.msg = []
+          this.image = []
         }
       })
     },
@@ -205,6 +206,9 @@ export default {
       socket.addEventListener('open', this.handleOpen.bind(this), false)
       // socket.addEventListener('error', this.handleError.bind(this), false)
       socket.addEventListener('message', this.handleMessage.bind(this), false)
+    },
+    emptyFileList() {
+      this.image = []
     },
     handleOpen() {
       // this.$forceUpdate()
