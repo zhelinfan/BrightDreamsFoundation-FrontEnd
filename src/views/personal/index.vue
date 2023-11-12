@@ -204,7 +204,8 @@ export default {
       return ''
     },
     fetchPersonalInfo() {
-      api.getUserInfo(18).then(response => {
+      const userId = this.getCookie().id
+      api.getUserInfo(userId).then(response => {
         this.user = response.data
         this.person.id = this.user.id
         this.person.username = this.user.username
