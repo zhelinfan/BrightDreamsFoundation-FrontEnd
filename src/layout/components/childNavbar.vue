@@ -10,13 +10,13 @@
     <el-menu-item id="el-menu-item-0" index="0" class="el-menu-item" disabled>
       <img
         class="sun-image"
-        style="width: 65px; height: 65px"
+        style="width: 50px; height: 50px"
         fit="fill"
         :src="require('@/assets/childnav_images/sun.png')"
       >
       <img
         class="sun-image"
-        style="width: 100px"
+        style="width: 120px"
         fit="fill"
         :src="require('@/assets/childnav_images/title.png')"
       >
@@ -137,14 +137,15 @@ export default {
 <style lang="scss" scoped>
 .el-menu{
   //background-color: #f9ead8;
-  background-color: #ffffff;
+  background-color: #fff8f3;
+  box-shadow: 0px 1px 8px rgb(197, 186, 173);
 }
 #el-menu-item-0{
   opacity: 1;
   margin-right: 0px;
 }
 #el-menu-item-1,#el-menu-item-3,#el-menu-item-4{
-  color: #c7621c;
+  color: #c0643c;
 }
 #el-menu-item-1:hover,#el-menu-item-2:hover,#el-menu-item-3:hover,#el-menu-item-4:hover{
   background-color: rgba(248, 176, 68, 0.1);

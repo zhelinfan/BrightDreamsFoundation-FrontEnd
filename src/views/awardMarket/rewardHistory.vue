@@ -20,9 +20,9 @@
                 </el-dropdown-menu>
               </el-dropdown>
               <span style="color:  #c1643c">总支出
-                  <img :src="require('@/assets/personal_images/flower.png')" class="flower">
+                <img :src="require('@/assets/personal_images/flower.png')" class="flower">
                 {{ total_outcome }}</span>
-              <span style="color:  #c1643c; margin-left: -50px">总收入
+              <span style="color:  #c1643c; margin-left: -1px">总收入
                 <img :src="require('@/assets/personal_images/flower.png')" class="flower">
                 {{ total_income }}</span>
             </div>
@@ -38,17 +38,17 @@
                 <el-table-column
                   prop="desc"
                   label="描述"
-                  width="240"
+                  width="242"
                 />
                 <el-table-column
                   prop="time"
                   label="收支时间"
-                  width="240"
+                  width="242"
                 />
                 <el-table-column
                   prop="reward"
                   label="积分"
-                  width="240"
+                  width="242"
                 />
               </el-table>
             </div>
@@ -345,7 +345,7 @@ export default {
   /*border: 1px solid #000000;*/
   cursor: pointer;
   color:  #c1643c;
-  margin-right: 160px;
+  margin-right: 170px;
   margin-left: 60px;
 }
 .el-dropdown-menu {
@@ -360,7 +360,7 @@ export default {
   position: absolute;
   /*border: 3px solid #f56c6c;*/
   top: 15%;
-  left: 2.5%;
+  left: 1.5%;
 }
 
 .item-title {
