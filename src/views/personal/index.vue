@@ -257,21 +257,29 @@ export default {
     saveEditClass() {
       this.isEditingClass = !this.isEditingClass
       this.user.clazz = this.person.class
+      const updatedUserInfoJSON = JSON.stringify(this.user)
+      document.cookie = `userInfo=${updatedUserInfoJSON}; path=/`
       api.updateUserInfo(this.user)
     },
     saveEditTrueName() {
       this.isEditingTrueName = !this.isEditingTrueName
       this.user.realName = this.person.realName
+      const updatedUserInfoJSON = JSON.stringify(this.user)
+      document.cookie = `userInfo=${updatedUserInfoJSON}; path=/`
       api.updateUserInfo(this.user)
     },
     saveEditAge() {
       this.isEditingAge = !this.isEditingAge
       this.user.age = this.person.age
+      const updatedUserInfoJSON = JSON.stringify(this.user)
+      document.cookie = `userInfo=${updatedUserInfoJSON}; path=/`
       api.updateUserInfo(this.user)
     },
     saveEditGender() {
       this.isEditingGender = !this.isEditingGender
       this.user.gender = this.person.gender
+      const updatedUserInfoJSON = JSON.stringify(this.user)
+      document.cookie = `userInfo=${updatedUserInfoJSON}; path=/`
       api.updateUserInfo(this.user)
     }
   }
