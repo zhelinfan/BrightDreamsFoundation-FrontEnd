@@ -35,6 +35,7 @@
           :type="passwordType"
           placeholder="密码"
           name="password"
+          show-password
           tabindex="2"
         />
         <span class="show-pwd" @click="showPwd">
@@ -52,11 +53,12 @@
           :type="passwordType"
           placeholder="确认密码"
           name="password_confirm"
+          show-password
           tabindex="3"
         />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon v-bind:icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
+<!--        <span class="show-pwd" @click="showPwd">-->
+<!--          <svg-icon v-bind:icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />-->
+<!--        </span>-->
       </el-form-item>
       <el-form-item prop="realName">
         <span class="svg-container">

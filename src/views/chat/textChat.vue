@@ -11,8 +11,8 @@
             <span class="vol-sch">东北大学 软件学院</span>
           </div>
         </div>
-<!--        <canvas id="myCanvas"></canvas>-->
-        <el-main ref="chatPart" id="chatPart" class="chat-part">
+        <!--        <canvas id="myCanvas"></canvas>-->
+        <el-main id="chatPart" ref="chatPart" class="chat-part">
           <div v-for="(item, index) in msgList" :key="index">
             <div v-if="msgList[index].senderId === userId" class="per-message-right">
               <img src="@/assets/childnav_images/child.png" class="child-av">
@@ -38,10 +38,37 @@
         </el-main>
         <div class="control-part">
           <div class="normal">
-            <el-input v-model="msg" class="input-box" size="medium" placeholder="输入你想和哥哥/姐姐说的话哦！"/>
-            <el-button size="medium" type="primary" icon="el-icon-s-promotion" class="send-button" @click="handleSendMsg" />
-            <el-button size="medium" icon="el-icon-plus" circle class="more" />
-            <!--            <img src="@/assets/chat_images/plane.png" class="plane">-->
+            <el-input v-model="msg" class="input-box" size="medium" placeholder="输入你想和哥哥/姐姐说的话哦！" @keyup.enter.native="handleEnter" />
+            <el-button
+              id="sendButton"
+              size="medium"
+              type="primary"
+              icon="el-icon-s-promotion"
+              class="send-button"
+              @click="handleSendMsg"
+            />
+            <el-popover
+              v-model="popVisible"
+              placement="top"
+              trigger="hover"
+            >
+              <div class="pop">
+                <el-upload
+                  id="upload"
+                  class="upload-demo"
+                  action=""
+                  :before-upload="handleSendImg"
+                  :show-file-list="false"
+                  :file-list="image"
+                  :limit="1"
+                  accept=".jpg,.png"
+                >
+                  <i class="el-icon-picture" />
+                </el-upload>
+                <el-button type="primary" class="upload-demo" size="mini" icon="el-icon-camera-solid"></el-button>
+              </div>
+              <el-button slot="reference" size="medium" icon="el-icon-plus" circle class="more" />
+            </el-popover>
           </div>
         </div>
       </div>
@@ -85,6 +112,8 @@ export default {
       receiverId: '',
       inputValue: '',
       msg: '',
+      image: [{ name: '', url: '' }],
+      popVisible: false,
       msgList: [
         {
           // childrenId: '',
@@ -126,6 +155,9 @@ export default {
       this.msg = ''
       this.scrollToButtom()
     },
+    handleSendImg() {
+      console.log('img enter')
+    },
     scrollToButtom() {
       this.$nextTick(() => {
         const elMain = document.getElementById('chatPart')
@@ -164,37 +196,12 @@ export default {
       }
       // this.msgList[0].content = 'pmh是大猪逼'
       this.scrollToButtom()
+    },
+    handleEnter() {
+      console.log('enter')
+      this.handleSendMsg()
+      // document.getElementById('sendButton').click()
     }
-    // OnOpen() {
-    //   socket.onopen = function(event) {
-    //   }
-    // },
-    // OnMessage() {
-    //   socket.onmessage = function(event) {
-    //     console.log(event.data)
-    //     this.msgList.push(event.data)
-    //     console.log(this.msgList)
-    //   }
-    // },
-    // OnClick() {
-    //   const interaction = {}
-    //   interaction.volunteerId = 18
-    //   interaction.childrenId = 1
-    //   interaction.type = 2
-    //   interaction.content = this.msg
-    //   socket.send(JSON.stringify(interaction))
-    // },
-    // OnClose() {
-    //   socket.onclose = function(e) {
-    //     console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
-    //     console.log(e)
-    //   }
-    // },
-    // OnError() {
-    //   socket.onerror = function(e) {
-    //     console.log(e)
-    //   }
-    // }
   }
 }
 </script>
@@ -360,5 +367,36 @@ export default {
   align-items: flex-end;
   width: auto;
   height: auto;
+}
+.upload-demo{
+  border-radius: 40%;
+  border: 2px solid #f1c179;
+  background-color: #ffe28e;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  box-shadow: 0 2px 12px 0 rgba(203, 203, 203, 0.1)
+}
+.upload-demo:hover{
+  border: 2px solid #fcc06d;
+  background-color: #ffd66f;
+}
+.el-icon-picture-outline:hover{
+  background-color: #ffd66f;
+
+}
+.el-icon-picture-outline{
+  background-color: #ffe28e;
+
+}
+.pop{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 </style>

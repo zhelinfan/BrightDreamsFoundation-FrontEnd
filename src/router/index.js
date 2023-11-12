@@ -139,25 +139,6 @@ export const constantRoutes = [
       icon: 'el-icon-notebook-2'
     }
   },
-  // {
-  //   path: '/detail',
-  //   component: Layout, // 使用Layout组件作为包裹
-  //   redirect: 'task-detail', // 可能需要一个默认的子路由
-  //   meta: {
-  //     title: '任务详情',
-  //     icon: 'child'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'task-detail',
-  //       component: () => import('@/views/task/detail.vue'),
-  //       meta: {
-  //         title: '任务详情',
-  //         icon: 'child'
-  //       }
-  //     }
-  //   ]
-  // },
   {
     path: '/404',
     component: () => import('@/views/404'),
@@ -248,7 +229,7 @@ export const constantRoutes = [
   },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  { path: '*', redirect: '/login', hidden: true }
 ]
 
 const createRouter = () => new Router({
