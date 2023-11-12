@@ -37,8 +37,8 @@
           <div class="box">
             <el-row v-for="(o, indexRow) in rowNum" :key="indexRow" :span="4" :offset="indexRow > 0 ? 1 : 0" style="margin-top: 20px">
               <el-col v-for="(o, indexCol) in columnNum" :key="indexCol" :span="4" :offset="indexCol > 0 ? 1 : 0">
-                <el-card :body-style="{ padding: '0px' }" class="card-hover">
-                  <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+                <el-card :body-style="{ padding: '0px'}" class="card-hover">
+                  <img :src="goodList[indexCol+indexRow*5].picture" class="image">
                   <div style="padding: 14px;">
                     <span>{{ goodList[indexCol+indexRow*5].goodName }}</span>
                     <div class="cost-container">
@@ -47,7 +47,8 @@
                     </div>
                     <div class="bottom clearfix">
                       <time class="time">{{ currentDate }}</time>
-                      <el-button type="text" class="button" @click="open(goodList[indexCol+indexRow*5])">查看</el-button>
+                      <el-button v-if="goodList[indexCol+indexRow*5].stock===0" disabled type="text" class="button" style="color: #b34d2c" @click="open(goodList[indexCol+indexRow*5])">已售罄</el-button>
+                      <el-button v-else type="text" class="button" @click="open(goodList[indexCol+indexRow*5])">查看</el-button>
                     </div>
                   </div>
                 </el-card>
@@ -55,8 +56,8 @@
             </el-row>
             <el-row v-for="(o, indexRow) in rowNumSingle" :key="indexRow" :span="4" :offset="indexRow > 0 ? 1 : 0" style="margin-top: 20px">
               <el-col v-for="(o, indexCol) in columnNumSingle" :key="indexCol" :span="4" :offset="indexCol > 0 ? 1 : 0">
-                <el-card :body-style="{ padding: '0px' }" class="card-hover">
-                  <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+                <el-card :body-style="{ padding: '0px' , width: 300, height: 200}" class="card-hover">
+                  <img :src="goodList[indexCol+rowNum*columnNum].picture" class="image">
                   <div style="padding: 14px;">
                     <span>{{ goodList[indexCol+rowNum*columnNum].goodName }}</span>
                     <div class="cost-container">
@@ -118,7 +119,8 @@ export default {
         goodName: '',
         description: '',
         cost: '',
-        stock: ''
+        stock: '',
+        picture: ''
       }],
       order: [{
         userId: '',
@@ -175,7 +177,7 @@ export default {
     },
     open(goodItem) {
       const h = this.$createElement
-      const imgSrc = 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'// 替换成你的图片地址
+      const imgSrc = goodItem.picture// 替换成你的图片地址
       const messageContent = [
         h('div', { style: 'text-align: center;' }, [
           h('img', {
@@ -368,6 +370,7 @@ export default {
 
 .image {
   width: 100%;
+  height: 250px;
   display: block;
 }
 
