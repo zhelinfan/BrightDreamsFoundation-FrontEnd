@@ -55,13 +55,13 @@
               <div class="pop">
                 <el-upload
                   id="upload"
-                  class="upload-demo"
-                  action=""
-                  :before-upload="handleSendImg"
-                  :show-file-list="false"
                   :file-list="image"
                   :limit="1"
+                  :show-file-list="false"
                   accept=".jpg,.png"
+                  action="http://localhost:9528/mission/upload"
+                  :before-upload="handleSendImg"
+                  class="upload-demo"
                 >
                   <i class="el-icon-picture" />
                 </el-upload>
@@ -83,6 +83,7 @@ import BubbleLeft from '@/layout/components/BubbleLeft.vue'
 import BubbleRight from '@/layout/components/BubbleRight.vue'
 import BubbleRightImg from '@/layout/components/BubbleRightImg.vue'
 import BubbleLeftImg from '@/layout/components/BubbleLeftImg.vue'
+import api from '@/api/task'
 let userId = ''
 const arr = document.cookie.split(';')
 for (let i = 0; i < arr.length; i++) {
@@ -123,7 +124,8 @@ export default {
           // interactionTime: ''
         }
       ],
-      userName: ''
+      userName: '',
+      uploadFileSizeLimit: 1000
     }
   },
   mounted() {
@@ -141,13 +143,10 @@ export default {
       if (!this.msg.trim().length) {
         return alert('不能发送空消息')
       }
-      const { DateTime } = require('luxon')
-      const currentDateTime = DateTime.now().setZone('Asia/Shanghai')
-      const formattedDateTime = currentDateTime.toFormat('yyyy-MM-dd HH:mm:ss')
       const messageSend = {
         senderId: this.userId,
         receiverId: this.receiverId,
-        interactTime: formattedDateTime,
+        interactTime: this.getCurrentTime(),
         content: this.msg,
         amount: 1
       }
@@ -156,8 +155,32 @@ export default {
       this.msg = ''
       this.scrollToButtom()
     },
-    handleSendImg() {
+    handleSendImg(file) {
       console.log('img enter')
+      const formData = new FormData()
+      formData.append('file', file)
+      api.getUrl(formData).then(response => {
+        console.log(response.data)
+        if (response.code === 200) {
+          const messageSend = {
+            senderId: this.userId,
+            receiverId: this.receiverId,
+            interactTime: this.getCurrentTime(),
+            amount: 1,
+            pictureURL: response.data
+          }
+          socket.send(JSON.stringify(messageSend))
+          this.msgList.push(messageSend)
+          this.scrollToButtom()
+          this.msg = []
+        }
+      })
+    },
+    getCurrentTime() {
+      const { DateTime } = require('luxon')
+      const currentDateTime = DateTime.now().setZone('Asia/Shanghai')
+      const formattedDateTime = currentDateTime.toFormat('yyyy-MM-dd HH:mm:ss')
+      return formattedDateTime
     },
     scrollToButtom() {
       this.$nextTick(() => {
