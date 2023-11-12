@@ -196,12 +196,12 @@ export default {
       if (row.type === '学习任务' || row.typeNum === 0 || row.typeNum === 1) {
         this.$router.push({
           path: '/checkSubmission',
-          query: { missionId: row.id }
+          query: { missionId: this.tableData[index].missionId }
         })
       } else if (row.type === '互动任务' || row.typeNum === 2 || row.typeNum === 3) {
         this.$router.push({
           path: '/chat',
-          query: { missionId: row.id }
+          query: { missionId: this.tableData[index].missionId }
         })
       }
     },
