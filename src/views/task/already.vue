@@ -153,9 +153,11 @@ export default {
         const arr2 = arr[i].split('=')
         if (arr2[0] === 'userInfo' || arr2[0] === ' userInfo') {
           const userinfo = JSON.parse(arr2[1])
-          this.userId = userinfo.id
           // return userinfo
+          this.userId = userinfo.id
           console.log(this.userId)
+          this.missionId = this.$route.query.missionId
+          console.log(this.missionId)
           this.fetchData()
         }
       }
@@ -169,14 +171,14 @@ export default {
       if (this.keywords === '') {
         this.fetchData()
       } else {
-        api.search(formData, this.userId).then(response => {
-          // console.log(response.data)
+        api.search2(formData, this.userId).then(response => {
+          console.log(response.data)
           this.tableData = [{
             id: '',
             name: '',
-            finishTime: '',
             typeNum: '',
             type: '',
+            finishTime: '',
             award: ''
           }]
           this.setData(response.data)

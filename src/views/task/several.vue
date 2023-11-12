@@ -6,9 +6,9 @@
       <el-main>
         <div class="content">
           <div style="margin-bottom: 20px; width: 50%; border-radius: 60px;">
-            <el-input v-model="input3" placeholder="请输入内容" class="input-with-select ">
+            <el-input v-model="keywords" placeholder="请输入内容" class="input-with-select ">
               <span class="blue-bold">提交记录</span>
-              <el-button slot="append" icon="el-icon-search" />
+              <el-button slot="append" @click="onSubmit" icon="el-icon-search" />
             </el-input>
           </div>
           <el-table :data="tableData" style="width: 100%;" border :header-cell-style="headerCellStyle" :cell-style="cellStyle">
@@ -65,6 +65,7 @@ export default {
   data: function() {
     return {
       userId: {},
+      missionId: {},
       tableData: [{
         id: '',
         name: '',
@@ -95,12 +96,13 @@ export default {
       }
     },
     setData(array) {
-      this.tableData[0].id = array[0].id
-      this.tableData[0].name = array[0].mission.missionName
-      this.tableData[0].finishTime = array[0].finishDate
-      this.tableData[0].typeStatus = array[0].status
-      this.tableData[0].status = this.typeStatus(array[0].status)
-      for (let i = 1; i < array.length; i++) {
+      // this.tableData[0].id = array[0].id
+      // this.tableData[0].name = array[0].mission.missionName
+      // this.tableData[0].finishTime = array[0].finishDate
+      // this.tableData[0].typeStatus = array[0].status
+      // this.tableData[0].status = this.typeStatus(array[0].status)
+      this.tableData.pop()
+      for (let i = 0; i < array.length; i++) {
         const temp = {
           id: '',
           name: '',
@@ -110,26 +112,10 @@ export default {
         temp.id = array[i].id
         temp.name = array[i].mission.missionName
         temp.finishTime = array[i].finishDate
-        temp.status = this.typeStatus(array[i].status)
         temp.typeStatus = array[i].status
+        temp.status = this.typeStatus(array[i].status)
         this.tableData.push(temp)
       }
-    },
-    fetchData() {
-      api.getSubmitTask(this.userId).then(response => {
-        console.log(response)
-        const code = response.code
-        const array = response.data
-        if (code === 200) {
-          this.setData(array)
-        } else {
-          console.error('Error: ' + '加载失败')
-        }
-      })
-      // .catch(error => {
-      //   console.error('Error fetching missions:', error)
-      //   // this.isLoading = false
-      // })
     },
     getCookie() {
       const arr = document.cookie.split(';')
@@ -147,6 +133,22 @@ export default {
       }
       return ''
     },
+    fetchData() {
+      api.getSubmitTask(this.userId, this.missionId).then(response => {
+        console.log(response)
+        const code = response.code
+        const array = [response.data]
+        if (code === 200) {
+          this.setData(array)
+        } else {
+          console.error('Error: ' + '加载失败')
+        }
+      })
+      // .catch(error => {
+      //   console.error('Error fetching missions:', error)
+      //   // this.isLoading = false
+      // })
+    },
     onSubmit() {
       console.log(this.keywords)
       console.log(this.userId)
@@ -155,8 +157,8 @@ export default {
       if (this.keywords === '') {
         this.fetchData()
       } else {
-        api.search(formData, this.userId).then(response => {
-          // console.log(response.data)
+        api.search3(formData, this.userId).then(response => {
+          console.log(response.data)
           this.tableData = [{
             id: '',
             name: '',

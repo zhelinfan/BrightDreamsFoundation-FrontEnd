@@ -49,11 +49,11 @@ export default {
       data: file
     })
   },
-  getSubmitTask(id) {
+  getSubmitTask(userId, missionId) {
     return request({
-      url: `/missionHistory/get/${id}`,
+      url: `/missionHistory/select/${userId}/${missionId}`,
       method: 'get',
-      data: id
+      data: { userId, missionId }
     })
   },
   getCompleteTask(id) {
@@ -61,6 +61,20 @@ export default {
       url: `/missionHistory/selectNewest/${id}`,
       method: 'get',
       data: id
+    })
+  },
+  search2(formData, id) {
+    return request({
+      url: `/missionHistory/searchCompleted/${id}`,
+      method: 'post',
+      data: formData
+    })
+  },
+  search3(formData, id) {
+    return request({
+      url: `/missionHistory/search/${id}`,
+      method: 'post',
+      data: formData
     })
   }
 }
