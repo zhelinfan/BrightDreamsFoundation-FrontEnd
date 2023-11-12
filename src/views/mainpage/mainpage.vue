@@ -1,6 +1,6 @@
 <template>
   <div class="content-container">
-    <ChildNavbar />
+    <ChildNavbar v-model="navIndex"/>
     <div class="image-container">
 <!--      <div class="image-front"></div>-->
       <img :src="require('@/assets/main_images/main1.jpg')" class="image-transition">
@@ -23,6 +23,7 @@ export default {
   },
   data() {
     return {
+      navIndex: '1',
       showImage: false,
       textLines: []
     }

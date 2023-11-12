@@ -12,6 +12,7 @@ export default {
         return this.value
       },
       set(newValue) {
+        console.log(this.newValue)
         this.$emit('input', newValue) // 通过 $emit 发送 input 事件通知父组件更新 value
       }
     }

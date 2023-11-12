@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-container">
-    <ChildNavbar />
+    <ChildNavbar v-model="navIndex"/>
     <div class="content-container">
       <img src="@/assets/chat_images/back.jpg" class="back" alt="">
       <div class="chat-box">
@@ -108,6 +108,7 @@ export default {
   data() {
     return {
       i: 0,
+      navIndex: '4',
       userId: userId,
       receiverId: '',
       inputValue: '',
