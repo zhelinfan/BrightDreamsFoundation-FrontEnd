@@ -91,6 +91,7 @@
             <!--              </div>-->
             <!--            </div>-->
             </div><!--right-->
+          <div class="write">"时光不负追梦人，星光不问赶路人。"</div>
           </div><!--work-main-->
         </div>
       </div><!--main-->
@@ -456,7 +457,7 @@ export default {
 }
 .write{
   position: absolute;
-  top: 90%;
+  top: 82%;
   left: 50%;
   height: 9%;
   width: 38%;
