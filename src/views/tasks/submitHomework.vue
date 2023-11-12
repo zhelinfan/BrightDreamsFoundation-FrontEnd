@@ -95,11 +95,6 @@
         </div>
       </div><!--main-->
     </div>
-          </div><!--right-->
-        </div><!--work-main-->
-      </div>
-    </div><!--main--> <div class="write">"时光不负追梦人，星光不问赶路人。"</div>
-  </div>
 </template>
 
 <script>
