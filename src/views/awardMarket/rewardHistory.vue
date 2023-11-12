@@ -4,7 +4,7 @@
     <div class="main">
       <div class="work-main">
         <div class="item-title">
-          <span style="font-weight: bold; font-size: 24px;">积分历史收支记录</span>
+          <span style="font-weight: bold; font-size: 24px;" class="font-color">积分历史收支记录</span>
         </div>
         <div class="left">
           <div class="item">
@@ -19,10 +19,10 @@
                   <el-dropdown-item v-for="(item, index) in duration" :key="index" :command="item" :disabled="isOptionDisabled(index)">{{ item }}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
-              <span style="color: #ffffff">总支出
+              <span style="color:  #c1643c">总支出
                   <img :src="require('@/assets/personal_images/flower.png')" class="flower">
                 {{ total_outcome }}</span>
-              <span style="color: #ffffff; margin-left: -60px">总收入
+              <span style="color:  #c1643c; margin-left: -50px">总收入
                 <img :src="require('@/assets/personal_images/flower.png')" class="flower">
                 {{ total_income }}</span>
             </div>
@@ -123,12 +123,14 @@ export default {
       this.total_outcome = 0
       this.total_income = 0
       let change = 0
+      let c = 0
       table.forEach(item => {
         if (item.type === 3) {
-          change = item.reward.substring(1)
-          this.total_outcome = Number(this.total_outcome) + Number(change)
+          c = Math.abs(Number(item.reward))
+          this.total_outcome = Number(this.total_outcome) + Number(c)
         } else {
-          change = item.reward.substring(1)
+          // change = item.reward.substring(1)
+          change = item.reward
           this.total_income = Number(this.total_income) + Number(change)
         }
       })
@@ -136,6 +138,7 @@ export default {
     setData(array) {
       this.tableData.pop()
       const monthsSet = new Set()
+      let c = 0
       for (let i = 0; i < array.length; i++) {
         const temp = {
           desc: '',
@@ -148,10 +151,11 @@ export default {
         temp.reward = array[i].change
         temp.type = array[i].type
         if (temp.type === 3) {
-          temp.reward = '-' + temp.reward
-          this.total_outcome = Number(this.total_outcome) + Number(array[i].change)
+          // temp.reward = '-' + temp.reward
+          c = Math.abs(Number(array[i].change))
+          this.total_outcome = Number(this.total_outcome) + Number(c)
         } else {
-          temp.reward = '+' + temp.reward
+          // temp.reward = '+' + temp.reward
           this.total_income = Number(this.total_income) + Number(array[i].change)
         }
         const month = array[i].changeDate.substring(0, 7)
@@ -184,14 +188,17 @@ export default {
       const options = {
         legend: {
           data: ['总收入', '总支出'],
-          right: '10%',
-          top: '17%',
+          right: '12%',
+          top: '20%',
           orient: 'vertical'
         },
         title: {
           text: '收入支出占比',
           top: '8%',
-          left: 'center'
+          left: 'center',
+          textStyle: {
+            color: '#c0643c' // 设置标题的颜色为红色
+          }
         },
         series: [
           {
@@ -229,7 +236,7 @@ export default {
     tableHeaderStyle(column) {
       const headItem = {
         'background-color': '#f8ebd8',
-        'color': '#0A1832',
+        'color': '#c0643c',
         'border-radius': '16px 0px 0px 16px',
         'border': '1px solid #f8ebd8!important',
         'border-right': 'none',
@@ -237,7 +244,7 @@ export default {
       }
       const midItem = {
         'background-color': '#f8ebd8',
-        'color': '#0A1832',
+        'color': '#c0643c',
         'border': 'border: 1px solid #f8ebd8!important',
         'border-right': 'none',
         'border-left': 'none',
@@ -245,7 +252,7 @@ export default {
       }
       const endItem = {
         'background-color': '#f8ebd8',
-        'color': '#0A1832',
+        'color': '#c0643c',
         'border-radius': '0px 16px 16px 0px',
         'border': '1px solid #f8ebd8!important',
         'border-left': 'none',
@@ -337,15 +344,17 @@ export default {
 .el-dropdown-link {
   /*border: 1px solid #000000;*/
   cursor: pointer;
-  color: #ffffff;
-  margin-right: 280px;
+  color:  #c1643c;
+  margin-right: 160px;
+  margin-left: 60px;
 }
 .el-dropdown-menu {
-  margin-right: 260px;
+  margin-right: 80px;
   /*placement:'bottom';*/
 }
 .el-icon-arrow-down {
   font-size: 12px;
+  text-align: right
 }
 .item{
   position: absolute;
@@ -360,7 +369,7 @@ export default {
   left: 20%;
 }
 .header {
-  background-color: #9cdbd0;
+  background-color: rgb(252, 205, 95, 0.5);
   display: flex;
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
@@ -398,5 +407,8 @@ export default {
 .disabled {
   pointer-events: none;
   color: #999;
+}
+.font-color{
+  color: #c1643c;
 }
 </style>

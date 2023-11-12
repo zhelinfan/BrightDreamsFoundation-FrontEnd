@@ -412,10 +412,13 @@ export default {
   color: #589cf5;
 }
 #goToNext span {
-  transition: 0.3s all;
+  text-decoration: underline;
+  color: #589cf5;
+  transition: text-shadow 0.3s;
+  cursor: pointer;
 }
 
 #goToNext span:hover {
-  transform: translateY(-2px);
+  text-shadow: 0 6px 6px rgba(101, 99, 99, 0.3);
 }
 </style>
