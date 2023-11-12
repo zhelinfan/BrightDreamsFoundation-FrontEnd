@@ -21,7 +21,7 @@
               </el-dropdown>
               <span style="color:  #c1643c">总支出
                   <img :src="require('@/assets/personal_images/flower.png')" class="flower">
-                {{ outcome }}</span>
+                {{ total_outcome }}</span>
               <span style="color:  #c1643c; margin-left: -50px">总收入
                 <img :src="require('@/assets/personal_images/flower.png')" class="flower">
                 {{ total_income }}</span>
@@ -78,7 +78,6 @@ export default {
       userId: '',
       total_income: '',
       total_outcome: '',
-      outcome: '',
       duration: [],
       disabledOptions: [],
       selectedOption: '',
@@ -123,15 +122,12 @@ export default {
     compute(table) {
       this.total_outcome = 0
       this.total_income = 0
-      this.outcome = 0
       let change = 0
       let c = 0
       table.forEach(item => {
         if (item.type === 3) {
           c = Math.abs(Number(item.reward))
-          this.outcome = Number(this.outcome) + Number(c)
-          change = item.reward
-          this.total_outcome = Number(this.total_outcome) + Number(change)
+          this.total_outcome = Number(this.total_outcome) + Number(c)
         } else {
           // change = item.reward.substring(1)
           change = item.reward
@@ -157,8 +153,7 @@ export default {
         if (temp.type === 3) {
           // temp.reward = '-' + temp.reward
           c = Math.abs(Number(array[i].change))
-          this.outcome = Number(this.outcome) + Number(c)
-          this.total_outcome = Number(this.total_outcome) + Number(array[i].change)
+          this.total_outcome = Number(this.total_outcome) + Number(c)
         } else {
           // temp.reward = '+' + temp.reward
           this.total_income = Number(this.total_income) + Number(array[i].change)
@@ -190,7 +185,6 @@ export default {
       this.resetData(this.tableData, command)
     },
     createCharts() {
-      console.log(this.outcome)
       const options = {
         legend: {
           data: ['总收入', '总支出'],
@@ -224,7 +218,7 @@ export default {
                 itemStyle: {
                   color: '#9cdcd0' // 设置总收入的颜色为绿色
                 }},
-              { value: parseInt(this.outcome),
+              { value: parseInt(this.total_outcome),
                 name: '总支出',
                 itemStyle: {
                   color: '#fdc5ba' // 设置总支出的颜色为红色
